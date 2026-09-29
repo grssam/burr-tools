@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BurrTools · Entities redesign — sneak peek</title>
+<style>
+:root{
+  --outer:#dde1e8; --bg:#eceff4; --panel:#ffffff; --panel2:#f3f5f8; --line:#dde1e8; --line2:#c6ccd7;
+  --text:#1a1f29; --muted:#667085; --accent:#2f6df6; --accentSoft:rgba(47,109,246,.12);
+  --canvas:#e4e8ef; --ax:#e5484d; --ay:#2fa85a; --az:#2f6df6; --danger:#d92d20;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 4px 14px rgba(16,24,40,.06);
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --outer:#08090b; --bg:#111318; --panel:#1a1d24; --panel2:#222630; --line:#2b303b; --line2:#3a4150;
+    --text:#e7eaf0; --muted:#8d96a6; --accent:#5b9bff; --accentSoft:rgba(91,155,255,.16);
+    --canvas:#0f1115; --ax:#ff6b70; --ay:#4bd17f; --az:#5b9bff; --danger:#ff7066;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --outer:#08090b; --bg:#111318; --panel:#1a1d24; --panel2:#222630; --line:#2b303b; --line2:#3a4150;
+  --text:#e7eaf0; --muted:#8d96a6; --accent:#5b9bff; --accentSoft:rgba(91,155,255,.16);
+  --canvas:#0f1115; --ax:#ff6b70; --ay:#4bd17f; --az:#5b9bff; --danger:#ff7066;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35); color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;height:100%;overflow:hidden;background:var(--outer);display:grid;place-items:center;
+  font:13px/1.35 -apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--text);font-variant-numeric:tabular-nums}
+#wrap{position:relative}
+#stage{position:absolute;left:0;top:0;width:1600px;height:1000px;transform-origin:0 0;background:var(--bg);
+  display:grid;grid-template-rows:40px 1fr 28px;overflow:hidden;
+  --lw:288px;--rw:400px;--cw:1fr}
+button{font:inherit;color:inherit}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:2px;padding:0 10px 0 14px;background:var(--panel);border-bottom:1px solid var(--line);position:relative}
+.brand{font-weight:700;letter-spacing:.2px;margin-right:12px;display:flex;align-items:center;gap:8px}
+.brand i{width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--ax),var(--az));display:block}
+.menu button{border:0;background:transparent;height:28px;padding:0 9px;border-radius:6px;color:var(--text);cursor:pointer}
+.menu button:hover{background:var(--panel2)}
+.tabs{position:absolute;left:50%;transform:translateX(-50%)}
+.top .right{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--muted)}
+.fname{max-width:330px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
+
+/* ---------- shared controls ---------- */
+.seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:2px;gap:2px}
+.seg button{border:0;background:transparent;height:24px;padding:0 12px;border-radius:6px;color:var(--muted);font-weight:600;cursor:pointer}
+.seg button.on{background:var(--panel);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.18)}
+.ib{width:28px;height:28px;border:0;background:transparent;color:var(--muted);border-radius:6px;display:inline-grid;place-items:center;cursor:pointer;flex:none}
+.ib:hover{background:var(--panel2);color:var(--text)}
+.ib.on{background:var(--accentSoft);color:var(--accent)}
+.ib.tb{width:32px;height:32px;border-radius:8px}
+.ib:disabled{opacity:.35;cursor:default}
+.sep{width:1px;height:20px;background:var(--line);margin:0 4px;flex:none}
+.btn{height:30px;padding:0 12px;border:1px solid var(--line2);background:var(--panel);border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:500}
+.btn:hover{background:var(--panel2)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn.sm{height:26px;padding:0 9px;font-size:12px}
+.chip{min-width:28px;height:26px;padding:0 6px;border-radius:6px;display:inline-grid;place-items:center;font-size:11px;font-weight:700;color:#fff;flex:none;text-shadow:0 1px 1px rgba(0,0,0,.25)}
+.mute{color:var(--muted)}
+.ax-x{color:var(--ax)} .ax-y{color:var(--ay)} .ax-z{color:var(--az)}
+
+/* ---------- workspace ---------- */
+.body{display:grid;grid-template-columns:var(--lw) var(--cw) var(--rw);gap:8px;padding:8px;min-height:0;transition:grid-template-columns .2s ease}
+#stage.lc{--lw:56px} #stage.rc{--rw:56px}
+#stage.f3d{--lw:56px;--rw:56px}
+#stage.f2d{--lw:56px;--cw:360px;--rw:1fr}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden;position:relative}
+.ch{height:44px;flex:none;display:flex;align-items:center;gap:8px;padding:0 8px 0 14px;border-bottom:1px solid var(--line);font-weight:600}
+.ch .sub{font-weight:400;color:var(--muted);font-size:12px}
+.ch .sp{flex:1}
+.lrail,.rrail{display:none;flex-direction:column;align-items:center;gap:8px;padding:8px 0}
+#stage.lc .lfull,#stage.f2d .lfull,#stage.f3d .lfull{display:none}
+#stage.lc .lrail,#stage.f2d .lrail,#stage.f3d .lrail{display:flex}
+#stage.rc .rfull,#stage.f3d .rfull{display:none}
+#stage.rc .rrail,#stage.f3d .rrail{display:flex}
+.lfull,.rfull{display:flex;flex-direction:column;min-height:0;flex:1}
+
+/* shapes */
+.shapes{padding:6px;overflow:auto;max-height:250px;flex:none;min-height:60px}
+.row{height:42px;display:flex;align-items:center;gap:8px;padding:0 6px 0 4px;border-radius:8px;cursor:pointer;position:relative;border:1px solid transparent}
+.row:hover{background:var(--panel2)}
+.row.sel{background:var(--accentSoft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.row.dragover{border-top:2px solid var(--accent)}
+.grip{color:var(--line2);cursor:grab;display:grid;place-items:center;width:14px}
+.row:hover .grip{color:var(--muted)}
+.row .chip{min-width:34px}
+.lbl{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
+.lbl input{width:100%;height:24px;border:1px solid var(--accent);background:var(--panel);color:var(--text);border-radius:6px;padding:0 6px;font:inherit}
+.wbadge{font-size:11px;font-weight:700;color:var(--muted);background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:0 5px;flex:none}
+.acts{display:none;gap:0;flex:none}
+.row:hover .acts,.row.sel .acts{display:flex}
+.acts .ib{width:24px;height:24px}
+.acts .ib.w{width:30px}
+.acts .ib.del:hover{color:var(--danger)}
+.acts .wtxt{font-size:11px;font-weight:700;width:26px}
+
+/* inspector */
+.insp{flex:1;overflow:auto;min-height:0}
+.sec{border-bottom:1px solid var(--line)}
+.sec>button.sh{width:100%;height:40px;display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:0 12px 0 14px;cursor:pointer;font-weight:600;text-align:left}
+.sec>button.sh:hover{background:var(--panel2)}
+.sec .chev{transition:transform .15s;color:var(--muted);display:grid}
+.sec.closed .chev{transform:rotate(-90deg)}
+.sec .sum{margin-left:auto;font-weight:400;color:var(--muted);font-size:12px}
+.sec .sb{padding:2px 14px 14px}
+.sec.closed .sb{display:none}
+.sub2{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:10px 0 6px}
+.sub2:first-child{margin-top:2px}
+.step{display:flex;align-items:center;border:1px solid var(--line2);border-radius:8px;height:30px;background:var(--panel)}
+.step b{width:18px;text-align:center;font-weight:700;padding-left:4px}
+.step .v{flex:1;text-align:center;font-weight:600}
+.step button{width:22px;height:28px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:6px}
+.step button:hover{background:var(--panel2);color:var(--text)}
+.size3{display:flex;gap:6px}
+.size3 .step{flex:1;min-width:0}
+.switch{display:flex;align-items:center;gap:10px;margin-top:12px;cursor:pointer;user-select:none}
+.switch .tr{width:32px;height:18px;border-radius:9px;background:var(--line2);position:relative;transition:background .15s;flex:none}
+.switch .tr::after{content:"";position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .15s}
+.switch.on .tr{background:var(--accent)}
+.switch.on .tr::after{transform:translateX(14px)}
+.tmat{display:grid;grid-template-columns:22px repeat(6,1fr);gap:4px;align-items:center}
+.tmat .gh{grid-column:span 2;text-align:center;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.3px;text-transform:uppercase}
+.tmat .ib{width:100%;height:28px;border:1px solid var(--line);background:var(--panel2);color:var(--text)}
+.tmat .ib:hover{border-color:var(--accent);background:var(--accentSoft)}
+.tmat .al{font-weight:700;text-align:center}
+.btnrow{display:flex;gap:6px;flex-wrap:wrap}
+.btnrow .btn{flex:1 1 auto;justify-content:center}
+.cmat{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cmat .ib{width:100%;height:30px;border:1px solid var(--line);background:var(--panel2)}
+.cmat .ib:hover{border-color:var(--accent);background:var(--accentSoft)}
+
+/* 3D viewport */
+.vp{position:relative;flex:1;min-height:0;background:var(--canvas)}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#cv.pan{cursor:move} #cv.zoom{cursor:zoom-in}
+.vt{position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:4px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);z-index:3}
+.vtag{position:absolute;left:14px;top:14px;display:flex;align-items:center;gap:8px;z-index:2;color:var(--muted);font-size:12px}
+#stage.f2d .vtag{display:none}
+.hint{position:absolute;left:14px;bottom:12px;color:var(--muted);font-size:12px;z-index:2}
+.empty{position:absolute;inset:0;display:none;place-items:center;color:var(--muted);pointer-events:none}
+
+/* voxel editor */
+.tools{display:flex;align-items:center;gap:2px;padding:6px 10px;border-bottom:1px solid var(--line);flex:none;flex-wrap:nowrap}
+.tools .tname{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+.tools .tname b{color:var(--text)}
+.subbar{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);flex:none}
+.subbar .sp{flex:1}
+.gbody{flex:1;min-height:0;display:flex;position:relative;background:var(--panel2)}
+.lstrip{width:54px;flex:none;border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0;overflow:auto;background:var(--panel)}
+.lstrip .lh{font-size:11px;font-weight:700;letter-spacing:.4px;margin-bottom:2px}
+.lchip{width:36px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;font-weight:600;color:var(--muted);flex:none}
+.lchip:hover{border-color:var(--accent);color:var(--text)}
+.lchip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.lchip.has::after{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:currentColor;margin-left:4px;vertical-align:middle;opacity:.7}
+#garea{flex:1;min-width:0;display:grid;place-items:center;overflow:hidden}
+.gwrap{display:grid;user-select:none}
+.cells{display:grid;border:1px solid var(--line2);background:var(--line2);gap:1px;box-shadow:var(--shadow)}
+.cell{background:var(--panel);cursor:crosshair;position:relative}
+.cell:hover{outline:2px solid var(--accent);outline-offset:-2px;z-index:1}
+.cell.sel::after{content:"";position:absolute;inset:0;background:var(--accentSoft);outline:2px dashed var(--accent);outline-offset:-2px}
+.cell.v{border:2px dashed rgba(255,255,255,.75)}
+.rrul,.crul{display:flex;font-size:11px;color:var(--muted)}
+.rrul{flex-direction:column;border-right:3px solid;padding-right:4px;margin-right:2px}
+.rrul span{display:flex;align-items:center;justify-content:flex-end}
+.crul{border-top:3px solid;padding-top:3px;margin-top:2px}
+.crul span{display:flex;justify-content:center}
+.selbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:none;align-items:center;gap:4px;padding:5px 6px 5px 12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);z-index:3;white-space:nowrap}
+.selbar.show{display:flex}
+.colfoot{flex:none;border-top:1px solid var(--line);padding:10px 12px;display:flex;align-items:center;gap:12px}
+.bigsw{width:40px;height:40px;border-radius:10px;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line2);flex:none}
+.colmeta{min-width:78px}
+.colmeta small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+.pal{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sw{width:26px;height:26px;border-radius:7px;border:1px solid rgba(0,0,0,.25);cursor:pointer;position:relative}
+.sw.on{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent)}
+.rrail .vt2{writing-mode:vertical-rl;color:var(--muted);font-weight:600;letter-spacing:.5px;margin-top:6px}
+
+/* status */
+.status{display:flex;align-items:center;padding:0 14px;background:var(--panel);border-top:1px solid var(--line);color:var(--muted);font-size:12px;gap:14px}
+.status .sp{flex:1}
+.status b{color:var(--text);font-weight:600}
+kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--line2);border-bottom-width:2px;border-radius:4px;padding:1px 4px;background:var(--panel2);color:var(--text)}
+
+/* popover */
+#pop{position:absolute;z-index:20;min-width:190px;background:var(--panel);border:1px solid var(--line2);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:6px;display:none}
+#pop button{display:flex;width:100%;align-items:center;gap:10px;height:30px;padding:0 10px;border:0;background:transparent;border-radius:6px;cursor:pointer;text-align:left}
+#pop button:hover{background:var(--panel2)}
+#pop button:disabled{opacity:.4;cursor:default}
+#pop .ck{width:14px;display:grid;place-items:center;color:var(--accent)}
+#pop hr{border:0;border-top:1px solid var(--line);margin:4px 0}
+#pop .ph{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:4px 10px}
+#pop .kb{margin-left:auto;color:var(--muted);font-size:11px}
+
+/* zones overlay */
+.zt{display:none;position:absolute;left:10px;bottom:10px;right:10px;padding:8px 10px;border-radius:8px;font-size:12px;z-index:9;color:#fff;font-weight:500;pointer-events:none;line-height:1.35}
+#stage.zones .zt{display:block}
+.zt b{display:block;letter-spacing:.5px;font-size:11px}
+.z1{background:#7c5cff}.z2{background:#0e9f8e}.z3{background:#e5732f}
+
+.btn:disabled{opacity:.4;cursor:default}
+.mrow{display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--line);flex:none}
+.mrow .gl{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.mrow .grp{display:inline-flex;gap:2px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:2px}
+.mrow .grp button{width:30px;height:24px;border:0;background:transparent;border-radius:6px;font-weight:700;cursor:pointer}
+.mrow .grp button:hover{background:var(--panel)}
+.mrow .grp button.on{background:var(--panel);box-shadow:0 1px 2px rgba(0,0,0,.2),inset 0 0 0 2px var(--accent)}
+.mrow .sp{flex:1}
+.prow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pl{font-weight:600}.ph2{color:var(--muted);font-size:12px}
+.surf{display:grid;grid-template-columns:1fr 66px 66px;gap:6px;align-items:center}
+.surf .btn{justify-content:center;padding:0}
+.status .seg{padding:1px}.status .seg button{height:22px;padding:0 10px;font-size:12px}
+.hint div+div{margin-top:2px}
+#scrim{position:absolute;inset:0;background:rgba(10,12,16,.5);display:none;place-items:center;z-index:30}
+#scrim.show{display:grid}
+.dlg{width:780px;height:580px;background:var(--panel);border:1px solid var(--line2);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.4);display:grid;grid-template-columns:200px 1fr;grid-template-rows:56px 1fr 56px;overflow:hidden}
+.dlg .dh{grid-column:1/3;display:flex;align-items:center;gap:16px;padding:0 12px 0 20px;border-bottom:1px solid var(--line);font-weight:700;font-size:15px}
+.dlg .dh .sp{flex:1}
+.sbox{display:flex;align-items:center;gap:6px;border:1px solid var(--line2);border-radius:8px;height:32px;padding:0 10px;width:260px;color:var(--muted);background:var(--panel2)}
+.sbox input{border:0;outline:0;background:transparent;color:var(--text);font:inherit;flex:1;min-width:0}
+.dlg .nav{border-right:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:2px;background:var(--panel2)}
+.dlg .nav button{height:34px;text-align:left;border:0;background:transparent;border-radius:8px;padding:0 12px;cursor:pointer;font-weight:500;color:var(--muted)}
+.dlg .nav button:hover{background:var(--panel)}
+.dlg .nav button.on{background:var(--panel);color:var(--text);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.dlg .pg{overflow:auto;padding:4px 26px 16px}
+.pg h3{margin:16px 0 2px;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.pgh{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.setrow{display:flex;gap:28px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.setrow:last-child{border-bottom:0}
+.setrow .t{flex:1}.setrow .t b{display:block;font-weight:600;margin-bottom:2px}.setrow .t span{color:var(--muted);font-size:12px;line-height:1.45;display:block}
+.setrow .switch{margin:0;flex:none}
+.kbrow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.kbrow .k{display:flex;gap:4px}
+.dlg .df{grid-column:1/3;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 16px}
+.dlg .df .sp{flex:1}
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="stage">
+
+  <!-- top bar (menu & app tabs are out of scope; kept as-is) -->
+  <div class="top">
+    <div class="brand"><i></i>BurrTools</div>
+    <div class="menu" id="menu"></div>
+    <div class="tabs seg" id="apptabs">
+      <button class="on">Entities</button><button>Puzzle</button><button>Solver</button>
+    </div>
+    <div class="right">
+      <span class="fname" title="E:\Girish\Puzzles\designs\TIC\Final\TIC 2.99 - Clutch 4 - Level 31R10.8.R14.xmpuzzle">TIC 2.99 – Clutch 4 – Level 31R10.8.R14.xmpuzzle</span>
+      <button class="btn sm" id="btnZones">Show zones</button>
+      <button class="ib" id="btnSettings" title="Settings  (Ctrl+,)"></button>
+      <button class="ib" id="btnTheme" title="Toggle light / dark"></button>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- ================= LEFT: OBJECT SCOPE ================= -->
+    <section class="card" id="left">
+      <div class="lfull">
+        <div class="ch">Shapes <span class="chip" id="shapeCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span>
+          <button class="btn pri sm" id="btnNew">+ New</button>
+          <button class="ib" id="btnLC" title="Collapse sidebar"></button>
+        </div>
+        <div class="shapes" id="shapeList"></div>
+        <div class="ch" style="border-top:1px solid var(--line)" id="inspHead"></div>
+        <div class="insp">
+          <div class="sec" id="secProps"><button class="sh"><span class="chev"></span>Properties<span class="sum" id="sumProps"></span></button>
+            <div class="sb">
+              <div class="prow"><div><div class="pl">Weight</div><div class="ph2">Relative weight — used by the Solver only</div></div><div class="step" id="weightStep" style="width:112px"></div></div>
+            </div></div>
+          <div class="sec" id="secSize"><button class="sh"><span class="chev"></span>Size<span class="sum" id="sumSize"></span></button>
+            <div class="sb">
+              <div class="size3" id="sizeSteppers"></div>
+              <div class="switch" id="applyAll"><span class="tr"></span><span>Apply size to all shapes</span></div>
+              <div class="btnrow" style="margin-top:12px"><button class="btn sm" id="btnPrune"></button></div>
+            </div></div>
+          <div class="sec" id="secTf"><button class="sh"><span class="chev"></span>Transform<span class="sum">Flip · Rotate · Nudge</span></button>
+            <div class="sb"><div class="tmat" id="tmat"></div>
+              <div class="sub2">Position</div>
+              <div class="btnrow"><button class="btn sm" id="btnCenter"></button><button class="btn sm" id="btnOrigin"></button></div></div></div>
+          <div class="sec closed" id="secTools"><button class="sh"><span class="chev"></span>Repair &amp; surface<span class="sum">Fill · Inner / Outer</span></button>
+            <div class="sb">
+              <div class="btnrow"><button class="btn sm" id="btnFill"></button></div>
+              <div class="sub2">Surface voxels</div>
+              <div class="surf" id="surf"></div>
+            </div></div>
+          <div class="sec closed" id="secAdv"><button class="sh"><span class="chev"></span>Scale<span class="sum">Multiply · Minimize</span></button>
+            <div class="sb">
+              <div class="sub2">Multiply voxels</div><div class="btnrow" id="mulRow"></div>
+              <div class="sub2">Minimize (keeps shape)</div><div class="btnrow" id="divRow"></div>
+            </div></div>
+        </div>
+      </div>
+      <div class="lrail" id="lrail"></div>
+      <div class="zt z1"><b>OBJECT SCOPE</b>Which shape, and what happens to the whole shape.</div>
+    </section>
+
+    <!-- ================= CENTER: SPATIAL VIEW ================= -->
+    <section class="card" id="center">
+      <div class="vp" id="vp">
+        <canvas id="cv"></canvas>
+        <div class="vtag" id="vtag"></div>
+        <div class="vt" id="vt"></div>
+        <div class="hint" id="vhint"><div><kbd>Ctrl</kbd> click add fixed · <kbd>Ctrl</kbd><kbd>Shift</kbd> click add variable · <kbd>Alt</kbd> click delete</div><div>Drag orbit · Shift-drag pan · Wheel zoom</div></div>
+        <div class="empty" id="emptyMsg">Empty shape — draw in the Voxel editor</div>
+      </div>
+      <div class="zt z2"><b>SPATIAL VIEW</b>Understand the piece. Navigate here, or modifier-click to edit voxels in place.</div>
+    </section>
+
+    <!-- ================= RIGHT: VOXEL SCOPE ================= -->
+    <section class="card" id="right">
+      <div class="rfull">
+        <div class="ch"><span>Voxel editor</span><span class="sp"></span>
+          <button class="ib" id="btnF2D" title="Focus 2D editor (Esc to exit)"></button>
+          <button class="ib" id="btnRC" title="Collapse sidebar"></button>
+        </div>
+        <div class="tools" id="toolStrip"></div>
+        <div class="mrow" id="modRow"></div>
+        <div class="subbar">
+          <div class="seg" id="planeSeg"><button data-p="XY">XY</button><button data-p="XZ">XZ</button><button data-p="YZ">YZ</button></div>
+          <span class="sp"></span>
+          <span class="mute" id="layerLbl"></span>
+        </div>
+        <div class="gbody">
+          <div class="lstrip" id="lstrip"></div>
+          <div id="garea"></div>
+          <div class="selbar" id="selbar"></div>
+        </div>
+        <div class="colfoot" id="colFoot"></div>
+      </div>
+      <div class="rrail" id="rrail"></div>
+      <div class="zt z3"><b>VOXEL SCOPE</b>Draw. Plane, layer, tool and colour stay together — no tab switching.</div>
+    </section>
+  </div>
+
+  <div class="status">
+    <span id="stText"></span><span class="sp"></span>
+    <span id="stCursor" class="mute"></span>
+    <div class="seg" id="segColor" title="Voxel colour display"><button data-v="piece">Piece colour</button><button data-v="actual">Voxel colour</button></div>
+    <div class="seg" id="segProj" title="Projection"><button data-v="persp">Perspective</button><button data-v="ortho">Orthographic</button></div>
+  </div>
+
+  <div id="pop"></div>
+  <div id="scrim"><div class="dlg" role="dialog" aria-label="Settings">
+    <div class="dh"><span>Settings</span>
+      <div class="sbox"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><input id="setSearch" placeholder="Search settings" autocomplete="off"></div>
+      <span class="sp"></span><button class="ib" id="setX" title="Close  (Esc)"></button></div>
+    <div class="nav" id="setNav"></div>
+    <div class="pg" id="setPg"></div>
+    <div class="df"><span class="mute">Changes apply immediately</span><span class="sp"></span><button class="btn" id="setDefaults">Restore all defaults</button><button class="btn pri" id="setDone">Done</button></div>
+  </div></div>
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- icons ---------- */
+const I={
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
+ trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/>',
+ tag:'<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.2"/>',
+ grip:'<circle cx="9" cy="6" r="1.2" fill="currentColor"/><circle cx="15" cy="6" r="1.2" fill="currentColor"/><circle cx="9" cy="12" r="1.2" fill="currentColor"/><circle cx="15" cy="12" r="1.2" fill="currentColor"/><circle cx="9" cy="18" r="1.2" fill="currentColor"/><circle cx="15" cy="18" r="1.2" fill="currentColor"/>',
+ chevD:'<path d="M6 9l6 6 6-6"/>',
+ solid:'<rect x="5" y="5" width="14" height="14" rx="2" fill="currentColor"/>',
+ dashed:'<rect x="5" y="5" width="14" height="14" rx="2" stroke-dasharray="3 3"/>',
+ eraser:'<path d="M8 20h12M4.5 14.5l8-8a2 2 0 0 1 2.8 0l3.2 3.2a2 2 0 0 1 0 2.8L12 20H8l-3.5-3.2a2 2 0 0 1 0-2.3z"/>',
+ toggle:'<path d="M7 4v13M4 14l3 3 3-3M17 20V7M14 10l3-3 3 3"/>',
+ selbox:'<rect x="4" y="4" width="16" height="16" rx="1" stroke-dasharray="3 3"/>',
+ cursor:'<path d="M5 3l14 7-6 2-2 6z"/>',
+ orbit:'<path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/>',
+ pan:'<path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/>',
+ zoom:'<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/>',
+ fit:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+ cube:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5"/>',
+ eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ focus:'<path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/>',
+ unfocus:'<path d="M20 10h-6V4M4 14h6v6M14 10l7-7M3 21l7-7"/>',
+ panelL:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
+ panelR:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/>',
+ shrink:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',
+ center:'<circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/>',
+ origin:'<path d="M5 19V5M5 19h14M5 19l7-7"/>',
+ scale:'<rect x="3" y="13" width="8" height="8" rx="1"/><rect x="11" y="3" width="10" height="10" rx="1"/>',
+ flip:'<path d="M12 3v18M8 7l-5 5 5 5zM16 7l5 5-5 5z"/>',
+ flip2:'<path d="M3 12h18M7 8l5-5 5 5zM7 16l5 5 5-5z"/>',
+ cw:'<path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5"/>',
+ ccw:'<path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v5h5"/>',
+ arL:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+ arR:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+ holes:'<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" fill="currentColor" opacity=".4"/>',
+ more:'<circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/>',
+ check:'<path d="M5 12l5 5 9-10"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>',
+ minus:'<path d="M5 12h14"/>',
+ brush:'<path d="M18 3l3 3-9 9-3-3z"/><path d="M9 12c-3 0-5 2-5 5 0 2 1 3 3 3 3 0 5-2 5-5"/>',
+ edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+ close:'<path d="M6 6l12 12M18 6L6 18"/>',
+ ptplus:'<path d="M5 3l12 6-5 2-2 5z"/><path d="M17 15v6M14 18h6"/>'
+};
+const ic=(n,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+const cmIc=(col,dash,mode)=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${col}" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2" ${dash?'stroke-dasharray="3 2"':''} fill="${dash?'none':col}" fill-opacity=".25"/><path d="M12 3v18M3 12h18" opacity="${mode?1:.35}"/>${mode?'':'<path d="M7 7l10 10" stroke="currentColor" stroke-width="1.6"/>'}</svg>`;
+
+/* ---------- model ---------- */
+const COLORS=[{n:'Default',h:'#22c55e'},{n:'C2',h:'#f59e0b'},{n:'C3',h:'#8b5cf6'}];
+const SHAPE_COL=['#3b6cff','#22c55e','#ef4444','#06b6d4','#f59e0b','#8b5cf6','#ec4899'];
+const key=(x,y,z)=>x+','+y+','+z;
+function mkVox(list){const m=new Map();list.forEach(([x,y,z])=>m.set(key(x,y,z),{s:'f',c:0}));return m}
+let shapes=[
+ {id:'S1',label:'',col:SHAPE_COL[0],dims:[3,3,3],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0],[0,1,0],[0,2,0],[0,0,1],[0,0,2]])},
+ {id:'S2',label:'Arm piece',col:SHAPE_COL[1],dims:[4,3,4],w:1,vox:mkVox([[1,0,0],[1,1,0],[0,0,1],[1,0,1],[1,1,1],[2,1,1],[1,1,2],[2,1,2],[3,1,2],[1,2,2],[2,1,3],[3,1,3],[3,2,3],[2,2,3]])},
+ {id:'S3',label:'',col:SHAPE_COL[2],dims:[4,1,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0],[3,0,0]])},
+ {id:'S4',label:'',col:SHAPE_COL[3],dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,1,1]])}
+];
+const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:false,z:false},edit3d:false,set:{undo:25,tips:true,cube:true,rev:false,rot:'Drag',lights:true,fade:true,threads:12,lists:false},sel:1,tool:'fixed',plane:'XY',layer:0,color:0,selCells:new Set(),applyAll:false,mode:'orbit',
+  disp:{axes:true,bounds:true,layer:true},persp:true};
+['3,1,2','3,1,3','3,2,3'].forEach(k=>shapes[1].vox.get(k).c=1);shapes[1].vox.get('1,2,2').c=2;shapes[1].vox.get('2,1,3').s='v';
+const cam={yaw:-32,pitch:26,zoom:1,px:0,py:0};
+const cur=()=>shapes[st.sel];
+let S=1; // stage scale
+
+/* plane mapping: display cols/rows/layers <-> x,y,z */
+function P(){
+ const d=cur().dims;
+ if(st.plane==='XY')return{cols:d[0],rows:d[1],layers:d[2],ca:'X',ra:'Y',la:'Z',xyz:(c,r,l)=>[c,r,l]};
+ if(st.plane==='XZ')return{cols:d[0],rows:d[2],layers:d[1],ca:'X',ra:'Z',la:'Y',xyz:(c,r,l)=>[c,l,r]};
+ return{cols:d[2],rows:d[1],layers:d[0],ca:'Z',ra:'Y',la:'X',xyz:(c,r,l)=>[l,r,c]};
+}
+const axCol=a=>({X:'var(--ax)',Y:'var(--ay)',Z:'var(--az)'})[a];
+
+/* ---------- static UI fill ---------- */
+$('#menu').innerHTML=['File','Export','Edit comment','Help'].map(t=>`<button>${t}</button>`).join('');
+$('#btnLC').innerHTML=ic('panelL'); $('#btnRC').innerHTML=ic('panelR'); $('#btnF2D').innerHTML=ic('focus');
+$('#btnFill').innerHTML=ic('holes')+' Fill holes';
+$('#btnTheme').innerHTML=ic('sun');$('#btnSettings').innerHTML=ic('gear');$('#setX').innerHTML=ic('close');
+$$('.sec>button.sh .chev').forEach(e=>e.innerHTML=ic('chevD',14));
+
+/* toolbar for the 3D viewport — single canonical component */
+const vt=$('#vt');
+vt.innerHTML=
+ `<button class="ib tb on" data-m="orbit" title="Orbit  (drag)">${ic('orbit',18)}</button>`+
+ `<button class="ib tb" data-m="pan" title="Pan  (Shift-drag)">${ic('pan',18)}</button>`+
+ `<button class="ib tb" data-m="zoom" title="Zoom  (wheel)">${ic('zoom',18)}</button><span class="sep"></span>`+
+ `<button class="ib tb" id="bEdit" title="3D edit mode — a plain click uses the active voxel tool">${ic('ptplus',18)}</button><span class="sep"></span>`+
+ `<button class="ib tb" id="bViews" title="Standard views">${ic('cube',18)}</button>`+
+ `<button class="ib tb" id="bFit" title="Fit shape to view  (F)">${ic('fit',18)}</button><span class="sep"></span>`+
+ `<button class="ib tb" id="bDisp" title="Display options">${ic('eye',18)}</button><span class="sep"></span>`+
+ `<button class="ib tb" id="bF3D" title="Focus 3D viewport (Esc to exit)">${ic('focus',18)}</button>`;
+
+/* voxel tool strip */
+const TOOLS=[
+ {id:'fixed',ic:'solid',n:'Fixed voxel',k:'1',grp:0,tip:'Place a fixed (solid) voxel'},{id:'variable',ic:'dashed',n:'Variable voxel',k:'2',grp:0,tip:'Place a variable (optional) voxel'},
+ {id:'erase',ic:'eraser',n:'Erase voxel',k:'3',grp:0,tip:'Erase the voxel'},{id:'paint',ic:'brush',n:'Paint colour',k:'4',grp:0,tip:'Apply the drawing colour to an existing voxel'}
+];
+function renderTools(){
+ let h='';TOOLS.forEach((t,i)=>{ if(i&&t.grp!==TOOLS[i-1].grp)h+='<span class="sep"></span>';
+  h+=`<button class="ib tb ${st.tool===t.id?'on':''}" data-t="${t.id}" title="${t.tip}  (${t.k})">${ic(t.ic,18)}</button>`});
+ h+=`<span class="tname">Tool <b>${TOOLS.find(t=>t.id===st.tool).n}</b></span>`;
+ $('#toolStrip').innerHTML=h;
+}
+
+/* transform matrix: 3 axes × [Flip 2 | Rotate 2 | Nudge 2] */
+(function(){
+ let h='<span></span><span class="gh">Flip</span><span class="gh">Rotate</span><span class="gh">Nudge</span>';
+ ['X','Y','Z'].forEach((a,i)=>{
+  h+=`<span class="al ax-${a.toLowerCase()}">${a}</span>`+
+   `<button class="ib" data-o="flip" data-ax="${i}" data-sg="-1" title="Flip ${a}">${ic('flip',15)}</button><button class="ib" data-o="flip" data-ax="${i}" data-sg="1" title="Flip ${a} (alt)">${ic('flip2',15)}</button>`+
+   `<button class="ib" data-o="rot" data-ax="${i}" data-sg="-1" title="Rotate about ${a} −90°">${ic('ccw',15)}</button><button class="ib" data-o="rot" data-ax="${i}" data-sg="1" title="Rotate about ${a} +90°">${ic('cw',15)}</button>`+
+   `<button class="ib" data-o="nudge" data-ax="${i}" data-sg="-1" title="Nudge ${a} −1">${ic('arL',15)}</button><button class="ib" data-o="nudge" data-ax="${i}" data-sg="1" title="Nudge ${a} +1">${ic('arR',15)}</button>`});
+ $('#tmat').innerHTML=h;
+})();
+
+/* ---------- shapes list ---------- */
+function renderShapes(){
+ $('#shapeCount').textContent=shapes.length;
+ const l=$('#shapeList');
+ l.innerHTML=shapes.map((s,i)=>`<div class="row ${i===st.sel?'sel':''}" draggable="true" data-i="${i}">
+  <span class="grip" title="Drag to reorder">${ic('grip',14)}</span>
+  <span class="chip" style="background:${s.col}">${s.id}</span>
+  <span class="lbl">${s.label||''}</span>
+  ${s.w!==1?`<span class="wbadge">W${s.w}</span>`:''}
+  <span class="acts">
+   <button class="ib" data-a="label" title="Rename">${ic('edit',14)}</button>
+   <button class="ib" data-a="copy" title="Copy">${ic('copy',14)}</button>
+   <button class="ib del" data-a="del" title="Delete" ${shapes.length<2?'disabled':''}>${ic('trash',14)}</button>
+  </span></div>`).join('');
+ $('#lrail').innerHTML=`<button class="ib" id="btnLE" title="Expand Shapes">${ic('panelL')}</button>`+
+  shapes.map((s,i)=>`<button class="chip" data-i="${i}" title="${s.id} ${s.label}" style="background:${s.col};border:0;cursor:pointer;min-width:34px;${i===st.sel?'box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent)':''}">${s.id}</button>`).join('')+
+  `<button class="ib" id="btnLN" title="New shape">${ic('plus')}</button>`;
+ $('#btnLE').onclick=()=>{setLayout('')};
+ $('#btnLN').onclick=newShape;
+ $$('#lrail .chip').forEach(b=>b.onclick=()=>selectShape(+b.dataset.i));
+}
+function selectShape(i){st.sel=i;st.selCells.clear();st.layer=Math.min(st.layer,P().layers-1);renderAll()}
+function newShape(){
+ const n=Math.max(...shapes.map(s=>+s.id.slice(1)))+1;
+ shapes.push({id:'S'+n,label:'',col:SHAPE_COL[(n-1)%SHAPE_COL.length],dims:[3,3,3],w:1,vox:new Map()});
+ selectShape(shapes.length-1);
+}
+$('#btnNew').onclick=newShape;
+const list=$('#shapeList');
+list.addEventListener('click',e=>{
+ const row=e.target.closest('.row');if(!row)return;const i=+row.dataset.i;const b=e.target.closest('[data-a]');
+ if(!b){if(!e.target.closest('input'))selectShape(i);return}
+ e.stopPropagation();const a=b.dataset.a,s=shapes[i];
+ if(a==='copy'){const n=Math.max(...shapes.map(x=>+x.id.slice(1)))+1;
+  shapes.splice(i+1,0,{...s,id:'S'+n,col:SHAPE_COL[(n-1)%SHAPE_COL.length],dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,{...v}]))});selectShape(i+1)}
+ else if(a==='del'&&shapes.length>1){shapes.splice(i,1);st.sel=Math.max(0,Math.min(st.sel,shapes.length-1));if(i<st.sel)st.sel--;renderAll()}
+ else if(a==='wp'){s.w++;renderShapes()}else if(a==='wm'){s.w=Math.max(0,s.w-1);renderShapes()}
+ else if(a==='label'){selectShape(i);const lb=$$('#shapeList .row')[i].querySelector('.lbl');
+  lb.innerHTML=`<input value="${s.label}" placeholder="Label">`;const inp=lb.querySelector('input');inp.focus();
+  const done=()=>{s.label=inp.value;renderShapes();renderTag()};inp.onblur=done;inp.onkeydown=ev=>{if(ev.key==='Enter')inp.blur();if(ev.key==='Escape'){inp.value=s.label;inp.blur()}}}
+});
+let dragI=null;
+list.addEventListener('dragstart',e=>{const r=e.target.closest('.row');if(r){dragI=+r.dataset.i;e.dataTransfer.effectAllowed='move'}});
+list.addEventListener('dragover',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();$$('.row').forEach(x=>x.classList.remove('dragover'));r.classList.add('dragover')}});
+list.addEventListener('drop',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();const to=+r.dataset.i;const selShape=cur();const [m]=shapes.splice(dragI,1);shapes.splice(to,0,m);st.sel=shapes.indexOf(selShape);dragI=null;renderAll()}});
+list.addEventListener('dragend',()=>{dragI=null;$$('.row').forEach(x=>x.classList.remove('dragover'))});
+
+/* ---------- inspector & shape operations ---------- */
+const bbox=s=>{let mn=[1e9,1e9,1e9],mx=[-1,-1,-1];s.vox.forEach((v,k)=>{k.split(',').forEach((t,i)=>{t=+t;if(t<mn[i])mn[i]=t;if(t>mx[i])mx[i]=t})});return s.vox.size?{mn,mx,sz:mx.map((m,i)=>m-mn[i]+1)}:null};
+let msgT=null,flashed=false;
+function flash(t){flashed=true;$('#stText').textContent=t;clearTimeout(msgT);msgT=setTimeout(updateStatus,2400)}
+function remap(s,fn,nd,failMsg){const nv=new Map();let ok=true;s.vox.forEach((v,k)=>{const q=fn(k.split(',').map(Number));if(q.some((t,i)=>t<0||t>=nd[i]))ok=false;else nv.set(key(...q),v)});if(!ok){flash(failMsg||'Blocked: the piece would leave the grid');return false}s.vox=nv;s.dims=nd;return true}
+function doPrune(s){const b=bbox(s);if(b)remap(s,c=>c.map((t,i)=>t-b.mn[i]),b.sz)}
+function doCenter(s){const b=bbox(s);if(b)remap(s,c=>c.map((t,i)=>t+Math.floor((s.dims[i]-b.sz[i])/2)-b.mn[i]),s.dims)}
+function doOrigin(s){const b=bbox(s);if(b)remap(s,c=>c.map((t,i)=>t-b.mn[i]),s.dims)}
+function doMul(s,n){if(s.dims.some(d=>d*n>64)){flash('Blocked: grid would exceed 64');return}const nv=new Map();s.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);for(let a=0;a<n;a++)for(let b=0;b<n;b++)for(let c=0;c<n;c++)nv.set(key(x*n+a,y*n+b,z*n+c),{...v})});s.vox=nv;s.dims=s.dims.map(d=>d*n)}
+function canDiv(s,n){if(!s.vox.size||s.dims.some(d=>d%n))return false;const seen=new Set();for(const [k,v] of s.vox){const [x,y,z]=k.split(',').map(Number),bx=(x/n|0)*n,by=(y/n|0)*n,bz=(z/n|0)*n,bk=bx+','+by+','+bz;if(seen.has(bk))continue;seen.add(bk);
+  for(let a=0;a<n;a++)for(let b=0;b<n;b++)for(let c=0;c<n;c++){const o=s.vox.get(key(bx+a,by+b,bz+c));if(!o||o.s!==v.s||o.c!==v.c)return false}}return true}
+function doDiv(s,n){const nv=new Map();s.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);if(x%n||y%n||z%n)return;nv.set(key(x/n,y/n,z/n),v)});s.vox=nv;s.dims=s.dims.map(d=>d/n)}
+const N6=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]];
+function exterior(s){const [X,Y,Z]=s.dims,seen=new Set([key(-1,-1,-1)]),q=[[-1,-1,-1]];
+ while(q.length){const [x,y,z]=q.pop();for(const [a,b,c] of N6){const nx=x+a,ny=y+b,nz=z+c;if(nx<-1||ny<-1||nz<-1||nx>X||ny>Y||nz>Z)continue;const k=key(nx,ny,nz);if(seen.has(k)||s.vox.has(k))continue;seen.add(k);q.push([nx,ny,nz])}}return seen}
+function surfaceSets(s){const ext=exterior(s),outer=[],inner=[];s.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);(N6.some(([a,b,c])=>ext.has(key(x+a,y+b,z+c)))?outer:inner).push(v)});return{outer,inner}}
+function doFill(s){const ext=exterior(s),[X,Y,Z]=s.dims;let n=0;for(let x=0;x<X;x++)for(let y=0;y<Y;y++)for(let z=0;z<Z;z++){const k=key(x,y,z);if(!s.vox.has(k)&&!ext.has(k)){s.vox.set(k,{s:'f',c:0});n++}}flash(n?`Filled ${n} interior voxel${n===1?'':'s'}`:'No interior holes found')}
+
+function renderInsp(){
+ const s=cur();
+ $('#inspHead').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>Shape properties</span><span class="sp"></span><span class="sub">${s.dims.join(' × ')}</span>`;
+ $('#sumSize').textContent=s.dims.join(' × ');
+ $('#sumProps').textContent='Weight '+s.w;
+ $('#weightStep').innerHTML=`<button data-w="-1" title="Decrease weight">${ic('minus',12)}</button><span class="v">${s.w}</span><button data-w="1" title="Increase weight">${ic('plus',12)}</button>`;
+ $('#sizeSteppers').innerHTML=['X','Y','Z'].map((a,i)=>`<div class="step"><b class="ax-${a.toLowerCase()}">${a}</b><button data-d="${i}" data-s="-1" title="Decrease ${a}">${ic('minus',12)}</button><span class="v">${s.dims[i]}</span><button data-d="${i}" data-s="1" title="Increase ${a}">${ic('plus',12)}</button></div>`).join('');
+ $('#applyAll').classList.toggle('on',st.applyAll);
+ $('#btnPrune').innerHTML=ic('shrink',15)+' Prune grid to fit piece';$('#btnPrune').disabled=!bbox(s);
+ $('#btnCenter').innerHTML=ic('center',15)+' Center on grid';$('#btnOrigin').innerHTML=ic('origin',15)+' Move to origin';
+ $('#btnFill').innerHTML=ic('holes',15)+' Fill interior holes';
+ $('#surf').innerHTML=[['fixed','Make fixed'],['variable','Make variable'],['clear','Clear colour']].map(([k,t])=>`<span>${t}</span><button class="btn sm" data-so="${k}" data-part="inner" title="Voxels not visible from outside">Inner</button><button class="btn sm" data-so="${k}" data-part="outer" title="Voxels on the outer surface">Outer</button>`).join('');
+ $('#mulRow').innerHTML=[2,3].map(n=>`<button class="btn sm" data-mul="${n}" ${s.dims.some(d=>d*n>64)?'disabled':''}>${ic('scale',15)} ×${n}</button>`).join('');
+ $('#divRow').innerHTML=[2,3].map(n=>{const ok=canDiv(s,n);return `<button class="btn sm" data-div="${n}" ${ok?'':'disabled'} title="${ok?'Shrink the piece '+n+'× keeping its shape':'The piece is not made of '+n+'×'+n+'×'+n+' blocks'}">${ic('shrink',15)} ÷${n}</button>`}).join('');
+}
+$('.insp').addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b||b.disabled)return;const s=cur();flashed=false;
+ if(b.dataset.w){s.w=Math.max(0,s.w+ +b.dataset.w)}
+ else if(b.dataset.o){const ax=+b.dataset.ax,sg=+b.dataset.sg,D=s.dims;
+  if(b.dataset.o==='flip')remap(s,c=>{const q=c.slice();q[ax]=D[ax]-1-c[ax];return q},D);
+  else if(b.dataset.o==='rot'){const A=(ax+1)%3,B=(ax+2)%3,nd=D.slice();nd[A]=D[B];nd[B]=D[A];remap(s,c=>{const q=c.slice();if(sg>0){q[A]=c[B];q[B]=D[A]-1-c[A]}else{q[A]=D[B]-1-c[B];q[B]=c[A]}return q},nd)}
+  else remap(s,c=>{const q=c.slice();q[ax]+=sg;return q},D)}
+ else if(b.id==='btnPrune')doPrune(s);
+ else if(b.id==='btnCenter')doCenter(s);
+ else if(b.id==='btnOrigin')doOrigin(s);
+ else if(b.id==='btnFill')doFill(s);
+ else if(b.dataset.so){const arr=surfaceSets(s)[b.dataset.part];arr.forEach(v=>{if(b.dataset.so==='fixed')v.s='f';else if(b.dataset.so==='variable')v.s='v';else v.c=0});flash(`${arr.length} ${b.dataset.part} voxel${arr.length===1?'':'s'} updated`)}
+ else if(b.dataset.mul)doMul(s,+b.dataset.mul);
+ else if(b.dataset.div)doDiv(s,+b.dataset.div);
+ else return;
+ st.layer=Math.min(st.layer,P().layers-1);renderInsp();renderShapes();renderEditor();render3d();if(!flashed)updateStatus();
+});
+$('#sizeSteppers').addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;const d=+b.dataset.d,sg=+b.dataset.s;
+ const targets=st.applyAll?shapes:[cur()];
+ targets.forEach(s=>{const nv=Math.max(1,Math.min(32,s.dims[d]+sg));if(nv===s.dims[d])return;s.dims[d]=nv;
+  if(sg<0)[...s.vox.keys()].forEach(k=>{if(k.split(',')[d]>=nv)s.vox.delete(k)})});
+ st.layer=Math.min(st.layer,P().layers-1);st.selCells.clear();renderAll();
+});
+$('#applyAll').onclick=()=>{st.applyAll=!st.applyAll;renderInsp()};
+$$('.sec>button.sh').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('closed'));
+
+/* ---------- 2D voxel editor ---------- */
+function renderPlane(){$$('#planeSeg button').forEach(b=>b.classList.toggle('on',b.dataset.p===st.plane))}
+$('#planeSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.plane=b.dataset.p;st.layer=Math.min(st.layer,P().layers-1);st.selCells.clear();renderEditor();render3d()};
+
+function layerHas(l){const p=P();for(let c=0;c<p.cols;c++)for(let r=0;r<p.rows;r++){if(cur().vox.has(key(...p.xyz(c,r,l))))return true}return false}
+function renderLayers(){
+ const p=P(),el=$('#lstrip');let h=`<div class="lh" style="color:${axCol(p.la)}">${p.la} layer</div>`;
+ for(let l=p.layers-1;l>=0;l--)h+=`<button class="lchip ${l===st.layer?'on':''} ${layerHas(l)?'has':''}" data-l="${l}" title="Layer ${l+1}">${l+1}</button>`;
+ el.innerHTML=h;
+ $('#layerLbl').textContent=`Layer ${st.layer+1} of ${p.layers}`;
+}
+$('#lstrip').onclick=e=>{const b=e.target.closest('.lchip');if(!b)return;st.layer=+b.dataset.l;st.selCells.clear();renderEditor();render3d()};
+
+function fillStyle(v){
+ const col=COLORS[v.c]?.h||COLORS[0].h;
+ return v.s==='v'?`background:repeating-linear-gradient(45deg,${col}55 0 6px,${col}22 6px 12px);border-color:${col}`:`background:${col}`;
+}
+function renderGrid(){
+ const area=$('#garea'),p=P();const aw=area.clientWidth,ah=area.clientHeight;if(!aw||!ah)return;
+ const cs=Math.max(16,Math.min(120,Math.floor(Math.min((aw-70)/p.cols,(ah-60)/p.rows))));
+ const cc=axCol(p.ca),rc=axCol(p.ra);
+ let cells='';
+ for(let ri=0;ri<p.rows;ri++){const r=p.rows-1-ri;for(let c=0;c<p.cols;c++){
+  const v=cur().vox.get(key(...p.xyz(c,r,st.layer)));
+  cells+=`<div class="cell ${v&&v.s==='v'?'v':''} ${st.selCells.has(c+','+r)?'sel':''}" data-c="${c}" data-r="${r}" style="${v?fillStyle(v):''}"></div>`}}
+ let rl='',cl='';
+ for(let ri=0;ri<p.rows;ri++)rl+=`<span style="height:${cs}px">${p.rows-1-ri}</span>`;
+ for(let c=0;c<p.cols;c++)cl+=`<span style="width:${cs}px">${c}</span>`;
+ area.innerHTML=`<div class="gwrap" style="grid-template-columns:auto ${cs*p.cols+ (p.cols+1)}px;grid-template-rows:${cs*p.rows+(p.rows+1)}px auto">
+  <div class="rrul" style="border-color:${rc};padding-top:1px">${rl}</div>
+  <div class="cells" style="grid-template-columns:repeat(${p.cols},${cs}px);grid-auto-rows:${cs}px">${cells}</div>
+  <div></div><div class="crul" style="border-color:${cc};margin-left:1px">${cl}</div></div>`;
+}
+function renderSelbar(){
+ const n=st.selCells.size,b=$('#selbar');b.classList.toggle('show',n>0);
+ b.innerHTML=`<span><b>${n}</b> cell${n===1?'':'s'} selected</span><span class="sep"></span>
+  <button class="btn sm" data-x="fill">Fill</button><button class="btn sm" data-x="clear">Clear</button><button class="ib" data-x="x" title="Deselect (Esc)">${ic('plus',14).replace('M12 5v14M5 12h14','M6 6l12 12M18 6L6 18')}</button>`;
+}
+$('#selbar').onclick=e=>{const b=e.target.closest('[data-x]');if(!b)return;const p=P();
+ if(b.dataset.x==='x'){st.selCells.clear()}
+ else st.selCells.forEach(k=>{const [c,r]=k.split(',').map(Number);const kk=key(...p.xyz(c,r,st.layer));
+  if(b.dataset.x==='fill')cur().vox.set(kk,{s:'f',c:st.color});else cur().vox.delete(kk)});
+ renderEditor();render3d();updateStatus()};
+
+let down=false,anchor=null;
+/* mirror + span expand a click into several voxels; both work identically from 2D and 3D */
+function expand(coords){const d=cur().dims;let out=coords;
+ ['x','y','z'].forEach((a,i)=>{if(st.span[a]){const n=[];out.forEach(c=>{for(let t=0;t<d[i];t++){const q=c.slice();q[i]=t;n.push(q)}});out=n}});
+ ['x','y','z'].forEach((a,i)=>{if(st.mirror[a]){const n=out.slice();out.forEach(c=>{const q=c.slice();q[i]=d[i]-1-c[i];n.push(q)});out=n}});
+ const seen=new Set();return out.filter(c=>{const k=key(...c);if(seen.has(k))return false;seen.add(k);return true})}
+function applyTool(tool,coords){const v=cur().vox;expand(coords).forEach(c=>{const k=key(...c);
+ if(tool==='fixed')v.set(k,{s:'f',c:st.color});else if(tool==='variable')v.set(k,{s:'v',c:st.color});
+ else if(tool==='erase')v.delete(k);else if(tool==='paint'){const o=v.get(k);if(o)o.c=st.color}})}
+function applyCell(c,r){const p=P();applyTool(st.tool,[p.xyz(c,r,st.layer)])}
+function renderMod(){
+ const grp=(k,label,tip)=>`<span class="gl">${label}</span><div class="grp" data-g="${k}">`+['x','y','z'].map(a=>`<button class="ax-${a} ${st[k][a]?'on':''}" data-a="${a}" title="${tip(a.toUpperCase())}" aria-pressed="${st[k][a]}">${a.toUpperCase()}</button>`).join('')+'</div>';
+ $('#modRow').innerHTML=grp('mirror','Mirror',a=>`Also place a mirrored voxel across the ${a} centre plane`)+'<span class="sp"></span>'+grp('span','Span',a=>`Fill the whole grid along ${a} on each click`);
+}
+$('#modRow').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.parentElement.dataset.g;st[k][b.dataset.a]=!st[k][b.dataset.a];renderMod()});
+function afterEdit(){renderGrid();renderSelbar();renderLayers();render3d();updateStatus()}
+$('#garea').addEventListener('mousedown',e=>{const c=e.target.closest('.cell');if(!c)return;e.preventDefault();down=true;applyCell(+c.dataset.c,+c.dataset.r,true);afterEdit()});
+$('#garea').addEventListener('mouseover',e=>{const c=e.target.closest('.cell');if(!c)return;
+ const p=P();$('#stCursor').textContent=`Cursor ${p.ca}${c.dataset.c} ${p.ra}${c.dataset.r} · ${p.la}${st.layer}`;
+ if(down){applyCell(+c.dataset.c,+c.dataset.r,false);afterEdit()}});
+$('#garea').addEventListener('mouseleave',()=>$('#stCursor').textContent='');
+window.addEventListener('mouseup',()=>{down=false});
+
+$('#toolStrip').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;st.tool=b.dataset.t;renderTools()});
+
+/* colour: drawing state */
+function renderColors(){
+ const c=COLORS[st.color];
+ $('#colFoot').innerHTML=`<div class="bigsw" style="background:${c.h}"></div><div class="colmeta"><small>Drawing colour</small><b>C${st.color+1}${st.color===0?' · Default':''}</b></div>
+  <div class="pal">${COLORS.map((x,i)=>`<button class="sw ${i===st.color?'on':''}" data-c="${i}" style="background:${x.h}" title="C${i+1}${i===0?' (Default)':''}"></button>`).join('')}
+  <button class="ib" id="cAdd" title="Add colour">${ic('plus')}</button><button class="ib" id="cMore" title="Colour options">${ic('more')}</button></div>
+  <input type="color" id="cPick" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0">`;
+ $$('#colFoot .sw').forEach(b=>b.onclick=()=>{st.color=+b.dataset.c;renderColors()});
+ $('#cAdd').onclick=()=>{const extra=['#ef4444','#06b6d4','#ec4899','#84cc16','#f97316'];COLORS.push({n:'C'+(COLORS.length+1),h:extra[COLORS.length%extra.length]});st.color=COLORS.length-1;renderColors()};
+ $('#cMore').onclick=e=>openPop(e.currentTarget,`<button data-k="edit">Edit colour…</button><button data-k="rm" ${st.color===0?'disabled':''}>Remove colour</button>`,k=>{
+  if(k==='edit'){const p=$('#cPick');p.value=COLORS[st.color].h;p.oninput=()=>{COLORS[st.color].h=p.value;renderColors();renderGrid();render3d()};p.click()}
+  if(k==='rm'&&st.color>0){const idx=st.color;shapes.forEach(s=>s.vox.forEach(v=>{if(v.c===idx)v.c=0;else if(v.c>idx)v.c--}));COLORS.splice(idx,1);st.color=0;renderAll()}});
+ $('#rrail').innerHTML=`<button class="ib" id="btnRE" title="Expand Voxel editor">${ic('panelR')}</button><div class="bigsw" style="background:${c.h};width:28px;height:28px;border-radius:8px"></div><span class="vt2">Voxel editor</span>`;
+ $('#btnRE').onclick=()=>setLayout('');
+}
+
+/* ---------- popover ---------- */
+const pop=$('#pop');let popCb=null;
+function openPop(anchor,html,cb,above){
+ pop.innerHTML=html;popCb=cb;pop.style.display='block';
+ const sr=$('#stage').getBoundingClientRect(),ar=anchor.getBoundingClientRect();
+ let x=(ar.left-sr.left)/S,y=(ar.bottom-sr.top)/S+6;
+ pop.style.left='0px';pop.style.top='0px';const pw=pop.offsetWidth,ph=pop.offsetHeight;
+ x=Math.max(8,Math.min(x,1600-pw-8)); if(y+ph>990||above)y=(ar.top-sr.top)/S-ph-6;
+ pop.style.left=x+'px';pop.style.top=y+'px';
+}
+pop.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const k=b.dataset.k;const keep=b.dataset.keep;popCb&&popCb(k,b);if(!keep)closePop()});
+function closePop(){pop.style.display='none';popCb=null}
+document.addEventListener('mousedown',e=>{if(pop.style.display==='block'&&!pop.contains(e.target)&&!e.target.closest('#bViews,#bDisp,#cMore'))closePop()});
+
+$('#bViews').onclick=e=>openPop(e.currentTarget,
+ `<div class="ph">Standard views</div>`+[['iso','Isometric',-32,26],['front','Front',0,0],['back','Back',180,0],['left','Left',90,0],['right','Right',-90,0],['top','Top',0,89],['bottom','Bottom',0,-89]]
+ .map(v=>`<button data-k="${v[0]}" data-y="${v[2]}" data-p="${v[3]}">${v[1]}</button>`).join(''),
+ (k,b)=>{cam.yaw=+b.dataset.y;cam.pitch=+b.dataset.p;render3d()});
+$('#bDisp').onclick=e=>{const ck=v=>`<span class="ck">${v?ic('check',14):''}</span>`;
+ openPop(e.currentTarget,`<div class="ph">Show</div>
+ <button data-k="axes" data-keep="1">${ck(st.disp.axes)}Axes</button>
+ <button data-k="bounds" data-keep="1">${ck(st.disp.bounds)}Grid boundary</button>
+ <button data-k="layer" data-keep="1">${ck(st.disp.layer)}Active layer plane</button>`,
+ k=>{if(k==='persp')st.persp=true;else if(k==='ortho')st.persp=false;else st.disp[k]=!st.disp[k];render3d();$('#bDisp').click()})};
+$('#bFit').onclick=()=>{cam.zoom=1;cam.px=0;cam.py=0;render3d()};
+vt.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;st.mode=b.dataset.m;$$('#vt [data-m]').forEach(x=>x.classList.toggle('on',x===b));$('#cv').className=st.mode==='orbit'?'':st.mode});
+
+/* ---------- layout modes ---------- */
+function setLayout(m){
+ const s=$('#stage');s.classList.remove('lc','rc','f2d','f3d');if(m)s.classList.add(m);
+ $('#btnF2D').innerHTML=ic(m==='f2d'?'unfocus':'focus');$('#btnF2D').classList.toggle('on',m==='f2d');
+ $('#bF3D').innerHTML=ic(m==='f3d'?'unfocus':'focus',18);$('#bF3D').classList.toggle('on',m==='f3d');
+ $('#vhint').style.display=m==='f2d'?'none':'';
+}
+const curMode=()=>['lc','rc','f2d','f3d'].find(c=>$('#stage').classList.contains(c))||'';
+$('#btnLC').onclick=()=>setLayout('lc');
+$('#btnRC').onclick=()=>setLayout('rc');
+$('#btnF2D').onclick=()=>setLayout(curMode()==='f2d'?'':'f2d');
+$('#bF3D').onclick=()=>setLayout(curMode()==='f3d'?'':'f3d');
+$('#btnZones').onclick=e=>{const on=$('#stage').classList.toggle('zones');e.currentTarget.textContent=on?'Hide zones':'Show zones'};
+$('#btnTheme').onclick=()=>{const dark=matchMedia('(prefers-color-scheme: dark)').matches;const cd=document.documentElement.dataset.theme||(dark?'dark':'light');
+ document.documentElement.dataset.theme=cd==='dark'?'light':'dark';render3d()};
+
+/* ---------- status & tag ---------- */
+function updateStatus(){
+ const v=[...cur().vox.values()],f=v.filter(x=>x.s==='f').length,va=v.length-f;
+ $('#stText').innerHTML=`Shape <b>${cur().id}</b> has <b>${v.length}</b> voxels (${f} fixed, ${va} variable)`;
+}
+function renderTag(){const s=cur();$('#vtag').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>${s.label||''}</span>`}
+
+/* ---------- 3D renderer ---------- */
+const FACES=[
+ {n:[1,0,0],v:[[1,0,0],[1,1,0],[1,1,1],[1,0,1]],f:.82},{n:[-1,0,0],v:[[0,0,0],[0,0,1],[0,1,1],[0,1,0]],f:.66},
+ {n:[0,1,0],v:[[0,1,0],[0,1,1],[1,1,1],[1,1,0]],f:1.14},{n:[0,-1,0],v:[[0,0,0],[1,0,0],[1,0,1],[0,0,1]],f:.5},
+ {n:[0,0,1],v:[[0,0,1],[1,0,1],[1,1,1],[0,1,1]],f:.98},{n:[0,0,-1],v:[[0,0,0],[0,1,0],[1,1,0],[1,0,0]],f:.58}];
+function shade(hex,f){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;
+ if(f>1){const t=f-1;r+=(255-r)*t;g+=(255-g)*t;b+=(255-b)*t}else{r*=f;g*=f;b*=f}return`rgb(${r|0},${g|0},${b|0})`}
+function render3d(){
+ const cv=$('#cv'),w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
+ const r=(window.devicePixelRatio||1)*S;const bw=Math.round(w*r),bh=Math.round(h*r);
+ if(cv.width!==bw||cv.height!==bh){cv.width=bw;cv.height=bh}
+ const g=cv.getContext('2d');g.setTransform(r,0,0,r,0,0);g.clearRect(0,0,w,h);
+ const sh=cur(),[dx,dy,dz]=sh.dims,ctr=[dx/2,dy/2,dz/2];
+ const a=cam.yaw*Math.PI/180,b=cam.pitch*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b);
+ const sc=Math.min(w,h)/(Math.max(dx,dy,dz)*2.05+1.5)*cam.zoom;
+ const rot=(x,y,z)=>{const x1=x*ca+z*sa,z1=-x*sa+z*ca;return[x1,y*cb-z1*sb,y*sb+z1*cb]};
+ const pr=(p)=>{const q=rot(p[0]-ctr[0],p[1]-ctr[1],p[2]-ctr[2]);const k=st.persp?64/(64-q[2]):1;return[w/2+cam.px+q[0]*sc*k,h/2+cam.py-q[1]*sc*k,q[2]]};
+ const line=(p,q,col,lw,dash)=>{const A=pr(p),B=pr(q);g.beginPath();g.moveTo(A[0],A[1]);g.lineTo(B[0],B[1]);g.strokeStyle=col;g.lineWidth=lw;g.setLineDash(dash||[]);g.stroke();g.setLineDash([])};
+ $('#emptyMsg').style.display=sh.vox.size?'none':'grid';
+ // bounds
+ if(st.disp.bounds){const c=css('--line2');const V=[[0,0,0],[dx,0,0],[dx,dy,0],[0,dy,0],[0,0,dz],[dx,0,dz],[dx,dy,dz],[0,dy,dz]];
+  [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([i,j])=>line(V[i],V[j],c,1,[4,4]))}
+ // axes
+ if(st.disp.axes){const L=.7;line([0,0,0],[dx+L,0,0],css('--ax'),2.5);line([0,0,0],[0,dy+L,0],css('--ay'),2.5);line([0,0,0],[0,0,dz+L],css('--az'),2.5)}
+ // cubes
+ lastFaces=[];const cubes=[];sh.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);cubes.push({x,y,z,v,d:rot(x+.5-ctr[0],y+.5-ctr[1],z+.5-ctr[2])[2]})});
+ cubes.sort((p,q)=>p.d-q.d);
+ cubes.forEach(cu=>{const base=st.colorView==='piece'?sh.col:(COLORS[cu.v.c]||COLORS[0]).h;
+  FACES.forEach(f=>{const nn=rot(f.n[0],f.n[1],f.n[2]);if(nn[2]<=0.0001)return;
+   if(sh.vox.has(key(cu.x+f.n[0],cu.y+f.n[1],cu.z+f.n[2])))return;
+   const pts=f.v.map(q=>pr([cu.x+q[0],cu.y+q[1],cu.z+q[2]]));lastFaces.push({pts,x:cu.x,y:cu.y,z:cu.z,n:f.n});
+   g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
+   g.globalAlpha=cu.v.s==='v'?.5:1;g.fillStyle=shade(base,st.set.lights?f.f:.92);g.fill();g.globalAlpha=1;
+   g.strokeStyle='rgba(0,0,0,.32)';g.lineWidth=1;g.setLineDash(cu.v.s==='v'?[3,3]:[]);g.stroke();g.setLineDash([])})});
+ // active layer plane (links 2D editor to 3D)
+ if(st.disp.layer){const p=P(),l=st.layer+.5;let Q;
+  if(st.plane==='XY')Q=[[0,0,l],[dx,0,l],[dx,dy,l],[0,dy,l]];
+  else if(st.plane==='XZ')Q=[[0,l,0],[dx,l,0],[dx,l,dz],[0,l,dz]];
+  else Q=[[l,0,0],[l,dy,0],[l,dy,dz],[l,0,dz]];
+  const pts=Q.map(pr);g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
+  g.fillStyle=css('--accent');g.globalAlpha=.08;g.fill();g.globalAlpha=1;g.strokeStyle=css('--accent');g.lineWidth=1.5;g.stroke()}
+ // live preview for 3D editing (includes mirror / span ghosts)
+ if(hov){
+  const acc=css('--accent'),dng=css('--danger');
+  const ghost=(c,fill,stroke,dash,alpha)=>FACES.forEach(f=>{const nn=rot(f.n[0],f.n[1],f.n[2]);if(nn[2]<=0.0001)return;
+   const pts=f.v.map(q=>pr([c[0]+q[0],c[1]+q[1],c[2]+q[2]]));g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
+   g.globalAlpha=alpha;g.fillStyle=fill;g.fill();g.globalAlpha=1;g.strokeStyle=stroke;g.lineWidth=2;g.setLineDash(dash);g.stroke();g.setLineDash([])});
+  const cc=(COLORS[st.color]||COLORS[0]).h;
+  if(hov.act==='fixed'||hov.act==='variable'){
+   if(hov.valid)expand([hov.target]).forEach(c=>{if(!sh.vox.has(key(...c)))ghost(c,cc,acc,hov.act==='variable'?[5,4]:[],.55)});
+   else{const pts=hov.face.pts;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();g.strokeStyle=dng;g.lineWidth=2.5;g.setLineDash([4,3]);g.stroke();g.setLineDash([])}
+  }else if(hov.act==='erase')expand([hov.target]).forEach(c=>{if(sh.vox.has(key(...c)))ghost(c,dng,dng,[],.5)});
+  else expand([hov.target]).forEach(c=>{if(sh.vox.has(key(...c)))ghost(c,cc,acc,[],.5)});
+ }
+ // orientation gizmo (Settings ▸ 3D view ▸ Show view cube)
+ if(st.set.cube){const gx=54,gy=h-96;[['X','--ax',[1,0,0]],['Y','--ay',[0,1,0]],['Z','--az',[0,0,1]]].forEach(([n,c,e])=>{
+  const q=rot(...e);g.beginPath();g.moveTo(gx,gy);g.lineTo(gx+q[0]*26,gy-q[1]*26);g.strokeStyle=css(c);g.lineWidth=2;g.stroke();
+  g.fillStyle=css(c);g.font='700 11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(n,gx+q[0]*36,gy-q[1]*36)});}
+}
+let hov=null,lastFaces=[],lm=null;
+const mods=e=>({ctrl:e.ctrlKey||e.metaKey,shift:e.shiftKey,alt:e.altKey});
+function actFor(m){if(m.alt)return'erase';if(m.ctrl&&m.shift)return'variable';if(m.ctrl)return'fixed';return st.edit3d?st.tool:null}
+function inPoly(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if((a[1]>pt[1])!==(b[1]>pt[1])&&pt[0]<(b[0]-a[0])*(pt[1]-a[1])/(b[1]-a[1])+a[0])c=!c}return c}
+function updateHover(px,py,m){
+ const act=actFor(m);hov=null;$('#cv').style.cursor=act?'crosshair':'';
+ if(act){for(let i=lastFaces.length-1;i>=0;i--){const F=lastFaces[i];if(inPoly([px,py],F.pts)){
+  const add=(act==='fixed'||act==='variable');
+  const t=add?[F.x+F.n[0],F.y+F.n[1],F.z+F.n[2]]:[F.x,F.y,F.z],d=cur().dims;
+  hov={act,face:F,target:t,valid:t.every((v,j)=>v>=0&&v<d[j])};break}}}
+ render3d();
+}
+(function(){const cv=$('#cv');let d=null;
+ cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);d={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,moved:false,m:(e.shiftKey&&!e.ctrlKey)?'pan':st.mode}});
+ cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();lm={x:(e.clientX-r.left)/S,y:(e.clientY-r.top)/S};
+  if(!d){updateHover(lm.x,lm.y,mods(e));return}
+  if(!d.moved){if(Math.hypot(e.clientX-d.sx,e.clientY-d.sy)<=4)return;d.moved=true;hov=null;d.x=e.clientX;d.y=e.clientY}
+  const dx=(e.clientX-d.x)/S,dy=(e.clientY-d.y)/S;d.x=e.clientX;d.y=e.clientY;
+  if(d.m==='orbit'){cam.yaw+=dx*.5;cam.pitch=Math.max(-89,Math.min(89,cam.pitch+dy*.5))}
+  else if(d.m==='pan'){cam.px+=dx;cam.py+=dy}else{cam.zoom=Math.max(.3,Math.min(4,cam.zoom*Math.exp(-dy*.01)))}render3d()});
+ cv.addEventListener('pointerup',e=>{const was=d;d=null;
+  if(was&&!was.moved&&hov&&hov.valid){applyTool(hov.act,[hov.target]);renderEditor();updateStatus()}
+  if(lm)updateHover(lm.x,lm.y,mods(e));else render3d()});
+ cv.addEventListener('pointerleave',()=>{if(!d){hov=null;render3d()}});
+ cv.addEventListener('wheel',e=>{e.preventDefault();cam.zoom=Math.max(.3,Math.min(4,cam.zoom*Math.exp(-e.deltaY*(st.set.rev?-1:1)*.0015)));render3d()},{passive:false});
+})();
+['keydown','keyup'].forEach(t=>document.addEventListener(t,e=>{if(lm&&(e.key==='Control'||e.key==='Shift'||e.key==='Alt'||e.key==='Meta'))updateHover(lm.x,lm.y,mods(e))}));
+$('#bEdit').onclick=()=>{st.edit3d=!st.edit3d;$('#bEdit').classList.toggle('on',st.edit3d);if(lm)updateHover(lm.x,lm.y,{ctrl:false,shift:false,alt:false});else render3d()};
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown',e=>{
+ if(e.target.matches('input'))return;const k=e.key;
+ if((e.ctrlKey||e.metaKey)&&k===','){e.preventDefault();openSettings();return}
+ if($('#scrim').classList.contains('show')&&k!=='Escape')return;
+ if(k>='1'&&k<='4'){st.tool=TOOLS[+k-1].id;renderTools()}
+ else if(k==='PageUp'){e.preventDefault();st.layer=Math.min(P().layers-1,st.layer+1);renderEditor();render3d()}
+ else if(k==='PageDown'){e.preventDefault();st.layer=Math.max(0,st.layer-1);renderEditor();render3d()}
+ else if(k==='f'||k==='F'){$('#bFit').click()}
+ else if(k==='Escape'){if($('#scrim').classList.contains('show'))closeSettings();else if(pop.style.display==='block')closePop();else if(st.selCells.size){st.selCells.clear();renderEditor()}else setLayout('')}
+});
+
+/* ---------- status-bar view toggles ---------- */
+function renderStatusTgl(){
+ $$('#segColor button').forEach(b=>b.classList.toggle('on',b.dataset.v===st.colorView));
+ $$('#segProj button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='persp')===st.persp));
+}
+$('#segColor').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.colorView=b.dataset.v;renderStatusTgl();render3d()};
+$('#segProj').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.persp=b.dataset.v==='persp';renderStatusTgl();render3d()};
+
+/* ---------- settings dialog ---------- */
+const SET=[
+ {id:'general',name:'General',rows:[
+  {k:'undo',t:'Undo history depth',d:'Number of undo steps kept in memory. Higher values use more RAM for large puzzles.',type:'step',min:1,max:200,def:25},
+  {k:'tips',t:'Show tooltips',d:'Show short help text when the mouse rests on buttons and other controls.',type:'sw',def:true}]},
+ {id:'view',name:'3D view',rows:[
+  {k:'cube',t:'Show view cube',d:'Display the 3D orientation cube in the corner of the 3D preview. Click it to snap to a face, edge, or corner view.',type:'sw',def:true},
+  {k:'rev',t:'Reverse scroll zoom direction',d:'Reverse the direction of the preview zoom when the mouse wheel is used.',type:'sw',def:false},
+  {k:'rot',t:'Rotation method',d:'Drag is the newer click-and-drag rotation. Arc-ball is the original method.',type:'seg',opts:['Drag','Arc-ball'],def:'Drag'},
+  {k:'lights',t:'Lighting',d:'Light the 3D preview so pieces look solid and shaded. Turn off for a flatter, unlit appearance.',type:'sw',def:true},
+  {k:'fade',t:'Fade out removed pieces',d:'During a disassembly animation, pieces that have been removed fade away instead of vanishing at once.',type:'sw',def:true}]},
+ {id:'perf',name:'Performance',rows:[
+  {k:'threads',t:'Worker threads',d:'Threads used for assembling and disassembling. Both stages share this pool, so raising it speeds up both.',type:'slider',min:1,max:32,def:12},
+  {k:'lists',t:'Use OpenGL display lists',d:'Cache 3D geometry in OpenGL display lists. Can speed up redraws on some systems, but is off by default because it can cause display problems.',type:'sw',def:false}]}
+];
+const KEYS=[[['1','2','3','4'],'Fixed · Variable · Erase · Paint'],[['PgUp','PgDn'],'Next / previous layer'],[['F'],'Fit shape to view'],[['Ctrl','Click'],'3D: add fixed voxel'],[['Ctrl','Shift','Click'],'3D: add variable voxel'],[['Alt','Click'],'3D: delete voxel'],[['Ctrl',','],'Open Settings'],[['Esc'],'Close dialog · exit focus mode']];
+let setPage='general',setQ='';
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rowByKey=k=>{for(const p of SET)for(const r of p.rows)if(r.k===k)return r};
+function rowHtml(r){const v=st.set[r.k];let c='';
+ if(r.type==='sw')c=`<div class="switch ${v?'on':''}" role="switch" aria-checked="${v}" tabindex="0" data-k="${r.k}"><span class="tr"></span></div>`;
+ else if(r.type==='step')c=`<div class="step" style="width:120px"><button data-k="${r.k}" data-s="-1">${ic('minus',12)}</button><span class="v">${v}</span><button data-k="${r.k}" data-s="1">${ic('plus',12)}</button></div>`;
+ else if(r.type==='slider')c=`<div style="display:flex;align-items:center;gap:10px;width:230px"><input type="range" min="${r.min}" max="${r.max}" value="${v}" data-k="${r.k}" style="flex:1;accent-color:var(--accent)"><b style="width:26px;text-align:right">${v}</b></div>`;
+ else if(r.type==='seg')c=`<div class="seg">${r.opts.map(o=>`<button class="${o===v?'on':''}" data-k="${r.k}" data-o="${o}">${o}</button>`).join('')}</div>`;
+ return `<div class="setrow"><div class="t"><b>${r.t}</b><span>${r.d}</span></div>${c}</div>`}
+function renderSettings(){
+ $('#setNav').innerHTML=SET.map(p=>`<button class="${!setQ&&p.id===setPage?'on':''}" data-p="${p.id}">${p.name}</button>`).join('')+`<button class="${!setQ&&setPage==='keys'?'on':''}" data-p="keys">Shortcuts</button>`;
+ let h='';
+ if(setQ){const q=setQ.toLowerCase();SET.forEach(p=>{const rs=p.rows.filter(r=>(r.t+' '+r.d).toLowerCase().includes(q));if(rs.length)h+=`<h3>${p.name}</h3>`+rs.map(rowHtml).join('')});
+  if(!h)h=`<div class="mute" style="padding:60px 0;text-align:center">No settings match “${esc(setQ)}”</div>`}
+ else if(setPage==='keys')h=`<div class="pgh"><h3>Shortcuts</h3></div>`+KEYS.map(([k,t])=>`<div class="kbrow"><span>${t}</span><span class="k">${k.map(x=>`<kbd>${x}</kbd>`).join('')}</span></div>`).join('');
+ else{const p=SET.find(x=>x.id===setPage);h=`<div class="pgh"><h3>${p.name}</h3><button class="btn sm" data-reset="${p.id}">Reset section</button></div>`+p.rows.map(rowHtml).join('')}
+ $('#setPg').innerHTML=h;
+}
+function applySet(){renderSettings();render3d()}
+function openSettings(){$('#scrim').classList.add('show');renderSettings();$('#setSearch').focus()}
+function closeSettings(){$('#scrim').classList.remove('show')}
+$('#btnSettings').onclick=openSettings;$('#setX').onclick=closeSettings;$('#setDone').onclick=closeSettings;
+$('#scrim').onmousedown=e=>{if(e.target.id==='scrim')closeSettings()};
+$('#setNav').onclick=e=>{const b=e.target.closest('button');if(!b)return;setPage=b.dataset.p;setQ='';$('#setSearch').value='';renderSettings()};
+$('#setSearch').oninput=e=>{setQ=e.target.value.trim();renderSettings()};
+$('#setDefaults').onclick=()=>{SET.forEach(p=>p.rows.forEach(r=>st.set[r.k]=r.def));applySet()};
+$('#setPg').addEventListener('click',e=>{
+ const sw=e.target.closest('.switch');if(sw){st.set[sw.dataset.k]=!st.set[sw.dataset.k];applySet();return}
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.reset){SET.find(x=>x.id===b.dataset.reset).rows.forEach(r=>st.set[r.k]=r.def);applySet()}
+ else if(b.dataset.s){const r=rowByKey(b.dataset.k);st.set[r.k]=Math.max(r.min,Math.min(r.max,st.set[r.k]+ +b.dataset.s));applySet()}
+ else if(b.dataset.o){st.set[b.dataset.k]=b.dataset.o;applySet()}
+});
+$('#setPg').addEventListener('input',e=>{const t=e.target;if(t.type==='range'){st.set[t.dataset.k]=+t.value;t.nextElementSibling.textContent=t.value}});
+$('#setPg').addEventListener('keydown',e=>{const sw=e.target.closest&&e.target.closest('.switch');if(sw&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.set[sw.dataset.k]=!st.set[sw.dataset.k];applySet();const k=sw.dataset.k;const n=$(`#setPg .switch[data-k="${k}"]`);n&&n.focus()}});
+
+/* ---------- orchestration ---------- */
+function renderEditor(){renderPlane();renderLayers();renderGrid();renderSelbar()}
+function renderAll(){renderShapes();renderInsp();renderTools();renderMod();renderStatusTgl();renderColors();renderEditor();renderTag();updateStatus();render3d()}
+function fit(){S=Math.min(innerWidth/1600,innerHeight/1000);const wr=$('#wrap');wr.style.width=1600*S+'px';wr.style.height=1000*S+'px';$('#stage').style.transform=`scale(${S})`;renderGrid();render3d()}
+addEventListener('resize',fit);
+new ResizeObserver(()=>render3d()).observe($('#cv'));
+new ResizeObserver(()=>renderGrid()).observe($('#garea'));
+fit();renderAll();
+})();
+</script>
+</body>
+</html>
