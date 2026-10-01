@@ -271,6 +271,12 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 #stage.f2d .vt .sep{height:20px}
 .tmat{grid-template-columns:22px repeat(5,1fr)}
 .sw.def::after{content:"";position:absolute;inset:6px;border:2px dashed rgba(255,255,255,.9);border-radius:3px}
+.gsize{flex:none;border-top:1px solid var(--line);padding:8px 12px 10px}
+.gsh{display:flex;align-items:center;margin-bottom:6px}
+.gsh .gl2{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.gsh .sp{flex:1}
+.gsh .switch{margin:0;font-size:12px;color:var(--muted);gap:8px}
+.dd{height:30px;min-width:120px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);color:var(--text);padding:0 10px;font:inherit;cursor:pointer}
 </style>
 </head>
 <body>
@@ -303,26 +309,21 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
         <div class="shapes" id="shapeList"></div>
         <div class="ch" style="border-top:1px solid var(--line)" id="inspHead"></div>
         <div class="insp">
-          <div class="sec" id="secSize"><button class="sh"><span class="chev"></span>Size<span class="sum" id="sumSize"></span></button>
-            <div class="sb">
-              <div class="size3" id="sizeSteppers"></div>
-              <div class="size3 axf" id="axFlags" title="Legacy per-axis checkboxes — behaviour to be confirmed from source (OQ-3)"></div>
-              <div class="switch" id="applyAll"><span class="tr"></span><span>Apply size to all shapes</span></div>
-              <div class="sub2">Grid</div>
-              <button class="abtn" id="btnPrune"></button>
-              <div class="two" style="margin-top:6px"><button class="abtn" id="btnCenter"></button><button class="abtn" id="btnOrigin"></button></div>
-            </div></div>
-          <div class="sec closed" id="secAdv"><button class="sh"><span class="chev"></span>Scale<span class="sum">Minimize · ×2 · ×3</span></button>
-            <div class="sb">
-              <button class="abtn" id="btnMin"></button>
-              <div class="two" id="mulRow" style="margin-top:6px"></div>
-            </div></div>
           <div class="sec" id="secTf"><button class="sh"><span class="chev"></span>Transform<span class="sum">Flip · Rotate · Nudge</span></button>
             <div class="sb"><div class="tmat" id="tmat"></div></div></div>
+          <div class="sec closed" id="secFit"><button class="sh"><span class="chev"></span>Fit &amp; scale<span class="sum">Prune · Center · Scale</span></button>
+            <div class="sb">
+              <div class="sub2">Fit to grid</div>
+              <button class="abtn" id="btnPrune"></button>
+              <div class="two" style="margin-top:6px"><button class="abtn" id="btnCenter"></button><button class="abtn" id="btnOrigin"></button></div>
+              <div class="sub2">Scale</div>
+              <button class="abtn" id="btnMin"></button>
+              <div class="two" id="mulRow" style="margin-top:6px"></div>
+              <button class="abtn" id="btnGridScale" style="margin-top:6px"></button>
+            </div></div>
           <div class="sec closed" id="secTools"><button class="sh"><span class="chev"></span>Repair &amp; surface<span class="sum">Fill · Inner / Outer</span></button>
             <div class="sb">
               <button class="abtn" id="btnFill"></button>
-              <button class="abtn" id="btnGridScale" style="margin-top:6px"></button>
               <div class="sub2">Surface voxels</div>
               <div class="surf" id="surf"></div>
             </div></div>
@@ -338,7 +339,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
         <canvas id="cv"></canvas>
         <div class="vtag" id="vtag"></div>
         <div class="vt" id="vt"></div>
-        <div class="hint" id="vhint"><div><kbd>Shift</kbd> click add fixed · <kbd>Alt</kbd>/<kbd>⌘</kbd> click add variable · <kbd>Ctrl</kbd> click delete</div><div>Drag orbit · Shift-drag pan · Wheel zoom</div></div>
+        <div class="hint" id="vhint"><div><kbd>Shift</kbd> click add fixed · <kbd>Alt</kbd>/<kbd>⌘</kbd> click add variable · <kbd>Ctrl</kbd> click delete</div><div id="navHint">Drag orbit · Shift/middle-drag pan · Wheel zoom</div></div>
         <div class="empty" id="emptyMsg">Empty shape — draw in the Voxel editor</div>
       </div>
       <div class="zt z2"><b>SPATIAL VIEW</b>Understand the piece. Navigate here, or modifier-click to edit voxels in place.</div>
@@ -363,18 +364,17 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
           <div id="garea"></div>
           <div class="selbar" id="selbar"></div>
         </div>
+        <div class="gsize" id="gridSize"><div class="gsh"><span class="gl2">Grid size</span><span class="sp"></span><div class="switch" id="applyAll" title="Size changes apply to every shape"><span class="tr"></span><span>Apply to all shapes</span></div></div><div class="size3" id="sizeSteppers"></div></div>
         <div class="colfoot" id="colFoot"></div>
       </div>
       <div class="rrail" id="rrail"></div>
-      <div class="zt z3"><b>VOXEL SCOPE</b>Draw. Plane, layer, tool and colour stay together — no tab switching.</div>
+      <div class="zt z3"><b>VOXEL SCOPE</b>Draw. Tool, plane, layer, grid size and colour stay together — no tab switching.</div>
     </section>
   </div>
 
   <div class="status">
     <span id="stText"></span><span class="sp"></span>
     <span id="stCursor" class="mute"></span>
-    <div class="seg" id="segColor" title="Voxel colour display"><button data-v="piece">Piece colour</button><button data-v="actual">Voxel colour</button></div>
-    <div class="seg" id="segProj" title="Projection"><button data-v="persp">Perspective</button><button data-v="ortho">Orthographic</button></div>
   </div>
 
   <div id="pop"></div>
@@ -501,8 +501,10 @@ let shapes=[
  {id:'S4',label:'',col:SHAPE_COL[3],dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,1,1]])}
 ];
 const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:false,z:false},edit3d:false,set:{undo:25,tips:true,cube:true,rev:false,rot:'Drag',lights:true,fade:true,threads:12,lists:false},sel:1,tool:'fixed',plane:'XY',layer:0,color:0,selCells:new Set(),applyAll:false,mode:'orbit',
-  disp:{axes:true,bounds:true,layer:true},persp:true};
+  disp:{axes:true,bounds:true,layer:true,dim:false},persp:true};
 ['3,1,2','3,1,3','3,2,3'].forEach(k=>shapes[1].vox.get(k).c=1);shapes[1].vox.get('1,2,2').c=2;shapes[1].vox.get('2,1,3').s='v';
+function renumber(){shapes.forEach((s,i)=>{s.id='S'+(i+1);s.col=SHAPE_COL[i%SHAPE_COL.length]})}
+renumber();
 const cam={yaw:-32,pitch:26,zoom:1,px:0,py:0};
 const cur=()=>shapes[st.sel];
 let S=1; // stage scale
@@ -526,9 +528,8 @@ $$('.sec>button.sh .chev').forEach(e=>e.innerHTML=ic('chevD',14));
 /* toolbar for the 3D viewport — single canonical component */
 const vt=$('#vt');
 vt.innerHTML=
- `<button class="tbn on" data-m="orbit" title="Orbit  (drag)">${tbn('orbit','Orbit')}</button>`+
- `<button class="tbn" data-m="pan" title="Pan  (Shift-drag)">${tbn('pan','Pan')}</button>`+
- `<button class="tbn" data-m="zoom" title="Zoom  (wheel)">${tbn('zoom','Zoom')}</button><span class="sep"></span>`+
+ `<button class="tbn on" data-m="orbit" title="Left-drag orbits. Shift-drag pans. Middle-drag always pans.">${tbn('orbit','Orbit')}</button>`+
+ `<button class="tbn" data-m="pan" title="Left-drag pans. Shift-drag orbits. Middle-drag always pans.">${tbn('pan','Pan')}</button><span class="sep"></span>`+
  `<button class="tbn" id="bEdit" title="3D edit mode — a plain click uses the active voxel tool">${tbn('ptplus','Edit')}</button><span class="sep"></span>`+
  `<button class="tbn" id="bViews" title="Standard views">${tbn('cube','Views')}</button>`+
  `<button class="tbn" id="bFit" title="Fit shape to view  (F)">${tbn('fit','Fit')}</button><span class="sep"></span>`+
@@ -562,13 +563,13 @@ function renderShapes(){
  $('#shapeCount').textContent=shapes.length;
  const l=$('#shapeList');
  l.innerHTML=shapes.map((s,i)=>`<div class="row ${i===st.sel?'sel':''}" draggable="true" data-i="${i}">
-  <span class="grip" title="Drag to reorder">${ic('grip',14)}</span>
+  <span class="grip" title="Drag to reorder — ids follow the order">${ic('grip',14)}</span>
   <span class="chip" style="background:${s.col}">${s.id}</span>
   <span class="lbl">${s.label||''}</span>
   ${s.w!==1?`<span class="wbadge">W${s.w}</span>`:''}
   <span class="acts">
    <button class="ib" data-a="label" title="Rename">${ic('edit',14)}</button>
-   <button class="ib" data-a="copy" title="Copy">${ic('copy',14)}</button>
+   <button class="ib" data-a="copy" title="Duplicate (added as the last shape)">${ic('copy',14)}</button>
    <button class="ib w" data-a="wm" title="Weight −1 (Solver only)"><span class="wtxt">W−</span></button>
    <button class="ib w" data-a="wp" title="Weight +1 (Solver only)"><span class="wtxt">W+</span></button>
    <button class="ib del" data-a="del" title="Delete" ${shapes.length<2?'disabled':''}>${ic('trash',14)}</button>
@@ -582,18 +583,17 @@ function renderShapes(){
 }
 function selectShape(i){st.sel=i;st.selCells.clear();st.layer=Math.min(st.layer,P().layers-1);renderAll()}
 function newShape(){
- const n=Math.max(...shapes.map(s=>+s.id.slice(1)))+1;
- shapes.push({id:'S'+n,label:'',col:SHAPE_COL[(n-1)%SHAPE_COL.length],dims:[3,3,3],w:1,vox:new Map()});
+ shapes.push({id:'',label:'',col:'',dims:[3,3,3],w:1,vox:new Map()});renumber();
  selectShape(shapes.length-1);
 }
 $('#btnNew').onclick=newShape;
 const list=$('#shapeList');
 function shapeAction(a,i){
  const s=shapes[i];if(!s)return;
- if(a==='copy'){const n=Math.max(...shapes.map(x=>+x.id.slice(1)))+1;shapes.splice(i+1,0,{...s,id:'S'+n,col:SHAPE_COL[(n-1)%SHAPE_COL.length],dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,{...v}]))});selectShape(i+1)}
- else if(a==='del'){if(shapes.length<2)return;shapes.splice(i,1);st.sel=Math.max(0,Math.min(st.sel,shapes.length-1));if(i<st.sel)st.sel--;renderAll()}
+ if(a==='copy'){shapes.push({...s,dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,{...v}]))});renumber();selectShape(shapes.length-1)}
+ else if(a==='del'){if(shapes.length<2)return;shapes.splice(i,1);renumber();st.sel=Math.max(0,Math.min(st.sel,shapes.length-1));if(i<st.sel)st.sel--;renderAll()}
  else if(a==='wp'){s.w++;renderShapes()}else if(a==='wm'){s.w=Math.max(0,s.w-1);renderShapes()}
- else if(a==='up'||a==='down'){const j=i+(a==='up'?-1:1);if(j<0||j>=shapes.length)return;const sel=cur();[shapes[i],shapes[j]]=[shapes[j],shapes[i]];st.sel=shapes.indexOf(sel);renderAll()}
+ else if(a==='up'||a==='down'){const j=i+(a==='up'?-1:1);if(j<0||j>=shapes.length)return;const sel=cur();[shapes[i],shapes[j]]=[shapes[j],shapes[i]];renumber();st.sel=shapes.indexOf(sel);renderAll();flash('Order changed — shapes renumbered S1…S'+shapes.length)}
  else if(a==='label'){selectShape(i);const lb=$$('#shapeList .row')[i].querySelector('.lbl');
   lb.innerHTML=`<input value="${esc(s.label)}" placeholder="Label">`;const inp=lb.querySelector('input');inp.focus();inp.select();
   const done=()=>{s.label=inp.value;renderShapes();renderTag()};inp.onblur=done;inp.onkeydown=ev=>{if(ev.key==='Enter')inp.blur();if(ev.key==='Escape'){inp.value=s.label;inp.blur()}}}
@@ -608,7 +608,7 @@ list.addEventListener('contextmenu',e=>{const r=e.target.closest('.row');if(!r)r
 let dragI=null;
 list.addEventListener('dragstart',e=>{const r=e.target.closest('.row');if(r){dragI=+r.dataset.i;e.dataTransfer.effectAllowed='move'}});
 list.addEventListener('dragover',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();$$('.row').forEach(x=>x.classList.remove('dragover'));r.classList.add('dragover')}});
-list.addEventListener('drop',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();const to=+r.dataset.i;const selShape=cur();const [m]=shapes.splice(dragI,1);shapes.splice(to,0,m);st.sel=shapes.indexOf(selShape);dragI=null;renderAll()}});
+list.addEventListener('drop',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();const to=+r.dataset.i;const selShape=cur();const [m]=shapes.splice(dragI,1);shapes.splice(to,0,m);renumber();st.sel=shapes.indexOf(selShape);dragI=null;renderAll();flash('Order changed — shapes renumbered S1…S'+shapes.length)}});
 list.addEventListener('dragend',()=>{dragI=null;$$('.row').forEach(x=>x.classList.remove('dragover'))});
 
 /* ---------- inspector & shape operations ---------- */
@@ -633,9 +633,7 @@ function bestDiv(s){for(let n=8;n>=2;n--)if(canDiv(s,n))return n;return 0}
 function doMin(s){const n=bestDiv(s);if(n)doDiv(s,n);else flash('Already at minimum resolution')}
 function renderInsp(){
  const s=cur();
- $('#inspHead').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>Edit shape</span><span class="sp"></span><span class="sub">${s.dims.join(' × ')}</span>`;
- $('#sumSize').textContent=s.dims.join(' × ');
- $('#axFlags').innerHTML=['x','y','z'].map((a,i)=>`<label><input type="checkbox" data-axf="${i}" ${(st.axf||[])[i]?'checked':''}><span class="ax-${a}">opt</span></label>`).join('');
+ $('#inspHead').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>Edit shape</span>`;
  $('#sizeSteppers').innerHTML=['X','Y','Z'].map((a,i)=>`<div class="step"><b class="ax-${a.toLowerCase()}">${a}</b><button data-d="${i}" data-s="-1" title="Decrease ${a}">${ic('minus',12)}</button><span class="v">${s.dims[i]}</span><button data-d="${i}" data-s="1" title="Increase ${a}">${ic('plus',12)}</button></div>`).join('');
  $('#applyAll').classList.toggle('on',st.applyAll);
  abtnSet('#btnPrune',G.prune(30),'Prune grid to fit piece','Shrink the grid to the piece’s bounding box');$('#btnPrune').disabled=!bbox(s);
@@ -671,7 +669,6 @@ $('#sizeSteppers').addEventListener('click',e=>{
   if(sg<0)[...s.vox.keys()].forEach(k=>{if(k.split(',')[d]>=nv)s.vox.delete(k)})});
  st.layer=Math.min(st.layer,P().layers-1);st.selCells.clear();renderAll();
 });
-$('#axFlags').addEventListener('change',e=>{const i=+e.target.dataset.axf;st.axf=st.axf||[false,false,false];st.axf[i]=e.target.checked});
 $('#applyAll').onclick=()=>{st.applyAll=!st.applyAll;renderInsp()};
 $$('.sec>button.sh').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('closed'));
 
@@ -786,10 +783,17 @@ $('#bDisp').onclick=e=>{const ck=v=>`<span class="ck">${v?ic('check',14):''}</sp
  openPop(e.currentTarget,`<div class="ph">Show</div>
  <button data-k="axes" data-keep="1">${ck(st.disp.axes)}Axes</button>
  <button data-k="bounds" data-keep="1">${ck(st.disp.bounds)}Grid boundary</button>
- <button data-k="layer" data-keep="1">${ck(st.disp.layer)}Active layer plane</button>`,
- k=>{if(k==='persp')st.persp=true;else if(k==='ortho')st.persp=false;else st.disp[k]=!st.disp[k];render3d();$('#bDisp').click()})};
+ <button data-k="layer" data-keep="1">${ck(st.disp.layer)}Active layer slab</button>
+ <button data-k="dim" data-keep="1">${ck(st.disp.dim)}Dim other layers</button><hr>
+ <div class="ph">Projection</div>
+ <button data-k="persp" data-keep="1">${ck(st.persp)}Perspective</button>
+ <button data-k="ortho" data-keep="1">${ck(!st.persp)}Orthographic</button><hr>
+ <div class="ph">Voxel colour</div>
+ <button data-k="cpiece" data-keep="1">${ck(st.colorView==='piece')}Piece colour</button>
+ <button data-k="cvox" data-keep="1">${ck(st.colorView!=='piece')}Voxel colour</button>`,
+ k=>{if(k==='persp')st.persp=true;else if(k==='ortho')st.persp=false;else if(k==='cpiece')st.colorView='piece';else if(k==='cvox')st.colorView='actual';else st.disp[k]=!st.disp[k];render3d();$('#bDisp').click()})};
 $('#bFit').onclick=()=>{cam.zoom=1;cam.px=0;cam.py=0;render3d()};
-vt.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;st.mode=b.dataset.m;$$('#vt [data-m]').forEach(x=>x.classList.toggle('on',x===b));$('#cv').className=st.mode==='orbit'?'':st.mode});
+vt.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;st.mode=b.dataset.m;$$('#vt [data-m]').forEach(x=>x.classList.toggle('on',x===b));$('#cv').className=st.mode==='orbit'?'':st.mode;$('#navHint').textContent=st.mode==='orbit'?'Drag orbit · Shift/middle-drag pan · Wheel zoom':'Drag pan · Shift-drag orbit · Middle-drag pan · Wheel zoom'});
 
 /* ---------- layout modes ---------- */
 const layout={lc:false,rc:false,focus:''};
@@ -851,15 +855,16 @@ function render3d(){
    if(sh.vox.has(key(cu.x+f.n[0],cu.y+f.n[1],cu.z+f.n[2])))return;
    const pts=f.v.map(q=>pr([cu.x+q[0],cu.y+q[1],cu.z+q[2]]));lastFaces.push({pts,x:cu.x,y:cu.y,z:cu.z,n:f.n});
    g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
-   g.globalAlpha=cu.v.s==='v'?.5:1;g.fillStyle=shade(base,st.set.lights?f.f:.92);g.fill();g.globalAlpha=1;
+   const li=st.plane==='XY'?cu.z:st.plane==='XZ'?cu.y:cu.x;g.globalAlpha=(cu.v.s==='v'?.5:1)*((st.disp.dim&&li!==st.layer)?.28:1);g.fillStyle=shade(base,st.set.lights?f.f:.92);g.fill();g.globalAlpha=1;
    g.strokeStyle='rgba(0,0,0,.32)';g.lineWidth=1;g.setLineDash(cu.v.s==='v'?[3,3]:[]);g.stroke();g.setLineDash([])})});
- // active layer plane (links 2D editor to 3D)
- if(st.disp.layer){const p=P(),l=st.layer+.5;let Q;
-  if(st.plane==='XY')Q=[[0,0,l],[dx,0,l],[dx,dy,l],[0,dy,l]];
-  else if(st.plane==='XZ')Q=[[0,l,0],[dx,l,0],[dx,l,dz],[0,l,dz]];
-  else Q=[[l,0,0],[l,dy,0],[l,dy,dz],[l,0,dz]];
-  const pts=Q.map(pr);g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
-  g.fillStyle=css('--accent');g.globalAlpha=.08;g.fill();g.globalAlpha=1;g.strokeStyle=css('--accent');g.lineWidth=1.5;g.stroke()}
+ // active layer slab: the whole one-voxel-thick layer volume (links 2D editor to 3D)
+ if(st.disp.layer){const L=st.layer,lo=[0,0,0],hi=[dx,dy,dz],ai=st.plane==='XY'?2:st.plane==='XZ'?1:0;lo[ai]=L;hi[ai]=L+1;
+  const acc=css('--accent');
+  FACES.forEach(f=>{const nn=rot(f.n[0],f.n[1],f.n[2]);if(nn[2]<=0.0001)return;
+   const pts=f.v.map(q=>pr([lo[0]+q[0]*(hi[0]-lo[0]),lo[1]+q[1]*(hi[1]-lo[1]),lo[2]+q[2]*(hi[2]-lo[2])]));
+   g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();g.fillStyle=acc;g.globalAlpha=.08;g.fill();g.globalAlpha=1});
+  const V=[];for(let i=0;i<8;i++)V.push(pr([i&1?hi[0]:lo[0],i&2?hi[1]:lo[1],i&4?hi[2]:lo[2]]));
+  g.strokeStyle=acc;g.lineWidth=1.6;[[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b])=>{g.beginPath();g.moveTo(V[a][0],V[a][1]);g.lineTo(V[b][0],V[b][1]);g.stroke()})}
  // live preview for 3D editing (includes mirror / span ghosts)
  if(hov){
   const acc=css('--accent'),dng=css('--danger');
@@ -891,7 +896,9 @@ function updateHover(px,py,m){
  render3d();
 }
 (function(){const cv=$('#cv');let d=null;
- cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);d={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,moved:false,m:e.shiftKey?'pan':st.mode}});
+ cv.addEventListener('pointerdown',e=>{if(e.button===2)return;if(e.button===1)e.preventDefault();cv.setPointerCapture(e.pointerId);
+  const other=st.mode==='orbit'?'pan':'orbit';
+  d={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,moved:false,btn:e.button,m:e.button===1?'pan':(e.shiftKey?other:st.mode)}});
  cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();lm={x:(e.clientX-r.left)/S,y:(e.clientY-r.top)/S};
   if(!d){updateHover(lm.x,lm.y,mods(e));return}
   if(!d.moved){if(Math.hypot(e.clientX-d.sx,e.clientY-d.sy)<=4)return;d.moved=true;hov=null;d.x=e.clientX;d.y=e.clientY}
@@ -899,7 +906,7 @@ function updateHover(px,py,m){
   if(d.m==='orbit'){cam.yaw+=dx*.5;cam.pitch=Math.max(-89,Math.min(89,cam.pitch+dy*.5))}
   else if(d.m==='pan'){cam.px+=dx;cam.py+=dy}else{cam.zoom=Math.max(.3,Math.min(4,cam.zoom*Math.exp(-dy*.01)))}render3d()});
  cv.addEventListener('pointerup',e=>{const was=d;d=null;
-  if(was&&!was.moved&&hov&&hov.valid){applyTool(hov.act,[hov.target]);renderEditor();updateStatus()}
+  if(was&&was.btn===0&&!was.moved&&hov&&hov.valid){applyTool(hov.act,[hov.target]);renderEditor();updateStatus()}
   if(lm)updateHover(lm.x,lm.y,mods(e));else render3d()});
  cv.addEventListener('pointerleave',()=>{if(!d){hov=null;render3d()}});
  cv.addEventListener('wheel',e=>{e.preventDefault();cam.zoom=Math.max(.3,Math.min(4,cam.zoom*Math.exp(-e.deltaY*(st.set.rev?-1:1)*.0015)));render3d()},{passive:false});
@@ -921,17 +928,12 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ---------- status-bar view toggles ---------- */
-function renderStatusTgl(){
- $$('#segColor button').forEach(b=>b.classList.toggle('on',b.dataset.v===st.colorView));
- $$('#segProj button').forEach(b=>b.classList.toggle('on',(b.dataset.v==='persp')===st.persp));
-}
-$('#segColor').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.colorView=b.dataset.v;renderStatusTgl();render3d()};
-$('#segProj').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.persp=b.dataset.v==='persp';renderStatusTgl();render3d()};
+function renderStatusTgl(){}
 
 /* ---------- settings dialog ---------- */
 const SET=[
  {id:'general',name:'General',rows:[
-  {k:'undo',t:'Undo history depth',d:'Number of undo steps kept in memory. Higher values use more RAM for large puzzles.',type:'step',min:1,max:200,def:25},
+  {k:'undo',t:'Undo history depth',d:'Number of undo steps kept in memory. Higher values use more RAM for large puzzles.',type:'select',opts:[25,50,100,200,500],def:25},
   {k:'tips',t:'Show tooltips',d:'Show short help text when the mouse rests on buttons and other controls.',type:'sw',def:true}]},
  {id:'view',name:'3D view',rows:[
   {k:'cube',t:'Show view cube',d:'Display the 3D orientation cube in the corner of the 3D preview. Click it to snap to a face, edge, or corner view.',type:'sw',def:true},
@@ -950,6 +952,7 @@ const rowByKey=k=>{for(const p of SET)for(const r of p.rows)if(r.k===k)return r}
 function rowHtml(r){const v=st.set[r.k];let c='';
  if(r.type==='sw')c=`<div class="switch ${v?'on':''}" role="switch" aria-checked="${v}" tabindex="0" data-k="${r.k}"><span class="tr"></span></div>`;
  else if(r.type==='step')c=`<div class="step" style="width:120px"><button data-k="${r.k}" data-s="-1">${ic('minus',12)}</button><span class="v">${v}</span><button data-k="${r.k}" data-s="1">${ic('plus',12)}</button></div>`;
+ else if(r.type==='select')c=`<select class="dd" data-k="${r.k}">${r.opts.map(o=>`<option value="${o}" ${+o===+v?'selected':''}>${o}</option>`).join('')}</select>`;
  else if(r.type==='slider')c=`<div style="display:flex;align-items:center;gap:10px;width:230px"><input type="range" min="${r.min}" max="${r.max}" value="${v}" data-k="${r.k}" style="flex:1;accent-color:var(--accent)"><b style="width:26px;text-align:right">${v}</b></div>`;
  else if(r.type==='seg')c=`<div class="seg">${r.opts.map(o=>`<button class="${o===v?'on':''}" data-k="${r.k}" data-o="${o}">${o}</button>`).join('')}</div>`;
  return `<div class="setrow"><div class="t"><b>${r.t}</b><span>${r.d}</span></div>${c}</div>`}
@@ -977,6 +980,7 @@ $('#setPg').addEventListener('click',e=>{
  else if(b.dataset.s){const r=rowByKey(b.dataset.k);st.set[r.k]=Math.max(r.min,Math.min(r.max,st.set[r.k]+ +b.dataset.s));applySet()}
  else if(b.dataset.o){st.set[b.dataset.k]=b.dataset.o;applySet()}
 });
+$('#setPg').addEventListener('change',e=>{const t=e.target;if(t.tagName==='SELECT'){st.set[t.dataset.k]=+t.value;applySet()}});
 $('#setPg').addEventListener('input',e=>{const t=e.target;if(t.type==='range'){st.set[t.dataset.k]=+t.value;t.nextElementSibling.textContent=t.value}});
 $('#setPg').addEventListener('keydown',e=>{const sw=e.target.closest&&e.target.closest('.switch');if(sw&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.set[sw.dataset.k]=!st.set[sw.dataset.k];applySet();const k=sw.dataset.k;const n=$(`#setPg .switch[data-k="${k}"]`);n&&n.focus()}});
 
