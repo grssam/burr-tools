@@ -119,6 +119,7 @@ button{font:inherit;color:inherit}
 .step button{width:22px;height:28px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:6px}
 .step button:hover{background:var(--panel2);color:var(--text)}
 .size3{display:flex;gap:6px}
+.axf{margin-top:6px;align-items:center}.axf label{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;color:var(--muted);font-size:11px;cursor:pointer}.axf input{accent-color:var(--accent);margin:0}
 .size3 .step{flex:1;min-width:0}
 .switch{display:flex;align-items:center;gap:10px;margin-top:12px;cursor:pointer;user-select:none}
 .switch .tr{width:32px;height:18px;border-radius:9px;background:var(--line2);position:relative;transition:background .15s;flex:none}
@@ -206,12 +207,6 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 
 .btn:disabled{opacity:.4;cursor:default}
 .mrow{display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--line);flex:none}
-.mrow .gl{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
-.mrow .grp{display:inline-flex;gap:2px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:2px}
-.mrow .grp button{width:30px;height:24px;border:0;background:transparent;border-radius:6px;font-weight:700;cursor:pointer}
-.mrow .grp button:hover{background:var(--panel)}
-.mrow .grp button.on{background:var(--panel);box-shadow:0 1px 2px rgba(0,0,0,.2),inset 0 0 0 2px var(--accent)}
-.mrow .sp{flex:1}
 .prow{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .pl{font-weight:600}.ph2{color:var(--muted);font-size:12px}
 .surf{display:grid;grid-template-columns:1fr 66px 66px;gap:6px;align-items:center}
@@ -240,6 +235,42 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .kbrow .k{display:flex;gap:4px}
 .dlg .df{grid-column:1/3;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 16px}
 .dlg .df .sp{flex:1}
+
+/* ---- glyph buttons: icon + caption, borrowed vocabulary from the legacy icon set ---- */
+.gbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:0;padding:4px 2px 3px;border:1px solid var(--line);background:var(--panel2);border-radius:8px;cursor:pointer;color:var(--muted);font-size:10.5px;font-weight:600;line-height:1.15;position:relative}
+.gbtn svg.gx{display:block;color:var(--muted);flex:none}
+.gbtn:hover{border-color:var(--accent);color:var(--text);background:var(--accentSoft)}
+.gbtn.on{border-color:var(--accent);background:var(--accentSoft);color:var(--text);box-shadow:inset 0 0 0 1px var(--accent)}
+.gbtn:disabled{opacity:.4;cursor:default;background:var(--panel2);border-color:var(--line)}
+.gbtn .kb{position:absolute;top:2px;right:4px;font-size:9.5px;font-weight:700;font-style:normal;color:var(--muted);opacity:.85}
+.abtn{display:flex;align-items:center;gap:10px;text-align:left;min-height:48px;padding:4px 10px;border:1px solid var(--line);background:var(--panel2);border-radius:8px;cursor:pointer;color:var(--text);width:100%}
+.abtn:hover{border-color:var(--accent);background:var(--accentSoft)}
+.abtn:disabled{opacity:.4;cursor:default}
+.abtn b{display:block;font-weight:600;font-size:12.5px}.abtn small{display:block;color:var(--muted);font-size:11px;line-height:1.25}
+.abtn svg.gx{flex:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 10px}
+.tools .gbtn{height:58px}
+.tools .gbtn.on svg.gx{color:var(--text)}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;padding:8px 12px}
+.mg .gl2{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.mrow .grp{display:flex;gap:4px}
+.mrow .grp .gbtn{flex:1;height:54px}
+.pseg{display:flex;gap:6px}
+.pseg .gbtn{width:62px;height:56px}
+.tmat .gbtn{height:50px;padding:3px 1px 2px}
+.surf .gbtn{height:56px}
+.surf .sl b{display:block;font-weight:600}.surf .sl small{color:var(--muted);font-size:11px}
+.two .gbtn{height:56px}
+.tbn{width:54px;height:52px;border:0;background:transparent;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted);font-size:10.5px;font-weight:600;cursor:pointer;flex:none}
+.tbn:hover{background:var(--panel2);color:var(--text)}
+.tbn.on{background:var(--accentSoft);color:var(--accent)}
+.vt .sep{height:34px}
+#stage.f2d .tbn span{display:none}
+#stage.f2d .tbn{width:34px;height:34px}
+#stage.f2d .vt .sep{height:20px}
+.tmat{grid-template-columns:22px repeat(5,1fr)}
+.sw.def::after{content:"";position:absolute;inset:6px;border:2px dashed rgba(255,255,255,.9);border-radius:3px}
 </style>
 </head>
 <body>
@@ -272,30 +303,28 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
         <div class="shapes" id="shapeList"></div>
         <div class="ch" style="border-top:1px solid var(--line)" id="inspHead"></div>
         <div class="insp">
-          <div class="sec" id="secProps"><button class="sh"><span class="chev"></span>Properties<span class="sum" id="sumProps"></span></button>
-            <div class="sb">
-              <div class="prow"><div><div class="pl">Weight</div><div class="ph2">Relative weight — used by the Solver only</div></div><div class="step" id="weightStep" style="width:112px"></div></div>
-            </div></div>
           <div class="sec" id="secSize"><button class="sh"><span class="chev"></span>Size<span class="sum" id="sumSize"></span></button>
             <div class="sb">
               <div class="size3" id="sizeSteppers"></div>
+              <div class="size3 axf" id="axFlags" title="Legacy per-axis checkboxes — behaviour to be confirmed from source (OQ-3)"></div>
               <div class="switch" id="applyAll"><span class="tr"></span><span>Apply size to all shapes</span></div>
-              <div class="btnrow" style="margin-top:12px"><button class="btn sm" id="btnPrune"></button></div>
+              <div class="sub2">Grid</div>
+              <button class="abtn" id="btnPrune"></button>
+              <div class="two" style="margin-top:6px"><button class="abtn" id="btnCenter"></button><button class="abtn" id="btnOrigin"></button></div>
+            </div></div>
+          <div class="sec closed" id="secAdv"><button class="sh"><span class="chev"></span>Scale<span class="sum">Minimize · ×2 · ×3</span></button>
+            <div class="sb">
+              <button class="abtn" id="btnMin"></button>
+              <div class="two" id="mulRow" style="margin-top:6px"></div>
             </div></div>
           <div class="sec" id="secTf"><button class="sh"><span class="chev"></span>Transform<span class="sum">Flip · Rotate · Nudge</span></button>
-            <div class="sb"><div class="tmat" id="tmat"></div>
-              <div class="sub2">Position</div>
-              <div class="btnrow"><button class="btn sm" id="btnCenter"></button><button class="btn sm" id="btnOrigin"></button></div></div></div>
+            <div class="sb"><div class="tmat" id="tmat"></div></div></div>
           <div class="sec closed" id="secTools"><button class="sh"><span class="chev"></span>Repair &amp; surface<span class="sum">Fill · Inner / Outer</span></button>
             <div class="sb">
-              <div class="btnrow"><button class="btn sm" id="btnFill"></button></div>
+              <button class="abtn" id="btnFill"></button>
+              <button class="abtn" id="btnGridScale" style="margin-top:6px"></button>
               <div class="sub2">Surface voxels</div>
               <div class="surf" id="surf"></div>
-            </div></div>
-          <div class="sec closed" id="secAdv"><button class="sh"><span class="chev"></span>Scale<span class="sum">Multiply · Minimize</span></button>
-            <div class="sb">
-              <div class="sub2">Multiply voxels</div><div class="btnrow" id="mulRow"></div>
-              <div class="sub2">Minimize (keeps shape)</div><div class="btnrow" id="divRow"></div>
             </div></div>
         </div>
       </div>
@@ -309,7 +338,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
         <canvas id="cv"></canvas>
         <div class="vtag" id="vtag"></div>
         <div class="vt" id="vt"></div>
-        <div class="hint" id="vhint"><div><kbd>Ctrl</kbd> click add fixed · <kbd>Ctrl</kbd><kbd>Shift</kbd> click add variable · <kbd>Alt</kbd> click delete</div><div>Drag orbit · Shift-drag pan · Wheel zoom</div></div>
+        <div class="hint" id="vhint"><div><kbd>Shift</kbd> click add fixed · <kbd>Alt</kbd>/<kbd>⌘</kbd> click add variable · <kbd>Ctrl</kbd> click delete</div><div>Drag orbit · Shift-drag pan · Wheel zoom</div></div>
         <div class="empty" id="emptyMsg">Empty shape — draw in the Voxel editor</div>
       </div>
       <div class="zt z2"><b>SPATIAL VIEW</b>Understand the piece. Navigate here, or modifier-click to edit voxels in place.</div>
@@ -325,7 +354,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
         <div class="tools" id="toolStrip"></div>
         <div class="mrow" id="modRow"></div>
         <div class="subbar">
-          <div class="seg" id="planeSeg"><button data-p="XY">XY</button><button data-p="XZ">XZ</button><button data-p="YZ">YZ</button></div>
+          <div class="pseg" id="planeSeg"></div>
           <span class="sp"></span>
           <span class="mute" id="layerLbl"></span>
         </div>
@@ -414,8 +443,54 @@ const I={
 const ic=(n,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
 const cmIc=(col,dash,mode)=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${col}" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2" ${dash?'stroke-dasharray="3 2"':''} fill="${dash?'none':col}" fill-opacity=".25"/><path d="M12 3v18M3 12h18" opacity="${mode?1:.35}"/>${mode?'':'<path d="M7 7l10 10" stroke="currentColor" stroke-width="1.6"/>'}</svg>`;
 
+/* ---------- glyph library: vocabulary borrowed from the legacy icons (axis frame, pink/green/cyan bars, gold cubes, red/lime pencils) ---------- */
+const CUBEC={x:'#e0245e',y:'#2fb463',z:'#1aa7d6'};
+const SL={x:[[6,20],[17,20]],y:[[6,21],[13,14]],z:[[8,21],[8,9]]};
+const gsv=(inner,sz)=>`<svg class="gx" width="${sz}" height="${sz}" viewBox="0 0 32 32" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+const frame='<path d="M4 28V3" stroke="var(--az)" stroke-width="1.7"/><path d="M4 28H29" stroke="var(--ax)" stroke-width="1.7"/><path d="M4 28L15 17" stroke="var(--ay)" stroke-width="1.7"/>';
+function gbox(x,y,w,h,e,c,ghost){
+ const F=`M${x} ${y}h${w}v${h}h-${w}z`,T=`M${x} ${y}l${e} -${e}h${w}l-${e} ${e}z`,S=`M${x+w} ${y}l${e} -${e}v${h}l-${e} ${e}z`;
+ if(ghost)return `<g stroke="currentColor" stroke-opacity=".6" stroke-width="1.1" stroke-dasharray="2 2"><path d="${F}"/><path d="${T}"/><path d="${S}"/></g>`;
+ return `<path d="${F}" fill="${c}"/><path d="${T}" fill="${c}"/><path d="${T}" fill="#fff" fill-opacity=".38"/><path d="${S}" fill="${c}"/><path d="${S}" fill="#000" fill-opacity=".28"/><path d="${F}" stroke="#000" stroke-opacity=".35" stroke-width=".8"/>`}
+const mline=a=>`<path d="${a==='x'?'M16.5 9V27':a==='y'?'M8 16L18 26':'M5 18.5H28'}" stroke="currentColor" stroke-opacity=".7" stroke-width="1.3" stroke-dasharray="2 2"/>`;
+const PENCIL='<path d="M3 29l2-8L23 3l6 6L11 27z" fill="#f5b942" stroke="#7a4a00" stroke-width="1.6"/><path d="M3 29l2-8 6 6z" fill="#f6dfb2" stroke="#7a4a00" stroke-width="1.2"/>';
+const BRUSH='<path d="M27 3l2 2-11 11-2-2z" fill="#8791a1" stroke="#404a5c" stroke-width="1.2"/><path d="M16 14l2 2c-1 5-5 9-13 9 3-2 3-5 4-8z" fill="#3b6cff" stroke="#1b3fa6" stroke-width="1.2"/>';
+function arcArrow(cx,cy,r,sg,col){
+ const R=d=>d*Math.PI/180,pt=t=>[cx+r*Math.cos(R(t)),cy-r*Math.sin(R(t))],a0=sg>0?200:-20,a1=sg>0?-20:200,p0=pt(a0),p1=pt(a1);
+ const t=sg>0?[Math.sin(R(a1)),Math.cos(R(a1))]:[-Math.sin(R(a1)),-Math.cos(R(a1))],n=[-t[1],t[0]],f=v=>v.toFixed(1);
+ const tip=[p1[0]+t[0]*3,p1[1]+t[1]*3],b1=[p1[0]-t[0]*2+n[0]*3,p1[1]-t[1]*2+n[1]*3],b2=[p1[0]-t[0]*2-n[0]*3,p1[1]-t[1]*2-n[1]*3];
+ return `<path d="M${f(p0[0])} ${f(p0[1])}A${r} ${r} 0 1 ${sg>0?1:0} ${f(p1[0])} ${f(p1[1])}" stroke="${col}" stroke-width="1.9"/><path d="M${f(tip[0])} ${f(tip[1])}L${f(b1[0])} ${f(b1[1])}L${f(b2[0])} ${f(b2[1])}z" fill="${col}" stroke="none"/>`}
+const G={
+ flip:(a,v,sz=30)=>{const s=SL[a],[so,gh]=v?[s[1],s[0]]:[s[0],s[1]];return gsv(frame+mline(a)+gbox(gh[0],gh[1],7,7,3,null,true)+gbox(so[0],so[1],7,7,3,CUBEC[a]),sz)},
+ nudge:(a,sg,sz=30)=>{const s=SL[a],[so,gh]=sg>0?[s[0],s[1]]:[s[1],s[0]];return gsv(frame+gbox(gh[0],gh[1],7,7,3,null,true)+gbox(so[0],so[1],7,7,3,CUBEC[a]),sz)},
+ rotate:(a,sg,sz=30)=>{const c=CUBEC[a],bar=a==='x'?gbox(6,19,16,6,3,c):a==='y'?gbox(8,22,6,6,10,c):gbox(12,9,6,17,3,c);return gsv(frame+bar+arcArrow(17,17,10,sg,'currentColor'),sz)},
+ mirror:(a,sz=30)=>{const s=SL[a];return gsv(frame+mline(a)+gbox(s[0][0],s[0][1],7,7,3,CUBEC[a])+gbox(s[1][0],s[1][1],7,7,3,CUBEC[a]),sz)},
+ span:(a,sz=30)=>gsv(frame+(a==='x'?gbox(6,20,21,7,3,CUBEC[a]):a==='y'?gbox(6,23,7,5,11,CUBEC[a]):gbox(9,6,7,21,3,CUBEC[a])),sz),
+ plane:(p,sz=30)=>gsv(`<path d="${{XY:'M4 28H22L29 21H11Z',XZ:'M4 28H22V8H4Z',YZ:'M4 28L12 20V4L4 12Z'}[p]}" fill="var(--accent)" fill-opacity=".32" stroke="var(--accent)" stroke-width="1.3"/>`+frame,sz),
+ tool:(id,sz=30)=>gsv({
+  fixed:`<rect x="3" y="3" width="17" height="17" rx="2" fill="#ff3b3b"/><g transform="translate(9 9) scale(.7)">${PENCIL}</g>`,
+  variable:`<rect x="4.5" y="4.5" width="14" height="14" rx="2" stroke="#8be000" stroke-width="3"/><g transform="translate(9 9) scale(.7)">${PENCIL}</g>`,
+  erase:`<path d="M5 21l10-12 10 9-9 9h-7z" fill="#ff9ec4" stroke="#b04f7c" stroke-width="1.4"/><path d="M12 13l9 8" stroke="#b04f7c" stroke-width="1.2"/>`,
+  paint:`<rect x="3" y="3" width="17" height="17" rx="2" fill="#ffc400"/><g transform="translate(9 9) scale(.7)">${BRUSH}</g>`}[id],sz),
+ surf:(op,part,sz=30)=>{let c='';const ring=(i,j)=>i===0||j===0||i===3||j===3;
+  for(let j=0;j<4;j++)for(let i=0;i<4;i++){const on=part==='outer'?ring(i,j):!ring(i,j),x=2+i*7,y=2+j*7;
+   if(on)c+=op==='variable'?`<rect x="${x+.8}" y="${y+.8}" width="4.6" height="4.6" stroke="#8be000" stroke-width="1.6"/>`:`<rect x="${x}" y="${y}" width="6" height="6" fill="${op==='fixed'?'#ff3b3b':'#ffc400'}"/>`;
+   else c+=`<rect x="${x}" y="${y}" width="6" height="6" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="1.5 1.5" stroke-width=".8"/>`}
+  return gsv(c+`<g transform="translate(14 14) scale(.56)">${op==='clear'?BRUSH:PENCIL}</g>`,sz)},
+ fill:(sz=30)=>{let c='';for(let j=0;j<3;j++)for(let i=0;i<3;i++){const x=3+i*9,y=3+j*9;c+=(i===1&&j===1)?`<rect x="${x+1}" y="${y+1}" width="7" height="7" fill="#ffc400" stroke="currentColor" stroke-width="1" stroke-dasharray="2 1.5"/>`:`<rect x="${x}" y="${y}" width="8" height="8" fill="#ff3b3b"/>`}return gsv(c,sz)},
+ prune:(sz=30)=>gsv('<rect x="3" y="3" width="26" height="26" rx="2" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="3 2"/><rect x="11" y="11" width="10" height="10" fill="#ffc400"/><path d="M13 6l3 3 3-3M13 26l3-3 3 3M6 13l3 3-3 3M26 13l-3 3 3 3" stroke="#2f6df6" stroke-width="1.8"/>',sz),
+ center:(sz=30)=>gsv('<rect x="3" y="3" width="26" height="26" rx="2" stroke="currentColor" stroke-opacity=".5"/><path d="M16 3V29M3 16H29" stroke="#2f6df6" stroke-width="1.2" stroke-dasharray="2 2"/><rect x="11" y="11" width="10" height="10" fill="#ffc400"/>',sz),
+ origin:(sz=30)=>gsv(frame+gbox(6,21,7,7,3,'#ffc400')+'<circle cx="4" cy="28" r="2.6" fill="var(--accent)" stroke="none"/>',sz),
+ mul:(n,sz=30)=>{const cs=n===2?5:3,tot=n*cs+(n-1),x0=30-tot,y0=16-tot/2;let c='<rect x="2" y="12" width="8" height="8" fill="#ffc400"/><path d="M11 16h6M14.5 13l3 3-3 3" stroke="currentColor" stroke-width="1.5"/>';for(let j=0;j<n;j++)for(let i=0;i<n;i++)c+=`<rect x="${x0+i*(cs+1)}" y="${y0+j*(cs+1)}" width="${cs}" height="${cs}" fill="#ffc400"/>`;return gsv(c,sz)},
+ div:(n,sz=30)=>{const cs=n===2?5:3,tot=n*cs+(n-1),y0=16-tot/2;let c='<rect x="23" y="13" width="7" height="7" fill="#ffc400"/><path d="M13 16h7M17.5 13l3 3-3 3" stroke="currentColor" stroke-width="1.5"/>';for(let j=0;j<n;j++)for(let i=0;i<n;i++)c+=`<rect x="${2+i*(cs+1)}" y="${y0+j*(cs+1)}" width="${cs}" height="${cs}" fill="#ffc400"/>`;return gsv(c,sz)}
+};
+G.gscale=(sz=30)=>gsv('<path d="M4 4h24v24H4z" stroke="currentColor" stroke-opacity=".55"/><path d="M4 12h24M4 20h24M12 4v24M20 4v24" stroke="currentColor" stroke-opacity=".3"/><path d="M19 13l9-9M21 4h7v7" stroke="#2f6df6" stroke-width="1.9"/>',sz);
+const tbn=(icn,cap)=>`${ic(icn,20)}<span>${cap}</span>`;
+const abtnSet=(sel,g,t,sm)=>{$(sel).innerHTML=`${g}<span><b>${t}</b><small>${sm}</small></span>`};
+
 /* ---------- model ---------- */
-const COLORS=[{n:'Default',h:'#22c55e'},{n:'C2',h:'#f59e0b'},{n:'C3',h:'#8b5cf6'}];
+const COLORS=[{n:'Default',h:null},{n:'C1',h:'#f59e0b'},{n:'C2',h:'#8b5cf6'}];  // index 0 = Default = the piece's own colour
+const colHex=(ci,sh)=>ci>0&&COLORS[ci]?COLORS[ci].h:sh.col;
 const SHAPE_COL=['#3b6cff','#22c55e','#ef4444','#06b6d4','#f59e0b','#8b5cf6','#ec4899'];
 const key=(x,y,z)=>x+','+y+','+z;
 function mkVox(list){const m=new Map();list.forEach(([x,y,z])=>m.set(key(x,y,z),{s:'f',c:0}));return m}
@@ -442,7 +517,7 @@ function P(){
 const axCol=a=>({X:'var(--ax)',Y:'var(--ay)',Z:'var(--az)'})[a];
 
 /* ---------- static UI fill ---------- */
-$('#menu').innerHTML=['File','Export','Edit comment','Help'].map(t=>`<button>${t}</button>`).join('');
+$('#menu').innerHTML=['File','Toggle 3D','Export','Status','Edit comment','Help','About'].map(t=>`<button>${t}</button>`).join('');
 $('#btnLC').innerHTML=ic('panelL'); $('#btnRC').innerHTML=ic('panelR'); $('#btnF2D').innerHTML=ic('focus');
 $('#btnFill').innerHTML=ic('holes')+' Fill holes';
 $('#btnTheme').innerHTML=ic('sun');$('#btnSettings').innerHTML=ic('gear');$('#setX').innerHTML=ic('close');
@@ -451,35 +526,34 @@ $$('.sec>button.sh .chev').forEach(e=>e.innerHTML=ic('chevD',14));
 /* toolbar for the 3D viewport — single canonical component */
 const vt=$('#vt');
 vt.innerHTML=
- `<button class="ib tb on" data-m="orbit" title="Orbit  (drag)">${ic('orbit',18)}</button>`+
- `<button class="ib tb" data-m="pan" title="Pan  (Shift-drag)">${ic('pan',18)}</button>`+
- `<button class="ib tb" data-m="zoom" title="Zoom  (wheel)">${ic('zoom',18)}</button><span class="sep"></span>`+
- `<button class="ib tb" id="bEdit" title="3D edit mode — a plain click uses the active voxel tool">${ic('ptplus',18)}</button><span class="sep"></span>`+
- `<button class="ib tb" id="bViews" title="Standard views">${ic('cube',18)}</button>`+
- `<button class="ib tb" id="bFit" title="Fit shape to view  (F)">${ic('fit',18)}</button><span class="sep"></span>`+
- `<button class="ib tb" id="bDisp" title="Display options">${ic('eye',18)}</button><span class="sep"></span>`+
- `<button class="ib tb" id="bF3D" title="Focus 3D viewport (Esc to exit)">${ic('focus',18)}</button>`;
+ `<button class="tbn on" data-m="orbit" title="Orbit  (drag)">${tbn('orbit','Orbit')}</button>`+
+ `<button class="tbn" data-m="pan" title="Pan  (Shift-drag)">${tbn('pan','Pan')}</button>`+
+ `<button class="tbn" data-m="zoom" title="Zoom  (wheel)">${tbn('zoom','Zoom')}</button><span class="sep"></span>`+
+ `<button class="tbn" id="bEdit" title="3D edit mode — a plain click uses the active voxel tool">${tbn('ptplus','Edit')}</button><span class="sep"></span>`+
+ `<button class="tbn" id="bViews" title="Standard views">${tbn('cube','Views')}</button>`+
+ `<button class="tbn" id="bFit" title="Fit shape to view  (F)">${tbn('fit','Fit')}</button><span class="sep"></span>`+
+ `<button class="tbn" id="bDisp" title="Display options">${tbn('eye','Display')}</button><span class="sep"></span>`+
+ `<button class="tbn" id="bF3D" title="Focus 3D viewport (Esc to exit)">${tbn('focus','Focus')}</button>`;
+$('#planeSeg').innerHTML=['XY','XZ','YZ'].map(p=>`<button class="gbtn" data-p="${p}" title="Edit the ${p} plane">${G.plane(p,30)}<span>${p}</span></button>`).join('');
 
 /* voxel tool strip */
 const TOOLS=[
- {id:'fixed',ic:'solid',n:'Fixed voxel',k:'1',grp:0,tip:'Place a fixed (solid) voxel'},{id:'variable',ic:'dashed',n:'Variable voxel',k:'2',grp:0,tip:'Place a variable (optional) voxel'},
- {id:'erase',ic:'eraser',n:'Erase voxel',k:'3',grp:0,tip:'Erase the voxel'},{id:'paint',ic:'brush',n:'Paint colour',k:'4',grp:0,tip:'Apply the drawing colour to an existing voxel'}
+ {id:'fixed',ic:'solid',n:'Fixed voxel',short:'Fixed',k:'1',grp:0,tip:'Place a fixed (solid) voxel'},{id:'variable',ic:'dashed',n:'Variable voxel',short:'Variable',k:'2',grp:0,tip:'Place a variable (optional) voxel'},
+ {id:'erase',ic:'eraser',n:'Erase voxel',short:'Erase',k:'3',grp:0,tip:'Erase the voxel'},{id:'paint',ic:'brush',n:'Paint colour',short:'Paint',k:'4',grp:0,tip:'Apply the drawing colour to an existing voxel'}
 ];
 function renderTools(){
- let h='';TOOLS.forEach((t,i)=>{ if(i&&t.grp!==TOOLS[i-1].grp)h+='<span class="sep"></span>';
-  h+=`<button class="ib tb ${st.tool===t.id?'on':''}" data-t="${t.id}" title="${t.tip}  (${t.k})">${ic(t.ic,18)}</button>`});
- h+=`<span class="tname">Tool <b>${TOOLS.find(t=>t.id===st.tool).n}</b></span>`;
- $('#toolStrip').innerHTML=h;
+ $('#toolStrip').innerHTML=TOOLS.map(t=>`<button class="gbtn ${st.tool===t.id?'on':''}" data-t="${t.id}" title="${t.tip}  (${t.k})">${G.tool(t.id,30)}<span>${t.short}</span><i class="kb">${t.k}</i></button>`).join('');
 }
 
-/* transform matrix: 3 axes × [Flip 2 | Rotate 2 | Nudge 2] */
+/* transform matrix: per axis [Flip | Rotate − + | Nudge − +] — glyphs mirror the legacy axis-frame icons */
 (function(){
- let h='<span></span><span class="gh">Flip</span><span class="gh">Rotate</span><span class="gh">Nudge</span>';
- ['X','Y','Z'].forEach((a,i)=>{
-  h+=`<span class="al ax-${a.toLowerCase()}">${a}</span>`+
-   `<button class="ib" data-o="flip" data-ax="${i}" data-sg="-1" title="Flip ${a}">${ic('flip',15)}</button><button class="ib" data-o="flip" data-ax="${i}" data-sg="1" title="Flip ${a} (alt)">${ic('flip2',15)}</button>`+
-   `<button class="ib" data-o="rot" data-ax="${i}" data-sg="-1" title="Rotate about ${a} −90°">${ic('ccw',15)}</button><button class="ib" data-o="rot" data-ax="${i}" data-sg="1" title="Rotate about ${a} +90°">${ic('cw',15)}</button>`+
-   `<button class="ib" data-o="nudge" data-ax="${i}" data-sg="-1" title="Nudge ${a} −1">${ic('arL',15)}</button><button class="ib" data-o="nudge" data-ax="${i}" data-sg="1" title="Nudge ${a} +1">${ic('arR',15)}</button>`});
+ const tb=(o,i,sg,g,cap,ttl)=>`<button class="gbtn" data-o="${o}" data-ax="${i}" data-sg="${sg}" title="${ttl}">${g}<span>${cap}</span></button>`;
+ let h='<span></span><span class="gh" style="grid-column:span 1">Flip</span><span class="gh">Rotate</span><span class="gh">Nudge</span>';
+ ['x','y','z'].forEach((a,i)=>{const A=a.toUpperCase();
+  h+=`<span class="al ax-${a}">${A}</span>`+
+   tb('flip',i,1,G.flip(a,0,28),'Flip',`Mirror the piece across the ${A} plane`)+
+   tb('rot',i,-1,G.rotate(a,-1,28),'−90°',`Rotate about ${A} by −90°`)+tb('rot',i,1,G.rotate(a,1,28),'+90°',`Rotate about ${A} by +90°`)+
+   tb('nudge',i,-1,G.nudge(a,-1,28),'−1',`Nudge along ${A} by −1`)+tb('nudge',i,1,G.nudge(a,1,28),'+1',`Nudge along ${A} by +1`)});
  $('#tmat').innerHTML=h;
 })();
 
@@ -495,12 +569,14 @@ function renderShapes(){
   <span class="acts">
    <button class="ib" data-a="label" title="Rename">${ic('edit',14)}</button>
    <button class="ib" data-a="copy" title="Copy">${ic('copy',14)}</button>
+   <button class="ib w" data-a="wm" title="Weight −1 (Solver only)"><span class="wtxt">W−</span></button>
+   <button class="ib w" data-a="wp" title="Weight +1 (Solver only)"><span class="wtxt">W+</span></button>
    <button class="ib del" data-a="del" title="Delete" ${shapes.length<2?'disabled':''}>${ic('trash',14)}</button>
   </span></div>`).join('');
  $('#lrail').innerHTML=`<button class="ib" id="btnLE" title="Expand Shapes">${ic('panelL')}</button>`+
   shapes.map((s,i)=>`<button class="chip" data-i="${i}" title="${s.id} ${s.label}" style="background:${s.col};border:0;cursor:pointer;min-width:34px;${i===st.sel?'box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent)':''}">${s.id}</button>`).join('')+
   `<button class="ib" id="btnLN" title="New shape">${ic('plus')}</button>`;
- $('#btnLE').onclick=()=>{setLayout('')};
+ $('#btnLE').onclick=()=>{layout.focus='';layout.lc=false;applyLayout()};
  $('#btnLN').onclick=newShape;
  $$('#lrail .chip').forEach(b=>b.onclick=()=>selectShape(+b.dataset.i));
 }
@@ -512,18 +588,23 @@ function newShape(){
 }
 $('#btnNew').onclick=newShape;
 const list=$('#shapeList');
+function shapeAction(a,i){
+ const s=shapes[i];if(!s)return;
+ if(a==='copy'){const n=Math.max(...shapes.map(x=>+x.id.slice(1)))+1;shapes.splice(i+1,0,{...s,id:'S'+n,col:SHAPE_COL[(n-1)%SHAPE_COL.length],dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,{...v}]))});selectShape(i+1)}
+ else if(a==='del'){if(shapes.length<2)return;shapes.splice(i,1);st.sel=Math.max(0,Math.min(st.sel,shapes.length-1));if(i<st.sel)st.sel--;renderAll()}
+ else if(a==='wp'){s.w++;renderShapes()}else if(a==='wm'){s.w=Math.max(0,s.w-1);renderShapes()}
+ else if(a==='up'||a==='down'){const j=i+(a==='up'?-1:1);if(j<0||j>=shapes.length)return;const sel=cur();[shapes[i],shapes[j]]=[shapes[j],shapes[i]];st.sel=shapes.indexOf(sel);renderAll()}
+ else if(a==='label'){selectShape(i);const lb=$$('#shapeList .row')[i].querySelector('.lbl');
+  lb.innerHTML=`<input value="${esc(s.label)}" placeholder="Label">`;const inp=lb.querySelector('input');inp.focus();inp.select();
+  const done=()=>{s.label=inp.value;renderShapes();renderTag()};inp.onblur=done;inp.onkeydown=ev=>{if(ev.key==='Enter')inp.blur();if(ev.key==='Escape'){inp.value=s.label;inp.blur()}}}
+}
 list.addEventListener('click',e=>{
  const row=e.target.closest('.row');if(!row)return;const i=+row.dataset.i;const b=e.target.closest('[data-a]');
  if(!b){if(!e.target.closest('input'))selectShape(i);return}
- e.stopPropagation();const a=b.dataset.a,s=shapes[i];
- if(a==='copy'){const n=Math.max(...shapes.map(x=>+x.id.slice(1)))+1;
-  shapes.splice(i+1,0,{...s,id:'S'+n,col:SHAPE_COL[(n-1)%SHAPE_COL.length],dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,{...v}]))});selectShape(i+1)}
- else if(a==='del'&&shapes.length>1){shapes.splice(i,1);st.sel=Math.max(0,Math.min(st.sel,shapes.length-1));if(i<st.sel)st.sel--;renderAll()}
- else if(a==='wp'){s.w++;renderShapes()}else if(a==='wm'){s.w=Math.max(0,s.w-1);renderShapes()}
- else if(a==='label'){selectShape(i);const lb=$$('#shapeList .row')[i].querySelector('.lbl');
-  lb.innerHTML=`<input value="${s.label}" placeholder="Label">`;const inp=lb.querySelector('input');inp.focus();
-  const done=()=>{s.label=inp.value;renderShapes();renderTag()};inp.onblur=done;inp.onkeydown=ev=>{if(ev.key==='Enter')inp.blur();if(ev.key==='Escape'){inp.value=s.label;inp.blur()}}}
-});
+ e.stopPropagation();shapeAction(b.dataset.a,i)});
+list.addEventListener('dblclick',e=>{const r=e.target.closest('.row');if(r&&!e.target.closest('[data-a],input'))shapeAction('label',+r.dataset.i)});
+list.addEventListener('contextmenu',e=>{const r=e.target.closest('.row');if(!r)return;e.preventDefault();const i=+r.dataset.i;selectShape(i);const n=shapes.length;
+ openPopAt(e.clientX,e.clientY,`<div class="ph">Shape ${shapes[i].id}</div><button data-k="label">Rename…<span class="kb">F2</span></button><button data-k="copy">Duplicate<span class="kb">Ctrl D</span></button><hr><button data-k="up" ${i===0?'disabled':''}>Move earlier</button><button data-k="down" ${i===n-1?'disabled':''}>Move later</button><hr><button data-k="wp">Weight +1 <span class="kb">W+</span></button><button data-k="wm" ${shapes[i].w===0?'disabled':''}>Weight −1 <span class="kb">W−</span></button><hr><button data-k="del" ${n<2?'disabled':''} style="color:var(--danger)">Delete<span class="kb">Del</span></button>`,k=>shapeAction(k,i))});
 let dragI=null;
 list.addEventListener('dragstart',e=>{const r=e.target.closest('.row');if(r){dragI=+r.dataset.i;e.dataTransfer.effectAllowed='move'}});
 list.addEventListener('dragover',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();$$('.row').forEach(x=>x.classList.remove('dragover'));r.classList.add('dragover')}});
@@ -548,20 +629,22 @@ function exterior(s){const [X,Y,Z]=s.dims,seen=new Set([key(-1,-1,-1)]),q=[[-1,-
 function surfaceSets(s){const ext=exterior(s),outer=[],inner=[];s.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);(N6.some(([a,b,c])=>ext.has(key(x+a,y+b,z+c)))?outer:inner).push(v)});return{outer,inner}}
 function doFill(s){const ext=exterior(s),[X,Y,Z]=s.dims;let n=0;for(let x=0;x<X;x++)for(let y=0;y<Y;y++)for(let z=0;z<Z;z++){const k=key(x,y,z);if(!s.vox.has(k)&&!ext.has(k)){s.vox.set(k,{s:'f',c:0});n++}}flash(n?`Filled ${n} interior voxel${n===1?'':'s'}`:'No interior holes found')}
 
+function bestDiv(s){for(let n=8;n>=2;n--)if(canDiv(s,n))return n;return 0}
+function doMin(s){const n=bestDiv(s);if(n)doDiv(s,n);else flash('Already at minimum resolution')}
 function renderInsp(){
  const s=cur();
- $('#inspHead').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>Shape properties</span><span class="sp"></span><span class="sub">${s.dims.join(' × ')}</span>`;
+ $('#inspHead').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>Edit shape</span><span class="sp"></span><span class="sub">${s.dims.join(' × ')}</span>`;
  $('#sumSize').textContent=s.dims.join(' × ');
- $('#sumProps').textContent='Weight '+s.w;
- $('#weightStep').innerHTML=`<button data-w="-1" title="Decrease weight">${ic('minus',12)}</button><span class="v">${s.w}</span><button data-w="1" title="Increase weight">${ic('plus',12)}</button>`;
+ $('#axFlags').innerHTML=['x','y','z'].map((a,i)=>`<label><input type="checkbox" data-axf="${i}" ${(st.axf||[])[i]?'checked':''}><span class="ax-${a}">opt</span></label>`).join('');
  $('#sizeSteppers').innerHTML=['X','Y','Z'].map((a,i)=>`<div class="step"><b class="ax-${a.toLowerCase()}">${a}</b><button data-d="${i}" data-s="-1" title="Decrease ${a}">${ic('minus',12)}</button><span class="v">${s.dims[i]}</span><button data-d="${i}" data-s="1" title="Increase ${a}">${ic('plus',12)}</button></div>`).join('');
  $('#applyAll').classList.toggle('on',st.applyAll);
- $('#btnPrune').innerHTML=ic('shrink',15)+' Prune grid to fit piece';$('#btnPrune').disabled=!bbox(s);
- $('#btnCenter').innerHTML=ic('center',15)+' Center on grid';$('#btnOrigin').innerHTML=ic('origin',15)+' Move to origin';
- $('#btnFill').innerHTML=ic('holes',15)+' Fill interior holes';
- $('#surf').innerHTML=[['fixed','Make fixed'],['variable','Make variable'],['clear','Clear colour']].map(([k,t])=>`<span>${t}</span><button class="btn sm" data-so="${k}" data-part="inner" title="Voxels not visible from outside">Inner</button><button class="btn sm" data-so="${k}" data-part="outer" title="Voxels on the outer surface">Outer</button>`).join('');
- $('#mulRow').innerHTML=[2,3].map(n=>`<button class="btn sm" data-mul="${n}" ${s.dims.some(d=>d*n>64)?'disabled':''}>${ic('scale',15)} ×${n}</button>`).join('');
- $('#divRow').innerHTML=[2,3].map(n=>{const ok=canDiv(s,n);return `<button class="btn sm" data-div="${n}" ${ok?'':'disabled'} title="${ok?'Shrink the piece '+n+'× keeping its shape':'The piece is not made of '+n+'×'+n+'×'+n+' blocks'}">${ic('shrink',15)} ÷${n}</button>`}).join('');
+ abtnSet('#btnPrune',G.prune(30),'Prune grid to fit piece','Shrink the grid to the piece’s bounding box');$('#btnPrune').disabled=!bbox(s);
+ abtnSet('#btnCenter',G.center(30),'Center','Centre on the grid');abtnSet('#btnOrigin',G.origin(30),'To origin','Corner at 0, 0, 0');
+ abtnSet('#btnFill',G.fill(30),'Fill interior holes','Fill empty voxels not visible from outside with fixed voxels');
+ abtnSet('#btnGridScale',G.gscale(30),'Grid scale…','Legacy command — behaviour to be ported from source');
+ $('#surf').innerHTML=[['fixed','Make fixed','solid'],['variable','Make variable','optional'],['clear','Clear colour','remove paint']].map(([k,t,sm])=>`<span class="sl"><b>${t}</b><small>${sm}</small></span><button class="gbtn" data-so="${k}" data-part="inner" title="Voxels not visible from outside">${G.surf(k,'inner',30)}<span>Inner</span></button><button class="gbtn" data-so="${k}" data-part="outer" title="Voxels on the outer surface">${G.surf(k,'outer',30)}<span>Outer</span></button>`).join('');
+ const bn=bestDiv(s);abtnSet('#btnMin',G.div(2,30),'Minimize',bn?`Reduce resolution ÷${bn}, same shape`:'Already at minimum resolution');$('#btnMin').disabled=!bn;
+ $('#mulRow').innerHTML=[[2,'Double'],[3,'Triple']].map(([n,w])=>`<button class="gbtn" data-mul="${n}" ${s.dims.some(d=>d*n>64)?'disabled':''} title="Multiply every voxel ${n}× per axis (piece grows)">${G.mul(n,32)}<span>${w} ×${n}</span></button>`).join('');
 }
 $('.insp').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b||b.disabled)return;const s=cur();flashed=false;
@@ -576,7 +659,8 @@ $('.insp').addEventListener('click',e=>{
  else if(b.id==='btnFill')doFill(s);
  else if(b.dataset.so){const arr=surfaceSets(s)[b.dataset.part];arr.forEach(v=>{if(b.dataset.so==='fixed')v.s='f';else if(b.dataset.so==='variable')v.s='v';else v.c=0});flash(`${arr.length} ${b.dataset.part} voxel${arr.length===1?'':'s'} updated`)}
  else if(b.dataset.mul)doMul(s,+b.dataset.mul);
- else if(b.dataset.div)doDiv(s,+b.dataset.div);
+ else if(b.id==='btnMin')doMin(s);
+ else if(b.id==='btnGridScale')flash('Grid scale: legacy command — port behaviour from source (see spec, open item OQ-2)');
  else return;
  st.layer=Math.min(st.layer,P().layers-1);renderInsp();renderShapes();renderEditor();render3d();if(!flashed)updateStatus();
 });
@@ -587,6 +671,7 @@ $('#sizeSteppers').addEventListener('click',e=>{
   if(sg<0)[...s.vox.keys()].forEach(k=>{if(k.split(',')[d]>=nv)s.vox.delete(k)})});
  st.layer=Math.min(st.layer,P().layers-1);st.selCells.clear();renderAll();
 });
+$('#axFlags').addEventListener('change',e=>{const i=+e.target.dataset.axf;st.axf=st.axf||[false,false,false];st.axf[i]=e.target.checked});
 $('#applyAll').onclick=()=>{st.applyAll=!st.applyAll;renderInsp()};
 $$('.sec>button.sh').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('closed'));
 
@@ -604,7 +689,7 @@ function renderLayers(){
 $('#lstrip').onclick=e=>{const b=e.target.closest('.lchip');if(!b)return;st.layer=+b.dataset.l;st.selCells.clear();renderEditor();render3d()};
 
 function fillStyle(v){
- const col=COLORS[v.c]?.h||COLORS[0].h;
+ const col=colHex(v.c,cur());
  return v.s==='v'?`background:repeating-linear-gradient(45deg,${col}55 0 6px,${col}22 6px 12px);border-color:${col}`:`background:${col}`;
 }
 function renderGrid(){
@@ -645,8 +730,8 @@ function applyTool(tool,coords){const v=cur().vox;expand(coords).forEach(c=>{con
  else if(tool==='erase')v.delete(k);else if(tool==='paint'){const o=v.get(k);if(o)o.c=st.color}})}
 function applyCell(c,r){const p=P();applyTool(st.tool,[p.xyz(c,r,st.layer)])}
 function renderMod(){
- const grp=(k,label,tip)=>`<span class="gl">${label}</span><div class="grp" data-g="${k}">`+['x','y','z'].map(a=>`<button class="ax-${a} ${st[k][a]?'on':''}" data-a="${a}" title="${tip(a.toUpperCase())}" aria-pressed="${st[k][a]}">${a.toUpperCase()}</button>`).join('')+'</div>';
- $('#modRow').innerHTML=grp('mirror','Mirror',a=>`Also place a mirrored voxel across the ${a} centre plane`)+'<span class="sp"></span>'+grp('span','Span',a=>`Fill the whole grid along ${a} on each click`);
+ const grp=(k,label,tip,gf)=>`<div class="mg"><div class="gl2">${label}</div><div class="grp" data-g="${k}">`+['x','y','z'].map(a=>`<button class="gbtn ${st[k][a]?'on':''}" data-a="${a}" title="${tip(a.toUpperCase())}" aria-pressed="${st[k][a]}">${gf(a,28)}<span class="ax-${a}">${a.toUpperCase()}</span></button>`).join('')+'</div></div>';
+ $('#modRow').innerHTML=grp('mirror','Mirror',a=>`Also place a mirrored voxel across the ${a} centre plane`,G.mirror)+grp('span','Span',a=>`Fill the whole grid along ${a} on each click`,G.span);
 }
 $('#modRow').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.parentElement.dataset.g;st[k][b.dataset.a]=!st[k][b.dataset.a];renderMod()});
 function afterEdit(){renderGrid();renderSelbar();renderLayers();render3d();updateStatus()}
@@ -661,18 +746,20 @@ $('#toolStrip').addEventListener('click',e=>{const b=e.target.closest('[data-t]'
 
 /* colour: drawing state */
 function renderColors(){
- const c=COLORS[st.color];
- $('#colFoot').innerHTML=`<div class="bigsw" style="background:${c.h}"></div><div class="colmeta"><small>Drawing colour</small><b>C${st.color+1}${st.color===0?' · Default':''}</b></div>
-  <div class="pal">${COLORS.map((x,i)=>`<button class="sw ${i===st.color?'on':''}" data-c="${i}" style="background:${x.h}" title="C${i+1}${i===0?' (Default)':''}"></button>`).join('')}
-  <button class="ib" id="cAdd" title="Add colour">${ic('plus')}</button><button class="ib" id="cMore" title="Colour options">${ic('more')}</button></div>
+ const chex=colHex(st.color,cur()),nm=i=>i===0?'Default':'C'+(i+1);
+ $('#colFoot').innerHTML=`<div class="bigsw" style="background:${chex}"></div><div class="colmeta"><small>Drawing colour</small><b>${nm(st.color)}</b></div>
+  <div class="pal">${COLORS.map((x,i)=>`<button class="sw ${i===st.color?'on':''} ${i===0?'def':''}" data-c="${i}" style="background:${colHex(i,cur())}" title="${i===0?'Default — the piece’s own colour':nm(i)}"></button>`).join('')}
+  <button class="ib" id="cAdd" title="Add colour">${ic('plus')}</button><button class="ib" id="cMore" title="Edit / remove the current colour">${ic('more')}</button></div>
   <input type="color" id="cPick" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0">`;
- $$('#colFoot .sw').forEach(b=>b.onclick=()=>{st.color=+b.dataset.c;renderColors()});
- $('#cAdd').onclick=()=>{const extra=['#ef4444','#06b6d4','#ec4899','#84cc16','#f97316'];COLORS.push({n:'C'+(COLORS.length+1),h:extra[COLORS.length%extra.length]});st.color=COLORS.length-1;renderColors()};
- $('#cMore').onclick=e=>openPop(e.currentTarget,`<button data-k="edit">Edit colour…</button><button data-k="rm" ${st.color===0?'disabled':''}>Remove colour</button>`,k=>{
-  if(k==='edit'){const p=$('#cPick');p.value=COLORS[st.color].h;p.oninput=()=>{COLORS[st.color].h=p.value;renderColors();renderGrid();render3d()};p.click()}
-  if(k==='rm'&&st.color>0){const idx=st.color;shapes.forEach(s=>s.vox.forEach(v=>{if(v.c===idx)v.c=0;else if(v.c>idx)v.c--}));COLORS.splice(idx,1);st.color=0;renderAll()}});
- $('#rrail').innerHTML=`<button class="ib" id="btnRE" title="Expand Voxel editor">${ic('panelR')}</button><div class="bigsw" style="background:${c.h};width:28px;height:28px;border-radius:8px"></div><span class="vt2">Voxel editor</span>`;
- $('#btnRE').onclick=()=>setLayout('');
+ const menu=()=>`<button data-k="edit" ${st.color===0?'disabled':''}>Edit colour…</button><button data-k="rm" ${st.color===0?'disabled':''}>Remove colour</button>`;
+ const act=k=>{
+  if(k==='edit'&&st.color>0){const pk=$('#cPick');pk.value=COLORS[st.color].h;pk.oninput=()=>{COLORS[st.color].h=pk.value;renderColors();renderGrid();render3d()};pk.click()}
+  if(k==='rm'&&st.color>0){const idx=st.color;shapes.forEach(sh=>sh.vox.forEach(v=>{if(v.c===idx)v.c=0;else if(v.c>idx)v.c--}));COLORS.splice(idx,1);st.color=0;renderAll()}};
+ $$('#colFoot .sw').forEach(b=>{b.onclick=()=>{st.color=+b.dataset.c;renderColors()};b.oncontextmenu=e=>{e.preventDefault();st.color=+b.dataset.c;renderColors();openPopAt(e.clientX,e.clientY,menu(),act)}});
+ $('#cAdd').onclick=()=>{const extra=['#ef4444','#06b6d4','#ec4899','#84cc16','#f97316'];COLORS.push({n:'C'+COLORS.length,h:extra[COLORS.length%extra.length]});st.color=COLORS.length-1;renderColors()};
+ $('#cMore').onclick=e=>openPop(e.currentTarget,menu(),act);
+ $('#rrail').innerHTML=`<button class="ib" id="btnRE" title="Expand Voxel editor">${ic('panelR')}</button><div class="bigsw" style="background:${chex};width:28px;height:28px;border-radius:8px"></div><span class="vt2">Voxel editor</span>`;
+ $('#btnRE').onclick=()=>{layout.focus='';layout.rc=false;applyLayout()};
 }
 
 /* ---------- popover ---------- */
@@ -686,6 +773,8 @@ function openPop(anchor,html,cb,above){
  pop.style.left=x+'px';pop.style.top=y+'px';
 }
 pop.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const k=b.dataset.k;const keep=b.dataset.keep;popCb&&popCb(k,b);if(!keep)closePop()});
+function openPopAt(cx,cy,html,cb){pop.innerHTML=html;popCb=cb;pop.style.display='block';const sr=$('#stage').getBoundingClientRect();let x=(cx-sr.left)/S,y=(cy-sr.top)/S;
+ pop.style.left='0px';pop.style.top='0px';const pw=pop.offsetWidth,ph=pop.offsetHeight;x=Math.max(8,Math.min(x,1600-pw-8));y=Math.max(8,Math.min(y,992-ph));pop.style.left=x+'px';pop.style.top=y+'px'}
 function closePop(){pop.style.display='none';popCb=null}
 document.addEventListener('mousedown',e=>{if(pop.style.display==='block'&&!pop.contains(e.target)&&!e.target.closest('#bViews,#bDisp,#cMore'))closePop()});
 
@@ -703,17 +792,22 @@ $('#bFit').onclick=()=>{cam.zoom=1;cam.px=0;cam.py=0;render3d()};
 vt.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;st.mode=b.dataset.m;$$('#vt [data-m]').forEach(x=>x.classList.toggle('on',x===b));$('#cv').className=st.mode==='orbit'?'':st.mode});
 
 /* ---------- layout modes ---------- */
-function setLayout(m){
- const s=$('#stage');s.classList.remove('lc','rc','f2d','f3d');if(m)s.classList.add(m);
- $('#btnF2D').innerHTML=ic(m==='f2d'?'unfocus':'focus');$('#btnF2D').classList.toggle('on',m==='f2d');
- $('#bF3D').innerHTML=ic(m==='f3d'?'unfocus':'focus',18);$('#bF3D').classList.toggle('on',m==='f3d');
- $('#vhint').style.display=m==='f2d'?'none':'';
+const layout={lc:false,rc:false,focus:''};
+function applyLayout(){
+ const s=$('#stage');s.classList.remove('lc','rc','f2d','f3d');
+ if(layout.focus==='3d')s.classList.add('f3d');else if(layout.focus==='2d')s.classList.add('f2d');
+ else{if(layout.lc)s.classList.add('lc');if(layout.rc)s.classList.add('rc')}
+ const f2=layout.focus==='2d',f3=layout.focus==='3d';
+ $('#btnF2D').innerHTML=ic(f2?'unfocus':'focus');$('#btnF2D').classList.toggle('on',f2);
+ $('#bF3D').innerHTML=tbn(f3?'unfocus':'focus',f3?'Exit':'Focus');$('#bF3D').classList.toggle('on',f3);
+ $('#vhint').style.display=f2?'none':'';
+ requestAnimationFrame(()=>{renderGrid();render3d()});
 }
-const curMode=()=>['lc','rc','f2d','f3d'].find(c=>$('#stage').classList.contains(c))||'';
-$('#btnLC').onclick=()=>setLayout('lc');
-$('#btnRC').onclick=()=>setLayout('rc');
-$('#btnF2D').onclick=()=>setLayout(curMode()==='f2d'?'':'f2d');
-$('#bF3D').onclick=()=>setLayout(curMode()==='f3d'?'':'f3d');
+function setLayout(m){layout.focus='';if(m==='')applyLayout()}
+$('#btnLC').onclick=()=>{layout.lc=true;applyLayout()};
+$('#btnRC').onclick=()=>{layout.rc=true;applyLayout()};
+$('#btnF2D').onclick=()=>{layout.focus=layout.focus==='2d'?'':'2d';applyLayout()};
+$('#bF3D').onclick=()=>{layout.focus=layout.focus==='3d'?'':'3d';applyLayout()};
 $('#btnZones').onclick=e=>{const on=$('#stage').classList.toggle('zones');e.currentTarget.textContent=on?'Hide zones':'Show zones'};
 $('#btnTheme').onclick=()=>{const dark=matchMedia('(prefers-color-scheme: dark)').matches;const cd=document.documentElement.dataset.theme||(dark?'dark':'light');
  document.documentElement.dataset.theme=cd==='dark'?'light':'dark';render3d()};
@@ -752,7 +846,7 @@ function render3d(){
  // cubes
  lastFaces=[];const cubes=[];sh.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);cubes.push({x,y,z,v,d:rot(x+.5-ctr[0],y+.5-ctr[1],z+.5-ctr[2])[2]})});
  cubes.sort((p,q)=>p.d-q.d);
- cubes.forEach(cu=>{const base=st.colorView==='piece'?sh.col:(COLORS[cu.v.c]||COLORS[0]).h;
+ cubes.forEach(cu=>{const base=st.colorView==='piece'?sh.col:colHex(cu.v.c,sh);
   FACES.forEach(f=>{const nn=rot(f.n[0],f.n[1],f.n[2]);if(nn[2]<=0.0001)return;
    if(sh.vox.has(key(cu.x+f.n[0],cu.y+f.n[1],cu.z+f.n[2])))return;
    const pts=f.v.map(q=>pr([cu.x+q[0],cu.y+q[1],cu.z+q[2]]));lastFaces.push({pts,x:cu.x,y:cu.y,z:cu.z,n:f.n});
@@ -772,7 +866,7 @@ function render3d(){
   const ghost=(c,fill,stroke,dash,alpha)=>FACES.forEach(f=>{const nn=rot(f.n[0],f.n[1],f.n[2]);if(nn[2]<=0.0001)return;
    const pts=f.v.map(q=>pr([c[0]+q[0],c[1]+q[1],c[2]+q[2]]));g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
    g.globalAlpha=alpha;g.fillStyle=fill;g.fill();g.globalAlpha=1;g.strokeStyle=stroke;g.lineWidth=2;g.setLineDash(dash);g.stroke();g.setLineDash([])});
-  const cc=(COLORS[st.color]||COLORS[0]).h;
+  const cc=colHex(st.color,sh);
   if(hov.act==='fixed'||hov.act==='variable'){
    if(hov.valid)expand([hov.target]).forEach(c=>{if(!sh.vox.has(key(...c)))ghost(c,cc,acc,hov.act==='variable'?[5,4]:[],.55)});
    else{const pts=hov.face.pts;g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();g.strokeStyle=dng;g.lineWidth=2.5;g.setLineDash([4,3]);g.stroke();g.setLineDash([])}
@@ -785,8 +879,8 @@ function render3d(){
   g.fillStyle=css(c);g.font='700 11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(n,gx+q[0]*36,gy-q[1]*36)});}
 }
 let hov=null,lastFaces=[],lm=null;
-const mods=e=>({ctrl:e.ctrlKey||e.metaKey,shift:e.shiftKey,alt:e.altKey});
-function actFor(m){if(m.alt)return'erase';if(m.ctrl&&m.shift)return'variable';if(m.ctrl)return'fixed';return st.edit3d?st.tool:null}
+const mods=e=>({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey});
+function actFor(m){if(m.ctrl)return'erase';if(m.alt)return'variable';if(m.shift)return'fixed';return st.edit3d?st.tool:null}
 function inPoly(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if((a[1]>pt[1])!==(b[1]>pt[1])&&pt[0]<(b[0]-a[0])*(pt[1]-a[1])/(b[1]-a[1])+a[0])c=!c}return c}
 function updateHover(px,py,m){
  const act=actFor(m);hov=null;$('#cv').style.cursor=act?'crosshair':'';
@@ -797,7 +891,7 @@ function updateHover(px,py,m){
  render3d();
 }
 (function(){const cv=$('#cv');let d=null;
- cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);d={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,moved:false,m:(e.shiftKey&&!e.ctrlKey)?'pan':st.mode}});
+ cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);d={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,moved:false,m:e.shiftKey?'pan':st.mode}});
  cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();lm={x:(e.clientX-r.left)/S,y:(e.clientY-r.top)/S};
   if(!d){updateHover(lm.x,lm.y,mods(e));return}
   if(!d.moved){if(Math.hypot(e.clientX-d.sx,e.clientY-d.sy)<=4)return;d.moved=true;hov=null;d.x=e.clientX;d.y=e.clientY}
@@ -815,14 +909,15 @@ $('#bEdit').onclick=()=>{st.edit3d=!st.edit3d;$('#bEdit').classList.toggle('on',
 
 /* ---------- keyboard ---------- */
 document.addEventListener('keydown',e=>{
- if(e.target.matches('input'))return;const k=e.key;
+ if(e.target.matches('input')){if(e.key==='Escape'&&$('#scrim').classList.contains('show')){closeSettings();e.target.blur()}return}const k=e.key;
  if((e.ctrlKey||e.metaKey)&&k===','){e.preventDefault();openSettings();return}
  if($('#scrim').classList.contains('show')&&k!=='Escape')return;
  if(k>='1'&&k<='4'){st.tool=TOOLS[+k-1].id;renderTools()}
+ else if(k==='F2'){shapeAction('label',st.sel)}else if(k==='Delete'){shapeAction('del',st.sel)}else if((e.ctrlKey||e.metaKey)&&(k==='d'||k==='D')){e.preventDefault();shapeAction('copy',st.sel)}
  else if(k==='PageUp'){e.preventDefault();st.layer=Math.min(P().layers-1,st.layer+1);renderEditor();render3d()}
  else if(k==='PageDown'){e.preventDefault();st.layer=Math.max(0,st.layer-1);renderEditor();render3d()}
  else if(k==='f'||k==='F'){$('#bFit').click()}
- else if(k==='Escape'){if($('#scrim').classList.contains('show'))closeSettings();else if(pop.style.display==='block')closePop();else if(st.selCells.size){st.selCells.clear();renderEditor()}else setLayout('')}
+ else if(k==='Escape'){if($('#scrim').classList.contains('show'))closeSettings();else if(pop.style.display==='block')closePop();else if(st.selCells.size){st.selCells.clear();renderEditor()}else{layout.focus='';applyLayout()}}
 });
 
 /* ---------- status-bar view toggles ---------- */
@@ -848,7 +943,7 @@ const SET=[
   {k:'threads',t:'Worker threads',d:'Threads used for assembling and disassembling. Both stages share this pool, so raising it speeds up both.',type:'slider',min:1,max:32,def:12},
   {k:'lists',t:'Use OpenGL display lists',d:'Cache 3D geometry in OpenGL display lists. Can speed up redraws on some systems, but is off by default because it can cause display problems.',type:'sw',def:false}]}
 ];
-const KEYS=[[['1','2','3','4'],'Fixed · Variable · Erase · Paint'],[['PgUp','PgDn'],'Next / previous layer'],[['F'],'Fit shape to view'],[['Ctrl','Click'],'3D: add fixed voxel'],[['Ctrl','Shift','Click'],'3D: add variable voxel'],[['Alt','Click'],'3D: delete voxel'],[['Ctrl',','],'Open Settings'],[['Esc'],'Close dialog · exit focus mode']];
+const KEYS=[[['1','2','3','4'],'Fixed · Variable · Erase · Paint'],[['PgUp','PgDn'],'Next / previous layer'],[['F'],'Fit shape to view'],[['Shift','Click'],'3D: add fixed voxel'],[['Alt / ⌘','Click'],'3D: add variable voxel'],[['Ctrl','Click'],'3D: delete voxel'],[['Ctrl',','],'Open Settings'],[['F2'],'Rename selected shape'],[['Ctrl','D'],'Duplicate selected shape'],[['Del'],'Delete selected shape'],[['Esc'],'Close menu / dialog · exit focus mode']];
 let setPage='general',setQ='';
 const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rowByKey=k=>{for(const p of SET)for(const r of p.rows)if(r.k===k)return r};
@@ -885,6 +980,7 @@ $('#setPg').addEventListener('click',e=>{
 $('#setPg').addEventListener('input',e=>{const t=e.target;if(t.type==='range'){st.set[t.dataset.k]=+t.value;t.nextElementSibling.textContent=t.value}});
 $('#setPg').addEventListener('keydown',e=>{const sw=e.target.closest&&e.target.closest('.switch');if(sw&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.set[sw.dataset.k]=!st.set[sw.dataset.k];applySet();const k=sw.dataset.k;const n=$(`#setPg .switch[data-k="${k}"]`);n&&n.focus()}});
 
+window.__G=G;window.__I=I;
 /* ---------- orchestration ---------- */
 function renderEditor(){renderPlane();renderLayers();renderGrid();renderSelbar()}
 function renderAll(){renderShapes();renderInsp();renderTools();renderMod();renderStatusTgl();renderColors();renderEditor();renderTag();updateStatus();render3d()}
