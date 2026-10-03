@@ -1,4 +1,3 @@
-Burrtools entities sneak peek · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +36,7 @@ body{margin:0;height:100%;overflow:hidden;background:var(--outer);display:grid;p
   display:grid;grid-template-rows:40px 1fr 28px;overflow:hidden;
   --lw:288px;--rw:400px;--cw:1fr}
 button{font:inherit;color:inherit}
- 
+
 /* ---------- top bar ---------- */
 .top{display:flex;align-items:center;gap:2px;padding:0 10px 0 14px;background:var(--panel);border-bottom:1px solid var(--line);position:relative}
 .brand{font-weight:700;letter-spacing:.2px;margin-right:12px;display:flex;align-items:center;gap:8px}
@@ -47,7 +46,7 @@ button{font:inherit;color:inherit}
 .tabs{position:absolute;left:50%;transform:translateX(-50%)}
 .top .right{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--muted)}
 .fname{max-width:330px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
- 
+
 /* ---------- shared controls ---------- */
 .seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:2px;gap:2px}
 .seg button{border:0;background:transparent;height:24px;padding:0 12px;border-radius:6px;color:var(--muted);font-weight:600;cursor:pointer}
@@ -66,7 +65,7 @@ button{font:inherit;color:inherit}
 .chip{min-width:28px;height:26px;padding:0 6px;border-radius:6px;display:inline-grid;place-items:center;font-size:11px;font-weight:700;color:#fff;flex:none;text-shadow:0 1px 1px rgba(0,0,0,.25)}
 .mute{color:var(--muted)}
 .ax-x{color:var(--ax)} .ax-y{color:var(--ay)} .ax-z{color:var(--az)}
- 
+
 /* ---------- workspace ---------- */
 .body{display:grid;grid-template-columns:var(--lw) var(--cw) var(--rw);gap:8px;padding:8px;min-height:0;transition:grid-template-columns .2s ease}
 #stage.lc{--lw:56px} #stage.rc{--rw:56px}
@@ -82,7 +81,7 @@ button{font:inherit;color:inherit}
 #stage.rc .rfull,#stage.f3d .rfull{display:none}
 #stage.rc .rrail,#stage.f3d .rrail{display:flex}
 .lfull,.rfull{display:flex;flex-direction:column;min-height:0;flex:1}
- 
+
 /* shapes */
 .shapes{padding:6px;overflow:auto;max-height:250px;flex:none;min-height:60px}
 .row{height:42px;display:flex;align-items:center;gap:8px;padding:0 6px 0 4px;border-radius:8px;cursor:pointer;position:relative;border:1px solid transparent}
@@ -101,7 +100,7 @@ button{font:inherit;color:inherit}
 .acts .ib.w{width:30px}
 .acts .ib.del:hover{color:var(--danger)}
 .acts .wtxt{font-size:11px;font-weight:700;width:26px}
- 
+
 /* inspector */
 .insp{flex:1;overflow:auto;min-height:0}
 .sec{border-bottom:1px solid var(--line)}
@@ -137,7 +136,7 @@ button{font:inherit;color:inherit}
 .cmat{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .cmat .ib{width:100%;height:30px;border:1px solid var(--line);background:var(--panel2)}
 .cmat .ib:hover{border-color:var(--accent);background:var(--accentSoft)}
- 
+
 /* 3D viewport */
 .vp{position:relative;flex:1;min-height:0;background:var(--canvas)}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
@@ -147,7 +146,7 @@ button{font:inherit;color:inherit}
 #stage.f2d .vtag{display:none}
 .hint{position:absolute;left:14px;bottom:12px;color:var(--muted);font-size:12px;z-index:2}
 .empty{position:absolute;inset:0;display:none;place-items:center;color:var(--muted);pointer-events:none}
- 
+
 /* voxel editor */
 .tools{display:flex;align-items:center;gap:2px;padding:6px 10px;border-bottom:1px solid var(--line);flex:none;flex-wrap:nowrap}
 .tools .tname{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
@@ -183,13 +182,13 @@ button{font:inherit;color:inherit}
 .sw{width:26px;height:26px;border-radius:7px;border:1px solid rgba(0,0,0,.25);cursor:pointer;position:relative}
 .sw.on{box-shadow:0 0 0 2px var(--panel),0 0 0 4px var(--accent)}
 .rrail .vt2{writing-mode:vertical-rl;color:var(--muted);font-weight:600;letter-spacing:.5px;margin-top:6px}
- 
+
 /* status */
 .status{display:flex;align-items:center;padding:0 14px;background:var(--panel);border-top:1px solid var(--line);color:var(--muted);font-size:12px;gap:14px}
 .status .sp{flex:1}
 .status b{color:var(--text);font-weight:600}
 kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--line2);border-bottom-width:2px;border-radius:4px;padding:1px 4px;background:var(--panel2);color:var(--text)}
- 
+
 /* popover */
 #pop{position:absolute;z-index:20;min-width:190px;background:var(--panel);border:1px solid var(--line2);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:6px;display:none}
 #pop button{display:flex;width:100%;align-items:center;gap:10px;height:30px;padding:0 10px;border:0;background:transparent;border-radius:6px;cursor:pointer;text-align:left}
@@ -199,13 +198,13 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 #pop hr{border:0;border-top:1px solid var(--line);margin:4px 0}
 #pop .ph{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:4px 10px}
 #pop .kb{margin-left:auto;color:var(--muted);font-size:11px}
- 
+
 /* zones overlay */
 .zt{display:none;position:absolute;left:10px;bottom:10px;right:10px;padding:8px 10px;border-radius:8px;font-size:12px;z-index:9;color:#fff;font-weight:500;pointer-events:none;line-height:1.35}
 #stage.zones .zt{display:block}
 .zt b{display:block;letter-spacing:.5px;font-size:11px}
 .z1{background:#7c5cff}.z2{background:#0e9f8e}.z3{background:#e5732f}
- 
+
 .btn:disabled{opacity:.4;cursor:default}
 .mrow{display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--line);flex:none}
 .prow{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -236,7 +235,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .kbrow .k{display:flex;gap:4px}
 .dlg .df{grid-column:1/3;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 16px}
 .dlg .df .sp{flex:1}
- 
+
 /* ---- glyph buttons: icon + caption, borrowed vocabulary from the legacy icon set ---- */
 .gbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:0;padding:4px 2px 3px;border:1px solid var(--line);background:var(--panel2);border-radius:8px;cursor:pointer;color:var(--muted);font-size:10.5px;font-weight:600;line-height:1.15;position:relative}
 .gbtn svg.gx{display:block;color:var(--muted);flex:none}
@@ -285,12 +284,25 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .tbn.tmp .kb{color:var(--accent)}
 #garea{cursor:crosshair}
 .dd2{margin-left:auto;font-size:11px;color:var(--muted)}
+#vcube{position:absolute;right:2px;top:-11px;width:156px;height:170px;z-index:3;touch-action:none}
+#stage.f2d #vcube{display:none}
+.vtchip{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:11px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);font-size:11px;font-weight:600;margin-left:8px;white-space:nowrap}
+.npad{display:grid;grid-template-columns:62px repeat(4,1fr);gap:4px;align-items:center;margin-top:4px}
+.npad .rl{font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.3px}
+.npad .nb{height:32px;border:1px solid var(--line);background:var(--panel2);border-radius:8px;font-size:15px;font-weight:700;color:var(--text);cursor:pointer}
+.npad .nb:hover{border-color:var(--accent);background:var(--accentSoft)}
+.npad.two6{grid-template-columns:62px repeat(2,1fr)}
+.mnote{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.4}
+.prev{width:100%;height:100%;display:block}
+.mocksel{height:26px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);color:var(--text);padding:0 6px;font:inherit;font-size:12px}
+.cell.sp{cursor:inherit}
+.cell.sp:hover{stroke:var(--accent);stroke-width:2.6}
 </style>
 </head>
 <body>
 <div id="wrap">
 <div id="stage">
- 
+
   <!-- top bar (menu & app tabs are out of scope; kept as-is) -->
   <div class="top">
     <div class="brand"><i></i>BurrTools</div>
@@ -300,12 +312,13 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
     </div>
     <div class="right">
       <span class="fname" title="E:\Girish\Puzzles\designs\TIC\Final\TIC 2.99 - Clutch 4 - Level 31R10.8.R14.xmpuzzle">TIC 2.99 – Clutch 4 – Level 31R10.8.R14.xmpuzzle</span>
+      <select class="mocksel" id="mockVType" title="Mock only: the voxel type is chosen once in File ▸ New and cannot change afterwards"><option value="brick">Mock voxel type: Brick</option><option value="prism">Mock voxel type: Triangular Prism</option><option value="spheres">Mock voxel type: Spheres</option><option value="rhombic">Mock voxel type: Rhombic Tetrahedra</option><option value="tetoct">Mock voxel type: Tetrahedra-Octahedra</option></select>
       <button class="btn sm" id="btnZones">Show zones</button>
       <button class="ib" id="btnSettings" title="Settings  (Ctrl+,)"></button>
       <button class="ib" id="btnTheme" title="Toggle light / dark"></button>
     </div>
   </div>
- 
+
   <div class="body">
     <!-- ================= LEFT: OBJECT SCOPE ================= -->
     <section class="card" id="left">
@@ -324,9 +337,9 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
               <div class="sub2">Fit to grid</div>
               <button class="abtn" id="btnPrune"></button>
               <div class="two" style="margin-top:6px"><button class="abtn" id="btnCenter"></button><button class="abtn" id="btnOrigin"></button></div>
-              <div class="sub2">Scale</div>
+              <div id="scaleBlock"><div class="sub2">Scale</div>
               <button class="abtn" id="btnMin"></button>
-              <div class="two" id="mulRow" style="margin-top:6px"></div>
+              <div class="two" id="mulRow" style="margin-top:6px"></div></div>
             </div></div>
           <div class="sec closed" id="secTools"><button class="sh"><span class="chev"></span>Repair &amp; surface<span class="sum">Fill · Inner / Outer</span></button>
             <div class="sb">
@@ -339,11 +352,12 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
       <div class="lrail" id="lrail"></div>
       <div class="zt z1"><b>OBJECT SCOPE</b>Which shape, and what happens to the whole shape.</div>
     </section>
- 
+
     <!-- ================= CENTER: SPATIAL VIEW ================= -->
     <section class="card" id="center">
       <div class="vp" id="vp">
         <canvas id="cv"></canvas>
+        <canvas id="vcube" title=""></canvas>
         <div class="vtag" id="vtag"></div>
         <div class="vt" id="vt"></div>
         <div class="hint" id="vhint"><div><kbd>Shift</kbd> click <b>1</b> fixed · <kbd>Alt</kbd>/<kbd>⌘</kbd> click <b>2</b> variable · <kbd>Ctrl</kbd> click <b>3</b> erase</div><div id="navHint">Drag orbit · Shift/middle-drag pan · Wheel zoom</div></div>
@@ -351,11 +365,11 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
       </div>
       <div class="zt z2"><b>SPATIAL VIEW</b>Understand the piece. Navigate here, or modifier-click to edit voxels in place.</div>
     </section>
- 
+
     <!-- ================= RIGHT: VOXEL SCOPE ================= -->
     <section class="card" id="right">
       <div class="rfull">
-        <div class="ch"><span>Voxel editor</span><span class="sp"></span>
+        <div class="ch"><span>Voxel editor</span><span class="vtchip" id="vtChip"></span><span class="sp"></span>
           <button class="ib" id="btnF2D" title="Focus 2D editor (Esc to exit)"></button>
           <button class="ib" id="btnRC" title="Collapse sidebar"></button>
         </div>
@@ -378,12 +392,12 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
       <div class="zt z3"><b>VOXEL SCOPE</b>Draw. Tool, plane, layer, grid size and colour stay together — no tab switching.</div>
     </section>
   </div>
- 
+
   <div class="status">
     <span id="stText"></span><span class="sp"></span>
     <span id="stCursor" class="mute"></span>
   </div>
- 
+
   <div id="pop"></div>
   <div id="scrim"><div class="dlg" role="dialog" aria-label="Settings">
     <div class="dh"><span>Settings</span>
@@ -395,13 +409,13 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
   </div></div>
 </div>
 </div>
- 
+
 <script>
 (function(){
 "use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
- 
+
 /* ---------- icons ---------- */
 const I={
  plus:'<path d="M12 5v14M5 12h14"/>',
@@ -449,7 +463,7 @@ const I={
 };
 const ic=(n,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
 const cmIc=(col,dash,mode)=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${col}" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2" ${dash?'stroke-dasharray="3 2"':''} fill="${dash?'none':col}" fill-opacity=".25"/><path d="M12 3v18M3 12h18" opacity="${mode?1:.35}"/>${mode?'':'<path d="M7 7l10 10" stroke="currentColor" stroke-width="1.6"/>'}</svg>`;
- 
+
 /* ---------- glyph library: vocabulary borrowed from the legacy icons (axis frame, pink/green/cyan bars, gold cubes, red/lime pencils) ---------- */
 const CUBEC={x:'#e0245e',y:'#2fb463',z:'#1aa7d6'};
 const SL={x:[[6,20],[17,20]],y:[[6,21],[13,14]],z:[[8,21],[8,9]]};
@@ -491,15 +505,41 @@ const G={
  mul:(n,sz=30)=>{const cs=n===2?5:3,tot=n*cs+(n-1),x0=30-tot,y0=16-tot/2;let c='<rect x="2" y="12" width="8" height="8" fill="#ffc400"/><path d="M11 16h6M14.5 13l3 3-3 3" stroke="currentColor" stroke-width="1.5"/>';for(let j=0;j<n;j++)for(let i=0;i<n;i++)c+=`<rect x="${x0+i*(cs+1)}" y="${y0+j*(cs+1)}" width="${cs}" height="${cs}" fill="#ffc400"/>`;return gsv(c,sz)},
  div:(n,sz=30)=>{const cs=n===2?5:3,tot=n*cs+(n-1),y0=16-tot/2;let c='<rect x="23" y="13" width="7" height="7" fill="#ffc400"/><path d="M13 16h7M17.5 13l3 3-3 3" stroke="currentColor" stroke-width="1.5"/>';for(let j=0;j<n;j++)for(let i=0;i<n;i++)c+=`<rect x="${2+i*(cs+1)}" y="${y0+j*(cs+1)}" width="${cs}" height="${cs}" fill="#ffc400"/>`;return gsv(c,sz)}
 };
-const HAND='M8 13v-8.5a1.5 1.5 0 0 1 3 0v7.5M11 11.5v-2a1.5 1.5 0 0 1 3 0v2.5M14 10.5a1.5 1.5 0 0 1 3 0v1.5M17 11.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-2.7l-.2-.3c-.3-.5-1.4-2.4-3.3-5.7a1.5 1.5 0 0 1 .5-2 1.9 1.9 0 0 1 2.3.3l1.5 1.5';
-const MINI={fixed:'<rect x="0.5" y="1" width="7" height="7" rx="1" fill="#ff3b3b"/>',variable:'<rect x="1.3" y="1.8" width="5.4" height="5.4" rx="1" stroke="#8be000" stroke-width="1.8"/>',erase:'<path d="M1 7.5l3-5 4.2 3.2-3 4.3z" fill="#ff9ec4" stroke="#b04f7c" stroke-width=".9"/>',paint:'<rect x="0.5" y="1" width="7" height="7" rx="1" fill="#ffc400"/><path d="M4.5 8l3 3.2" stroke="#3b6cff" stroke-width="1.7"/>'};
-function handSvg(tool,o={}){const sz=o.size||22,col=o.stroke||'currentColor';
- return `<svg xmlns="http://www.w3.org/2000/svg" class="gx" width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${o.halo?`<path d="${HAND}" stroke="#fff" stroke-width="4.2"/>`:''}<path d="${HAND}" stroke="${col}" stroke-width="1.7"/>${MINI[tool]}</svg>`}
-const cursorFor=tool=>'url("data:image/svg+xml,'+encodeURIComponent(handSvg(tool,{size:32,stroke:'#111',halo:true}).replace(' class="gx"',''))+'") 13 4, crosshair';
-window.__HAND=handSvg;
+/* ---- edit cursors / icons: Fixed & Variable = default pointer + square badge near its top-right; Erase & Paint = the tool icon alone ---- */
+const isDarkTheme=()=>document.documentElement.dataset.theme==='dark'||(!document.documentElement.dataset.theme&&matchMedia('(prefers-color-scheme: dark)').matches);
+const themeInk=()=>isDarkTheme()?'#f2f4f8':'#1a1f29';
+const themeOpp=()=>isDarkTheme()?'#14171c':'#ffffff';
+const badgeColour=()=>st.color>0?(COLORS[st.color]||COLORS[0]).h:null;   /* null = Default drawing colour -> white (light) / near-black (dark) inside */
+const lumOf=h=>{const n=parseInt(h.slice(1),16),f=c=>{c/=255;return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)};return .2126*f(n>>16&255)+.7152*f(n>>8&255)+.0722*f(n&255)};
+const plusInk=fill=>lumOf(fill)>.42?'#1a1f29':'#ffffff';
+const isPtrTool=t=>t==='fixed'||t==='variable';
+const PTR_ARROW='<path d="M.8 .8V16.4L4.4 13.2L7 19.3L9.4 18.2L6.8 12.1H11.9Z" fill="#000" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/>';
+function badgeSvg(tool,col,ink,opp){ /* 12x12 local box */
+ if(tool==='fixed'||tool==='variable'){
+  const fill=col||opp||'none';
+  const plus=c=>`<path d="M6 3.1v5.8M3.1 6h5.8" stroke="${c}" stroke-width="1.4" stroke-linecap="round"/>`;
+  if(tool==='fixed')return `<rect x=".6" y=".6" width="10.8" height="10.8" rx="2" fill="${fill}" stroke="${ink}" stroke-opacity="${col?.55:1}" stroke-width="1"/>${plus(ink)}`;
+  return `<rect x="1" y="1" width="10" height="10" rx="2" fill="${fill}" fill-opacity="${col?.32:1}" stroke="${col||ink}" stroke-width="1.6" stroke-dasharray="1.9 1.6"/>${plus(col||ink)}`}
+ if(tool==='erase')return `<path d="M1.7 8.8L6 2.3l4.4 3-3.9 5.6H3.7z" fill="${opp||'none'}" stroke="${ink}" stroke-width="1.3" stroke-linejoin="round"/><path d="M4.6 5.7l4 2.9" stroke="${ink}" stroke-width="1.1" stroke-linecap="round"/>`;
+ return `<path d="M2 6.2L6 2.2l4.2 4.2-4 4z" fill="${opp||'none'}" stroke="${ink}" stroke-width="1.2" stroke-linejoin="round"/><path d="M3.5 4.7C2 3.3 2.3 1.3 4.4 1" fill="none" stroke="${ink}" stroke-width="1" stroke-linecap="round"/><path d="M10.5 7.9c.8 1.2 1.4 1.9 1.4 2.6a1.4 1.4 0 0 1-2.8 0c0-.7.6-1.4 1.4-2.6z" fill="${col||ink}"/>`;
+}
+function ptrSvg(tool,o={}){
+ const col=('col' in o)?o.col:badgeColour(),ink=o.ink||themeInk(),opp=o.opp||themeOpp();
+ if(o.icon){ /* toolbar icon, viewBox 28x24, tinted by currentColor */
+  const sz=o.size||26,head=`<svg xmlns="http://www.w3.org/2000/svg" class="gx" width="${sz}" height="${sz}" viewBox="0 0 28 24" fill="none" aria-hidden="true">`;
+  if(isPtrTool(tool))return head+`<path d="M.8 .8V16.4L4.4 13.2L7 19.3L9.4 18.2L6.8 12.1H11.9Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><g transform="translate(12.5 .5)">${badgeSvg(tool,col,'currentColor')}</g></svg>`;
+  return head+`<g transform="translate(14 12) scale(1.75) translate(-6 -6)">${badgeSvg(tool,col,'currentColor')}</g></svg>`;
+ }
+ const head='<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">';
+ if(isPtrTool(tool))return head+`${PTR_ARROW}<g transform="translate(12 0)">${badgeSvg(tool,col,ink)}</g></svg>`;
+ return head+`<g transform="translate(16 16) scale(1.5) translate(-6 -6)">${badgeSvg(tool,col,ink,opp)}</g></svg>`;
+}
+const cursorFor=tool=>'url("data:image/svg+xml,'+encodeURIComponent(ptrSvg(tool))+'") '+(isPtrTool(tool)?'1 1':'16 16')+', default';
+window.__PTR=ptrSvg;window.__BADGE=badgeSvg;
+window.__cam=()=>cam;
 const tbn=(icn,cap)=>`${ic(icn,20)}<span>${cap}</span>`;
 const abtnSet=(sel,g,t,sm)=>{$(sel).innerHTML=`${g}<span><b>${t}</b><small>${sm}</small></span>`};
- 
+
 /* ---------- model ---------- */
 const COLORS=[{n:'Default',h:null},{n:'C1',h:'#f59e0b'},{n:'C2',h:'#8b5cf6'}];  // index 0 = Default = the piece's own colour
 const colHex=(ci,sh)=>ci>0&&COLORS[ci]?COLORS[ci].h:sh.col;
@@ -517,10 +557,63 @@ const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:fal
 ['3,1,2','3,1,3','3,2,3'].forEach(k=>shapes[1].vox.get(k).c=1);shapes[1].vox.get('1,2,2').c=2;shapes[1].vox.get('2,1,3').s='v';
 function renumber(){shapes.forEach((s,i)=>{s.id='S'+(i+1);s.col=SHAPE_COL[i%SHAPE_COL.length]})}
 renumber();
-const cam={yaw:-32,pitch:26,zoom:1,px:0,py:0};
+/* ===== non-brick voxel spaces (mock geometry). Spheres: close-packed FCC sites (x+y+z even), radius = half the nearest-neighbour distance so neighbours touch.
+   Triangular Prism: triangle lattice extruded in Z. Tetrahedral types: square cells split into 4 triangles, each the base of a tetrahedron (placeholder geometry for both tetrahedral types). ===== */
+const SQ2=Math.SQRT1_2,H3=Math.sqrt(3)/2,HZ=.6;
+const NB12=[];[1,-1].forEach(a=>[1,-1].forEach(b=>{NB12.push([a,b,0],[a,0,b],[0,a,b])}));
+const kindOf=t=>t==='spheres'?'spheres':t==='prism'?'prism':'tetra';
+const spaceCache=new Map();
+function getSpace(kind,dims){const ck=kind+':'+dims.join('x');if(spaceCache.has(ck))return spaceCache.get(ck);
+ const [X,Y,Z]=dims,cells=[],by=new Map(),add=c=>{cells.push(c);by.set(c.key,c)};let ext,lz=1;
+ const rk=v=>Math.round(v*1000);
+ if(kind==='spheres'){
+  for(let z=0;z<Z;z++)for(let y=0;y<Y;y++)for(let x=0;x<X;x++)if((x+y+z)%2===0){const nbs=[];
+   NB12.forEach(d=>{const nx=x+d[0],ny=y+d[1],nz=z+d[2];if(nx>=0&&ny>=0&&nz>=0&&nx<X&&ny<Y&&nz<Z)nbs.push({d,key:nx+','+ny+','+nz})});
+   add({key:x+','+y+','+z,z,c3:[x+.5,y+.5,z+.5],r:SQ2,circle:[x+.5,y+.5,SQ2],nbs})}
+  ext=[X,Y,Z]}
+ else if(kind==='prism'){
+  const tris=[],em=new Map(),ek=(a,b)=>[rk(a[0])+','+rk(a[1]),rk(b[0])+','+rk(b[1])].sort().join('|');
+  for(let r=0;r<Y;r++){const sh=(r%2)*.5,y0=r*H3;for(let c=0;c<2*X;c++){const k=c>>1;
+   const v=c%2===0?[[k+sh,y0],[k+1+sh,y0],[k+.5+sh,y0+H3]]:[[k+.5+sh,y0+H3],[k+1.5+sh,y0+H3],[k+1+sh,y0]];tris.push({c,r,v})}}
+  tris.forEach(t=>{t.e=[0,1,2].map(i=>ek(t.v[i],t.v[(i+1)%3]));t.e.forEach(e=>{if(!em.has(e))em.set(e,[]);em.get(e).push(t)})});
+  tris.forEach(t=>{t.nb2=t.e.map(e=>{const o=em.get(e).find(q=>q!==t);return o?o.c+','+o.r:null})});
+  for(let z=0;z<Z;z++)tris.forEach(t=>{const cen=[(t.v[0][0]+t.v[1][0]+t.v[2][0])/3,(t.v[0][1]+t.v[1][1]+t.v[2][1])/3],faces=[];
+   faces.push({pts:t.v.map(q=>[q[0],q[1],z]),n:[0,0,-1],nb:z>0?t.c+','+t.r+','+(z-1):null});
+   faces.push({pts:t.v.map(q=>[q[0],q[1],z+1]),n:[0,0,1],nb:z<Z-1?t.c+','+t.r+','+(z+1):null});
+   for(let i=0;i<3;i++){const a=t.v[i],b=t.v[(i+1)%3];let nx=b[1]-a[1],ny=-(b[0]-a[0]);const m=Math.hypot(nx,ny);nx/=m;ny/=m;
+    if(nx*((a[0]+b[0])/2-cen[0])+ny*((a[1]+b[1])/2-cen[1])<0){nx=-nx;ny=-ny}
+    faces.push({pts:[[a[0],a[1],z],[b[0],b[1],z],[b[0],b[1],z+1],[a[0],a[1],z+1]],n:[nx,ny,0],nb:t.nb2[i]?t.nb2[i]+','+z:null})}
+   add({key:t.c+','+t.r+','+z,z,c3:[cen[0],cen[1],z+.5],poly:t.v,faces})});
+  ext=[X+(Y>1?1:.5),Y*H3,Z]}
+ else{ /* tetra */
+  lz=HZ;const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]];
+  for(let z=0;z<Z;z++)for(let y=0;y<Y;y++)for(let x=0;x<X;x++)for(let sd=0;sd<4;sd++){
+   const C=[[x,y],[x+1,y],[x+1,y+1],[x,y+1]],a=C[sd],b=C[(sd+1)%4],cn=[x+.5,y+.5],even=z%2===0,zb=even?z*HZ:(z+1)*HZ,za=even?(z+1)*HZ:z*HZ;
+   const B1=[a[0],a[1],zb],B2=[b[0],b[1],zb],BC=[cn[0],cn[1],zb],A=[cn[0],cn[1],za],cen3=[(B1[0]+B2[0]+BC[0]+A[0])/4,(B1[1]+B2[1]+BC[1]+A[1])/4,(B1[2]+B2[2]+BC[2]+A[2])/4];
+   const orient=pts=>{const u=sub(pts[1],pts[0]),w=sub(pts[2],pts[0]);let n=[u[1]*w[2]-u[2]*w[1],u[2]*w[0]-u[0]*w[2],u[0]*w[1]-u[1]*w[0]];const m=Math.hypot(...n);n=n.map(q=>q/m);
+    const mid=[(pts[0][0]+pts[1][0]+pts[2][0])/3-cen3[0],(pts[0][1]+pts[1][1]+pts[2][1])/3-cen3[1],(pts[0][2]+pts[1][2]+pts[2][2])/3-cen3[2]];return n[0]*mid[0]+n[1]*mid[1]+n[2]*mid[2]<0?n.map(q=>-q):n};
+   const zb2=even?z-1:z+1,nbBase=zb2>=0&&zb2<Z?x+','+y+','+sd+','+zb2:null;
+   const o=[[0,-1,2],[1,0,3],[0,1,0],[-1,0,1]][sd],ox=x+o[0],oy=y+o[1],nbOut=ox>=0&&oy>=0&&ox<X&&oy<Y?ox+','+oy+','+o[2]+','+z:null;
+   const f=(pts,nb)=>({pts,n:orient(pts),nb});
+   add({key:x+','+y+','+sd+','+z,z,c3:cen3,poly:[a,b,cn],faces:[f([B1,B2,BC],nbBase),f([B1,B2,A],nbOut),f([B2,BC,A],x+','+y+','+((sd+1)%4)+','+z),f([BC,B1,A],x+','+y+','+((sd+3)%4)+','+z)]})}
+  ext=[X,Y,Z*HZ]}
+ const sp={kind,cells,by,ext,lz};spaceCache.set(ck,sp);return sp}
+const spaceNow=()=>st.vtype==='brick'?null:getSpace(kindOf(st.vtype),cur().dims);
+const defDims=()=>st.vtype==='brick'||st.vtype==='spheres'?[3,3,3]:[3,3,2];
+function cloneShape(s){return Object.assign({},s,{dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,Object.assign({},v)]))})}
+const BRICK_DOC=shapes.map(cloneShape);
+const DEMO={
+ spheres:{dims:[3,3,3],sets:[['0,0,0','1,1,0'],['0,0,0','1,1,0','2,2,0','1,0,1!','1,1,2'],['0,0,0','2,0,0','1,1,0','0,2,0'],['1,1,0','1,0,1','0,1,1','2,1,1','1,2,1','1,1,2']]},
+ prism:{dims:[3,3,2],sets:[['2,1,0','3,1,0'],['1,1,0','2,1,0','3,1,0','2,2,0','3,2,0!','2,0,0','3,1,1'],['0,0,0','1,0,0','2,0,0','3,0,0'],['2,1,0','3,1,0','4,1,0','3,2,0','2,2,1']]},
+ tetra:{dims:[3,3,2],sets:[['1,1,0,0','1,1,1,0'],['1,1,0,0','1,1,1,0','1,1,2,0!','1,1,3,0','0,1,1,0','1,1,0,1'],['0,0,0,0','0,0,1,0','1,0,3,0','1,0,0,0'],['1,1,2,0','1,2,0,0','2,1,3,0']]}};
+function setVType(t){st.vtype=t;st.plane='XY';st.mirror={x:false,y:false,z:false};st.span={x:false,y:false,z:false};st.layer=0;st.sel=1;
+ if(t==='brick')shapes=BRICK_DOC.map(cloneShape);
+ else{const D=DEMO[kindOf(t)];shapes=D.sets.map((ks,i)=>{const vox=new Map();ks.forEach(k=>{const v=k.endsWith('!');vox.set(v?k.slice(0,-1):k,{s:v?'v':'f',c:0})});return{id:'',label:i===1?'Demo piece':'',col:'',dims:[...D.dims],w:1,vox}})}
+ renumber();renderAll();render3d()}
+const cam={yaw:-32,pitch:26,roll:0,zoom:1,px:0,py:0};
 const cur=()=>shapes[st.sel];
 let S=1; // stage scale
- 
+
 /* plane mapping: display cols/rows/layers <-> x,y,z */
 function P(){
  const d=cur().dims;
@@ -529,50 +622,72 @@ function P(){
  return{cols:d[2],rows:d[1],layers:d[0],ca:'Z',ra:'Y',la:'X',xyz:(c,r,l)=>[l,r,c]};
 }
 const axCol=a=>({X:'var(--ax)',Y:'var(--ay)',Z:'var(--az)'})[a];
- 
+
 /* ---------- static UI fill ---------- */
 $('#menu').innerHTML=['File','Toggle 3D','Export','Status','Edit comment','Help','About'].map(t=>`<button>${t}</button>`).join('');
 $('#btnLC').innerHTML=ic('panelL'); $('#btnRC').innerHTML=ic('panelR'); $('#btnF2D').innerHTML=ic('focus');
 $('#btnFill').innerHTML=ic('holes')+' Fill holes';
 $('#btnTheme').innerHTML=ic('sun');$('#btnSettings').innerHTML=ic('gear');$('#setX').innerHTML=ic('close');
 $$('.sec>button.sh .chev').forEach(e=>e.innerHTML=ic('chevD',14));
- 
+
 /* toolbar for the 3D viewport — single canonical component */
 const vt=$('#vt');
 vt.innerHTML=
  `<button class="tbn on" data-m="orbit" title="Left-drag orbits. Shift-drag pans. Middle-drag always pans.">${tbn('orbit','Orbit')}</button>`+
  `<button class="tbn" data-m="pan" title="Left-drag pans. Shift-drag orbits. Middle-drag always pans.">${tbn('pan','Pan')}</button><span class="sep"></span>`+
  `<button class="tbn" id="bEdit" title="3D edit mode — a plain click uses the active voxel tool">${tbn('ptplus','Edit')}</button><span class="sep"></span>`+
- `<button class="tbn" id="bViews" title="Standard views">${tbn('cube','Views')}</button>`+
- `<button class="tbn" id="bFit" title="Fit shape to view  (F)">${tbn('fit','Fit')}</button><span class="sep"></span>`+
  `<button class="tbn" id="bDisp" title="Display options">${tbn('eye','Display')}</button><span class="sep"></span>`+
  `<button class="tbn" id="bF3D" title="Focus 3D viewport (Esc to exit)">${tbn('focus','Focus')}</button>`;
 $('#planeSeg').innerHTML=['XY','XZ','YZ'].map(p=>`<button class="gbtn" data-p="${p}" title="Edit the ${p} plane">${G.plane(p,30)}<span>${p}</span></button>`).join('');
- 
+
 /* voxel tool strip */
 const TOOLS=[
  {id:'fixed',ic:'solid',n:'Fixed voxel',short:'Fixed',k:'1',grp:0,tip:'Place a fixed (solid) voxel'},{id:'variable',ic:'dashed',n:'Variable voxel',short:'Variable',k:'2',grp:0,tip:'Place a variable (optional) voxel'},
  {id:'erase',ic:'eraser',n:'Erase voxel',short:'Erase',k:'3',grp:0,tip:'Erase the voxel'},{id:'paint',ic:'brush',n:'Paint colour',short:'Paint',k:'4',grp:0,tip:'Apply the drawing colour to an existing voxel'}
 ];
 function renderEditBtn(tmp){const b=document.getElementById('bEdit');if(!b)return;const tool=tmp||st.tool,t=TOOLS.find(x=>x.id===tool);
- b.innerHTML=handSvg(tool,{size:24})+'<span>Edit</span><i class="kb">'+t.k+'</i>';b.classList.toggle('on',!!st.edit3d);b.classList.toggle('tmp',!!tmp);
+ b.innerHTML=ptrSvg(tool,{icon:true,size:26})+'<span>Edit</span><i class="kb">'+t.k+'</i>';b.classList.toggle('on',!!st.edit3d);b.classList.toggle('tmp',!!tmp);
  b.title=(tmp?'Quick tool — ':'3D edit mode — ')+t.n+' ('+t.k+'). '+(st.edit3d?'Click edits with the active tool. Press E to leave edit mode.':'Press E to turn edit mode on; or hold Shift/Alt/Ctrl while clicking.')}
 function renderTools(){renderEditBtn();
  $('#toolStrip').innerHTML=TOOLS.map(t=>`<button class="gbtn ${st.tool===t.id?'on':''}" data-t="${t.id}" title="${t.tip}  (${t.k})">${G.tool(t.id,30)}<span>${t.short}</span><i class="kb">${t.k}</i></button>`).join('');
 }
- 
-/* transform matrix: per axis [Flip | Rotate − + | Nudge − +] — glyphs mirror the legacy axis-frame icons */
-(function(){
- const tb=(o,i,sg,g,cap,ttl)=>`<button class="gbtn" data-o="${o}" data-ax="${i}" data-sg="${sg}" title="${ttl}">${g}<span>${cap}</span></button>`;
- let h='<span></span><span class="gh" style="grid-column:span 1">Flip</span><span class="gh">Rotate</span><span class="gh">Nudge</span>';
- ['x','y','z'].forEach((a,i)=>{const A=a.toUpperCase();
-  h+=`<span class="al ax-${a}">${A}</span>`+
-   tb('flip',i,1,G.flip(a,0,28),'Flip',`Mirror the piece across the ${A} plane`)+
-   tb('rot',i,-1,G.rotate(a,-1,28),'−90°',`Rotate about ${A} by −90°`)+tb('rot',i,1,G.rotate(a,1,28),'+90°',`Rotate about ${A} by +90°`)+
-   tb('nudge',i,-1,G.nudge(a,-1,28),'−1',`Nudge along ${A} by −1`)+tb('nudge',i,1,G.nudge(a,1,28),'+1',`Nudge along ${A} by +1`)});
- $('#tmat').innerHTML=h;
-})();
- 
+
+/* ---------- voxel space types (chosen once in File > New, read-only afterwards) ---------- */
+const VTYPES={brick:'Brick',prism:'Triangular Prism',spheres:'Spheres',rhombic:'Rhombic Tetrahedra',tetoct:'Tetrahedra-Octahedra'};
+st.vtype='brick';
+/* transform matrix per voxel type — glyphs mirror the legacy axis-frame icons */
+function renderTransform(){
+ const tb=(o,i,sg,g,cap,ttl,mock)=>`<button class="gbtn" ${mock?'data-mock="1"':`data-o="${o}" data-ax="${i}" data-sg="${sg}"`} title="${ttl}">${g}<span>${cap}</span></button>`;
+ const t=st.vtype,box=$('#tmat');
+ if(t==='brick'||t==='rhombic'||t==='tetoct'){
+  let h='<span></span><span class="gh" style="grid-column:span 1">Flip</span><span class="gh">Rotate</span><span class="gh">Nudge</span>';
+  ['x','y','z'].forEach((a,i)=>{const A=a.toUpperCase(),mk=t!=='brick';
+   h+=`<span class="al ax-${a}">${A}</span>`+tb('flip',i,1,G.flip(a,0,28),'Flip',`Mirror the piece across the ${A} plane`,mk)+
+    tb('rot',i,-1,G.rotate(a,-1,28),'−90°',`Rotate about ${A} by −90°`,mk)+tb('rot',i,1,G.rotate(a,1,28),'+90°',`Rotate about ${A} by +90°`,mk)+
+    tb('nudge',i,-1,G.nudge(a,-1,28),'−1',`Nudge along ${A} by −1`,mk)+tb('nudge',i,1,G.nudge(a,1,28),'+1',`Nudge along ${A} by +1`,mk)});
+  box.className='tmat';box.innerHTML=h+(t!=='brick'?'<div class="mnote" style="grid-column:1/-1">Mock placeholder: the transform set of this voxel type is not shown in the reference screenshots — confirm from source (OQ-19).</div>':'');return}
+ box.className='';
+ const fr=(rows)=>{let h='<div class="tmat" style="grid-template-columns:22px repeat(3,1fr)"><span></span><span class="gh" style="grid-column:span 1">Flip</span><span class="gh" style="grid-column:span 2">Rotate</span>';
+  rows.forEach(([a,i,rots])=>{const A=a.toUpperCase();h+=`<span class="al ax-${a}">${A}</span>`+tb('flip',i,1,G.flip(a,0,28),'Flip',`Mirror the piece across the ${A} plane`,true)+rots.map(([sg,cap])=>tb('rot',i,sg,G.rotate(a,sg,28),cap,`Rotate about ${A} (${cap})`,true)).join('')+(rots.length<2?'<span></span>':'')});return h+'</div>'};
+ const pad=(label,arrows,cls)=>`<div class="npad ${cls||''}"><span class="rl">${label}</span>${arrows.map(([ch,ttl])=>`<button class="nb" data-mock="1" title="${ttl}">${ch}</button>`).join('')}</div>`;
+ if(t==='spheres'){
+  box.innerHTML=fr([['x',0,[[-1,'−90°'],[1,'+90°']]],['y',1,[[-1,'−90°'],[1,'+90°']]],['z',2,[[-1,'−90°'],[1,'+90°']]]])+'<div class="sub2">Nudge</div>'+
+   pad('UP LAYER',[['→','Nudge up one layer, towards +X'],['↑','Nudge up one layer, towards +Y'],['←','Nudge up one layer, towards −X'],['↓','Nudge up one layer, towards −Y']])+
+   pad('IN LAYER',[['↗','Nudge diagonally ↗'],['↖','Nudge diagonally ↖'],['↙','Nudge diagonally ↙'],['↘','Nudge diagonally ↘']])+
+   pad('DOWN LAYER',[['→','Nudge down one layer, towards +X'],['↑','Nudge down one layer, towards +Y'],['←','Nudge down one layer, towards −X'],['↓','Nudge down one layer, towards −Y']])}
+ else{ /* triangular prism */
+  box.innerHTML=fr([['x',0,[[1,'180°']]],['y',1,[[1,'180°']]],['z',2,[[-1,'−60°'],[1,'+60°']]]])+'<div class="sub2">Nudge</div>'+
+   pad('IN PLANE',[['↖','Nudge ↖'],['↗','Nudge ↗']],'two6')+pad('',[['←','Nudge ←'],['→','Nudge →']],'two6')+pad('',[['↙','Nudge ↙'],['↘','Nudge ↘']],'two6')+pad('Z',[['↓','Nudge one layer down (−Z)'],['↑','Nudge one layer up (+Z)']],'two6')}
+}
+function renderVType(){
+ $('#vtChip').innerHTML=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>${VTYPES[st.vtype]}`;
+ $('#vtChip').title='Voxel type: '+VTYPES[st.vtype]+' — fixed when the file is created (File ▸ New); it cannot be changed afterwards.';
+ renderTransform();$('#scaleBlock').style.display=st.vtype==='spheres'?'none':'';
+ const nb=st.vtype!=='brick';$$('#planeSeg button').forEach(b=>{const off=nb&&b.dataset.p!=='XY';b.disabled=off;b.title=off?'Mock: only the XY layer plane is available for this voxel type (OQ-19)':'Edit the '+b.dataset.p+' plane'});
+ $$('#modRow button').forEach(b=>{b.disabled=nb;b.title=nb?'Mock: mirror/span are not implemented for this voxel type (OQ-19)':b.title});
+}
+$('#mockVType').onchange=e=>setVType(e.target.value);
+
 /* ---------- shapes list ---------- */
 function renderShapes(){
  $('#shapeCount').textContent=shapes.length;
@@ -598,7 +713,7 @@ function renderShapes(){
 }
 function selectShape(i){st.sel=i;st.selCells.clear();st.layer=Math.min(st.layer,P().layers-1);renderAll()}
 function newShape(){
- shapes.push({id:'',label:'',col:'',dims:[3,3,3],w:1,vox:new Map()});renumber();
+ shapes.push({id:'',label:'',col:'',dims:defDims(),w:1,vox:new Map()});renumber();
  selectShape(shapes.length-1);
 }
 $('#btnNew').onclick=newShape;
@@ -625,7 +740,7 @@ list.addEventListener('dragstart',e=>{const r=e.target.closest('.row');if(r){dra
 list.addEventListener('dragover',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();$$('.row').forEach(x=>x.classList.remove('dragover'));r.classList.add('dragover')}});
 list.addEventListener('drop',e=>{const r=e.target.closest('.row');if(r&&dragI!==null){e.preventDefault();const to=+r.dataset.i;const selShape=cur();const [m]=shapes.splice(dragI,1);shapes.splice(to,0,m);renumber();st.sel=shapes.indexOf(selShape);dragI=null;renderAll();flash('Order changed — shapes renumbered S1…S'+shapes.length)}});
 list.addEventListener('dragend',()=>{dragI=null;$$('.row').forEach(x=>x.classList.remove('dragover'))});
- 
+
 /* ---------- inspector & shape operations ---------- */
 const bbox=s=>{let mn=[1e9,1e9,1e9],mx=[-1,-1,-1];s.vox.forEach((v,k)=>{k.split(',').forEach((t,i)=>{t=+t;if(t<mn[i])mn[i]=t;if(t>mx[i])mx[i]=t})});return s.vox.size?{mn,mx,sz:mx.map((m,i)=>m-mn[i]+1)}:null};
 let msgT=null,flashed=false;
@@ -643,7 +758,7 @@ function exterior(s){const [X,Y,Z]=s.dims,seen=new Set([key(-1,-1,-1)]),q=[[-1,-
  while(q.length){const [x,y,z]=q.pop();for(const [a,b,c] of N6){const nx=x+a,ny=y+b,nz=z+c;if(nx<-1||ny<-1||nz<-1||nx>X||ny>Y||nz>Z)continue;const k=key(nx,ny,nz);if(seen.has(k)||s.vox.has(k))continue;seen.add(k);q.push([nx,ny,nz])}}return seen}
 function surfaceSets(s){const ext=exterior(s),outer=[],inner=[];s.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);(N6.some(([a,b,c])=>ext.has(key(x+a,y+b,z+c)))?outer:inner).push(v)});return{outer,inner}}
 function doFill(s){const ext=exterior(s),[X,Y,Z]=s.dims;let n=0;for(let x=0;x<X;x++)for(let y=0;y<Y;y++)for(let z=0;z<Z;z++){const k=key(x,y,z);if(!s.vox.has(k)&&!ext.has(k)){s.vox.set(k,{s:'f',c:0});n++}}flash(n?`Filled ${n} interior voxel${n===1?'':'s'}`:'No interior holes found')}
- 
+
 function bestDiv(s){for(let n=8;n>=2;n--)if(canDiv(s,n))return n;return 0}
 function doMin(s){const n=bestDiv(s);if(n)doDiv(s,n);else flash('Already at minimum resolution')}
 function renderInsp(){
@@ -660,6 +775,7 @@ function renderInsp(){
 }
 $('.insp').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b||b.disabled)return;const s=cur();flashed=false;
+ if(spaceNow()&&(b.id==='btnPrune'||b.id==='btnCenter'||b.id==='btnOrigin'||b.id==='btnMin'||b.id==='btnFill'||b.dataset.so||b.dataset.mul)){flash('Mock: this operation is specified but not interactive for this voxel type');return}
  if(b.dataset.w){s.w=Math.max(0,s.w+ +b.dataset.w)}
  else if(b.dataset.o){const ax=+b.dataset.ax,sg=+b.dataset.sg,D=s.dims;
   if(b.dataset.o==='flip')remap(s,c=>{const q=c.slice();q[ax]=D[ax]-1-c[ax];return q},D);
@@ -672,6 +788,7 @@ $('.insp').addEventListener('click',e=>{
  else if(b.dataset.so){const arr=surfaceSets(s)[b.dataset.part];arr.forEach(v=>{if(b.dataset.so==='fixed')v.s='f';else if(b.dataset.so==='variable')v.s='v';else v.c=0});flash(`${arr.length} ${b.dataset.part} voxel${arr.length===1?'':'s'} updated`)}
  else if(b.dataset.mul)doMul(s,+b.dataset.mul);
  else if(b.id==='btnMin')doMin(s);
+ else if(b.dataset.mock){flash('Mock: transforms for this voxel type are specified but not interactive here — see spec C14');renderInsp();return}
  else return;
  st.layer=Math.min(st.layer,P().layers-1);renderInsp();renderShapes();renderEditor();render3d();if(!flashed)updateStatus();
 });
@@ -679,17 +796,17 @@ $('#sizeSteppers').addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;const d=+b.dataset.d,sg=+b.dataset.s;
  const targets=st.applyAll?shapes:[cur()];
  targets.forEach(s=>{const nv=Math.max(1,Math.min(32,s.dims[d]+sg));if(nv===s.dims[d])return;s.dims[d]=nv;
-  if(sg<0)[...s.vox.keys()].forEach(k=>{if(k.split(',')[d]>=nv)s.vox.delete(k)})});
+  if(sg<0){if(st.vtype==='brick')[...s.vox.keys()].forEach(k=>{if(k.split(',')[d]>=nv)s.vox.delete(k)});else{const sp=getSpace(kindOf(st.vtype),s.dims);[...s.vox.keys()].forEach(k=>{if(!sp.by.has(k))s.vox.delete(k)})}}});
  st.layer=Math.min(st.layer,P().layers-1);st.selCells.clear();renderAll();
 });
 $('#applyAll').onclick=()=>{st.applyAll=!st.applyAll;renderInsp()};
 $$('.sec>button.sh').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('closed'));
- 
+
 /* ---------- 2D voxel editor ---------- */
 function renderPlane(){$$('#planeSeg button').forEach(b=>b.classList.toggle('on',b.dataset.p===st.plane))}
 $('#planeSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.plane=b.dataset.p;st.layer=Math.min(st.layer,P().layers-1);st.selCells.clear();renderEditor();render3d()};
- 
-function layerHas(l){const p=P();for(let c=0;c<p.cols;c++)for(let r=0;r<p.rows;r++){if(cur().vox.has(key(...p.xyz(c,r,l))))return true}return false}
+
+function layerHas(l){if(spaceNow()){for(const k of cur().vox.keys())if(+k.split(',').pop()===l)return true;return false}const p=P();for(let c=0;c<p.cols;c++)for(let r=0;r<p.rows;r++){if(cur().vox.has(key(...p.xyz(c,r,l))))return true}return false}
 function renderLayers(){
  const p=P(),el=$('#lstrip');let h=`<div class="lh" style="color:${axCol(p.la)}">${p.la} layer</div>`;
  for(let l=p.layers-1;l>=0;l--)h+=`<button class="lchip ${l===st.layer?'on':''} ${layerHas(l)?'has':''}" data-l="${l}" title="Layer ${l+1}">${l+1}</button>`;
@@ -697,14 +814,29 @@ function renderLayers(){
  $('#layerLbl').textContent=`Layer ${st.layer+1} of ${p.layers}`;
 }
 $('#lstrip').onclick=e=>{const b=e.target.closest('.lchip');if(!b)return;st.layer=+b.dataset.l;st.selCells.clear();renderEditor();render3d()};
- 
+
 function fillStyle(v){
  const col=colHex(v.c,cur());
  return v.s==='v'?`background:repeating-linear-gradient(45deg,${col}55 0 6px,${col}22 6px 12px);border-color:${col}`:`background:${col}`;
 }
+function spaceGridSvg(aw,ah){const SP=spaceNow(),sh=cur(),[ex,ey]=SP.ext,M=44,sc=Math.max(16,Math.min(110,Math.floor(Math.min((aw-2*M)/ex,(ah-2*M)/ey))));
+ const ox=(aw-ex*sc)/2,oy=(ah-ey*sc)/2,X=x=>(ox+x*sc).toFixed(1),Y=y=>(oy+(ey-y)*sc).toFixed(1);let b='';
+ SP.cells.forEach(c=>{if(c.z!==st.layer)return;const v=sh.vox.get(c.key),vr=v&&v.s==='v';
+  const cm=`class="cell sp" data-key="${c.key}" fill="${v?colHex(v.c,sh):'var(--panel)'}" fill-opacity="${vr?.5:1}" stroke="${vr?'var(--text)':'var(--line2)'}" stroke-width="${vr?1.6:1.2}" ${vr?'stroke-dasharray="4 3"':''}`;
+  b+=c.circle?`<circle ${cm} cx="${X(c.circle[0])}" cy="${Y(c.circle[1])}" r="${(c.circle[2]*sc).toFixed(1)}"/>`:`<polygon ${cm} points="${c.poly.map(q=>X(q[0])+','+Y(q[1])).join(' ')}"/>`});
+ b+=`<line x1="${X(0)}" y1="${Y(0)}" x2="${X(ex)}" y2="${Y(0)}" stroke="var(--ax)" stroke-width="3" pointer-events="none"/><line x1="${X(0)}" y1="${Y(0)}" x2="${X(0)}" y2="${Y(ey)}" stroke="var(--ay)" stroke-width="3" pointer-events="none"/>`;
+ return `<svg width="${aw}" height="${ah}" style="display:block">${b}</svg>`}
+function previewSvg(t){const fillC=cur().col,ln='var(--line2)',tx='var(--muted)';let b='';
+ if(t==='spheres'){[[0,0,1],[2,0,0],[1,1,1],[0,2,0],[2,2,1]].forEach(([x,y,f])=>{b+=`<circle cx="${60+x*60}" cy="${60+y*60}" r="30" fill="${f?fillC:'var(--panel)'}" stroke="${ln}" stroke-width="1.5"/>`})}
+ else if(t==='prism'){const w=44,h=38;for(let r=0;r<6;r++)for(let c=0;c<5;c++){const x=20+c*w+(r%2?w/2:0),y=20+r*h;const up=`${x},${y+h} ${x+w/2},${y} ${x+w},${y+h}`,dn=`${x+w/2},${y} ${x+w*1.5},${y} ${x+w},${y+h}`;const on=(r+c)%3===0;
+   b+=`<polygon points="${up}" fill="${on?fillC:'var(--panel)'}" stroke="${ln}" stroke-width="1.2"/><polygon points="${dn}" fill="${(r*2+c)%4===1?fillC:'var(--panel)'}" stroke="${ln}" stroke-width="1.2"/>`}}
+ else{for(let r=0;r<3;r++)for(let c=0;c<3;c++){const x=30+c*80,y=30+r*80,m=[x+40,y+40];const T=[[x,y,x+80,y,m],[x+80,y,x+80,y+80,m],[x,y+80,x+80,y+80,m],[x,y,x,y+80,m]];
+   T.forEach((q,i)=>{const on=(r===0&&c===1&&i===3)||(r===1&&c===1)||(r===2&&c===1&&i===0)||(r===2&&c===2&&i===3);b+=`<polygon points="${q[0]},${q[1]} ${q[2]},${q[3]} ${q[4][0]},${q[4][1]}" fill="${on?fillC:'var(--panel)'}" stroke="${ln}" stroke-width="1.2"/>`})}}
+ return `<svg class="prev" viewBox="0 0 300 ${t==='prism'?260:300}" preserveAspectRatio="xMidYMid meet">${b}<text x="150" y="${t==='prism'?254:294}" text-anchor="middle" font-size="11" fill="${tx}" font-family="system-ui">Mock preview — only Brick is interactive</text></svg>`}
 function renderGrid(){
  const area=$('#garea'),p=P();const aw=area.clientWidth,ah=area.clientHeight;if(!aw||!ah)return;
  const cs=Math.max(16,Math.min(120,Math.floor(Math.min((aw-70)/p.cols,(ah-60)/p.rows))));
+ if(spaceNow()){area.innerHTML=spaceGridSvg(aw,ah);return}
  const cc=axCol(p.ca),rc=axCol(p.ra);
  let cells='';
  for(let ri=0;ri<p.rows;ri++){const r=p.rows-1-ri;for(let c=0;c<p.cols;c++){
@@ -728,38 +860,41 @@ $('#selbar').onclick=e=>{const b=e.target.closest('[data-x]');if(!b)return;const
  else st.selCells.forEach(k=>{const [c,r]=k.split(',').map(Number);const kk=key(...p.xyz(c,r,st.layer));
   if(b.dataset.x==='fill')cur().vox.set(kk,{s:'f',c:st.color});else cur().vox.delete(kk)});
  renderEditor();render3d();updateStatus()};
- 
+
 let down=false,anchor=null;
 /* mirror + span expand a click into several voxels; both work identically from 2D and 3D */
 function expand(coords){const d=cur().dims;let out=coords;
  ['x','y','z'].forEach((a,i)=>{if(st.span[a]){const n=[];out.forEach(c=>{for(let t=0;t<d[i];t++){const q=c.slice();q[i]=t;n.push(q)}});out=n}});
  ['x','y','z'].forEach((a,i)=>{if(st.mirror[a]){const n=out.slice();out.forEach(c=>{const q=c.slice();q[i]=d[i]-1-c[i];n.push(q)});out=n}});
  const seen=new Set();return out.filter(c=>{const k=key(...c);if(seen.has(k))return false;seen.add(k);return true})}
-function applyTool(tool,coords){const v=cur().vox;expand(coords).forEach(c=>{const k=key(...c);
+function applyTool(tool,coords){const v=cur().vox;const SPn=spaceNow();
+ if(SPn){coords.forEach(k=>{if(!SPn.by.has(k))return;if(tool==='fixed')v.set(k,{s:'f',c:st.color});else if(tool==='variable')v.set(k,{s:'v',c:st.color});else if(tool==='erase')v.delete(k);else if(tool==='paint'){const o=v.get(k);if(o)o.c=st.color}});return}
+ expand(coords).forEach(c=>{const k=key(...c);
  if(tool==='fixed')v.set(k,{s:'f',c:st.color});else if(tool==='variable')v.set(k,{s:'v',c:st.color});
  else if(tool==='erase')v.delete(k);else if(tool==='paint'){const o=v.get(k);if(o)o.c=st.color}})}
 let strokeTool=null,hc=null,lastMods={ctrl:false,shift:false,alt:false};
 function applyCell(c,r){const p=P();applyTool(strokeTool||st.tool,[p.xyz(c,r,st.layer)])}
 function eff2d(m){return m.ctrl?'erase':m.alt?'variable':m.shift?'fixed':st.tool}
-function hover2d(m){if(!hc)return;lastMods=m;const act=eff2d(m),p=P();hov={act,face:null,target:p.xyz(hc.c,hc.r,st.layer),valid:true,from2d:true};$('#garea').style.cursor=cursorFor(act);renderEditBtn((m.ctrl||m.alt||m.shift)?act:null);render3d()}
+function hover2d(m){if(!hc)return;lastMods=m;const act=eff2d(m),p=P();hov={act,face:null,target:hc.key||p.xyz(hc.c,hc.r,st.layer),valid:true,from2d:true};$('#garea').style.cursor=cursorFor(act);renderEditBtn((m.ctrl||m.alt||m.shift)?act:null);render3d()}
 function clear2d(){hc=null;$('#garea').style.cursor='';if(hov&&hov.from2d){hov=null}renderEditBtn();render3d()}
 function editorVisible(){return layout.focus==='2d'||(layout.focus===''&&!layout.rc)}
 function renderMod(){
  const grp=(k,label,tip,gf)=>`<div class="mg"><div class="gl2">${label}</div><div class="grp" data-g="${k}">`+['x','y','z'].map(a=>`<button class="gbtn ${st[k][a]?'on':''}" data-a="${a}" title="${tip(a.toUpperCase())}" aria-pressed="${st[k][a]}">${gf(a,28)}<span class="ax-${a}">${a.toUpperCase()}</span></button>`).join('')+'</div></div>';
  $('#modRow').innerHTML=grp('mirror','Mirror',a=>`Also place a mirrored voxel across the ${a} centre plane`,G.mirror)+grp('span','Span',a=>`Fill the whole grid along ${a} on each click`,G.span);
+ if(st.vtype!=='brick')$$('#modRow button').forEach(b=>{b.disabled=true;b.title='Mock: mirror/span are not implemented for this voxel type (OQ-19)'});
 }
 $('#modRow').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.parentElement.dataset.g;st[k][b.dataset.a]=!st[k][b.dataset.a];renderMod()});
 function afterEdit(){renderGrid();renderSelbar();renderLayers();render3d();updateStatus();if(hc)hover2d(lastMods)}
-$('#garea').addEventListener('mousedown',e=>{const c=e.target.closest('.cell');if(!c)return;e.preventDefault();down=true;strokeTool=eff2d({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey});applyCell(+c.dataset.c,+c.dataset.r,true);afterEdit()});
+$('#garea').addEventListener('mousedown',e=>{const c=e.target.closest('.cell');if(!c)return;e.preventDefault();down=true;strokeTool=eff2d({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey});if(c.dataset.key)applyTool(strokeTool,[c.dataset.key]);else applyCell(+c.dataset.c,+c.dataset.r,true);afterEdit()});
 $('#garea').addEventListener('mouseover',e=>{const c=e.target.closest('.cell');if(!c)return;
- const p=P();$('#stCursor').textContent=`Cursor ${p.ca}${c.dataset.c} ${p.ra}${c.dataset.r} · ${p.la}${st.layer}`;
- hc={c:+c.dataset.c,r:+c.dataset.r};
- if(down){applyCell(+c.dataset.c,+c.dataset.r,false);afterEdit()}else hover2d({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey})});
+ const p=P();
+ if(c.dataset.key){$('#stCursor').textContent='Cell '+c.dataset.key;hc={key:c.dataset.key}}else{$('#stCursor').textContent=`Cursor ${p.ca}${c.dataset.c} ${p.ra}${c.dataset.r} · ${p.la}${st.layer}`;hc={c:+c.dataset.c,r:+c.dataset.r}}
+ if(down){if(c.dataset.key)applyTool(strokeTool||st.tool,[c.dataset.key]);else applyCell(+c.dataset.c,+c.dataset.r,false);afterEdit()}else hover2d({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey})});
 $('#garea').addEventListener('mouseleave',()=>{$('#stCursor').textContent='';clear2d()});
 window.addEventListener('mouseup',()=>{down=false;strokeTool=null});
- 
+
 $('#toolStrip').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;st.tool=b.dataset.t;renderTools()});
- 
+
 /* colour: drawing state */
 function renderColors(){
  const chex=colHex(st.color,cur()),nm=i=>i===0?'Default':'C'+(i+1);
@@ -776,8 +911,9 @@ function renderColors(){
  $('#cMore').onclick=e=>openPop(e.currentTarget,menu(),act);
  $('#rrail').innerHTML=`<button class="ib" id="btnRE" title="Expand Voxel editor">${ic('panelR')}</button><div class="bigsw" style="background:${chex};width:28px;height:28px;border-radius:8px"></div><span class="vt2">Voxel editor</span>`;
  $('#btnRE').onclick=()=>{layout.focus='';layout.rc=false;applyLayout()};
+ renderEditBtn();if(typeof hc!=='undefined'&&hc)hover2d(lastMods);else if(typeof lm!=='undefined'&&lm)updateHover(lm.x,lm.y,{ctrl:false,shift:false,alt:false});
 }
- 
+
 /* ---------- popover ---------- */
 const pop=$('#pop');let popCb=null;
 function openPop(anchor,html,cb,above){
@@ -793,11 +929,7 @@ function openPopAt(cx,cy,html,cb){pop.innerHTML=html;popCb=cb;pop.style.display=
  pop.style.left='0px';pop.style.top='0px';const pw=pop.offsetWidth,ph=pop.offsetHeight;x=Math.max(8,Math.min(x,1600-pw-8));y=Math.max(8,Math.min(y,992-ph));pop.style.left=x+'px';pop.style.top=y+'px'}
 function closePop(){pop.style.display='none';popCb=null}
 document.addEventListener('mousedown',e=>{if(pop.style.display==='block'&&!pop.contains(e.target)&&!e.target.closest('#bViews,#bDisp,#cMore'))closePop()});
- 
-$('#bViews').onclick=e=>openPop(e.currentTarget,
- `<div class="ph">Standard views</div>`+[['iso','Isometric',-32,26],['front','Front',0,0],['back','Back',180,0],['left','Left',90,0],['right','Right',-90,0],['top','Top',0,89],['bottom','Bottom',0,-89]]
- .map(v=>`<button data-k="${v[0]}" data-y="${v[2]}" data-p="${v[3]}">${v[1]}</button>`).join(''),
- (k,b)=>{cam.yaw=+b.dataset.y;cam.pitch=+b.dataset.p;render3d()});
+
 $('#bDisp').onclick=e=>{const ck=v=>`<span class="ck">${v?ic('check',14):''}</span>`;
  openPop(e.currentTarget,`<div class="ph">Show</div>
  <button data-k="axes" data-keep="1">${ck(st.disp.axes)}Axes</button>
@@ -811,9 +943,8 @@ $('#bDisp').onclick=e=>{const ck=v=>`<span class="ck">${v?ic('check',14):''}</sp
  <button data-k="cpiece" data-keep="1">${ck(st.colorView==='piece')}Piece colour</button>
  <button data-k="cvox" data-keep="1">${ck(st.colorView!=='piece')}Voxel colour</button>`,
  k=>{if(k==='persp')st.persp=true;else if(k==='ortho')st.persp=false;else if(k==='cpiece')st.colorView='piece';else if(k==='cvox')st.colorView='actual';else st.disp[k]=!st.disp[k];render3d();$('#bDisp').click()})};
-$('#bFit').onclick=()=>{cam.zoom=1;cam.px=0;cam.py=0;render3d()};
 vt.addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;st.mode=b.dataset.m;$$('#vt [data-m]').forEach(x=>x.classList.toggle('on',x===b));$('#cv').className=st.mode==='orbit'?'':st.mode;$('#navHint').textContent=st.mode==='orbit'?'Drag orbit · Shift/middle-drag pan · Wheel zoom':'Drag pan · Shift-drag orbit · Middle-drag pan · Wheel zoom'});
- 
+
 /* ---------- layout modes ---------- */
 const layout={lc:false,rc:false,focus:''};
 function applyLayout(){
@@ -834,14 +965,14 @@ $('#bF3D').onclick=()=>{layout.focus=layout.focus==='3d'?'':'3d';applyLayout()};
 $('#btnZones').onclick=e=>{const on=$('#stage').classList.toggle('zones');e.currentTarget.textContent=on?'Hide zones':'Show zones'};
 $('#btnTheme').onclick=()=>{const dark=matchMedia('(prefers-color-scheme: dark)').matches;const cd=document.documentElement.dataset.theme||(dark?'dark':'light');
  document.documentElement.dataset.theme=cd==='dark'?'light':'dark';render3d()};
- 
+
 /* ---------- status & tag ---------- */
 function updateStatus(){
  const v=[...cur().vox.values()],f=v.filter(x=>x.s==='f').length,va=v.length-f;
  $('#stText').innerHTML=`Shape <b>${cur().id}</b> has <b>${v.length}</b> voxels (${f} fixed, ${va} variable)`;
 }
 function renderTag(){const s=cur();$('#vtag').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>${s.label||''}</span>`}
- 
+
 /* ---------- 3D renderer ---------- */
 const FACES=[
  {n:[1,0,0],v:[[1,0,0],[1,1,0],[1,1,1],[1,0,1]],f:.82},{n:[-1,0,0],v:[[0,0,0],[0,0,1],[0,1,1],[0,1,0]],f:.66},
@@ -849,15 +980,16 @@ const FACES=[
  {n:[0,0,1],v:[[0,0,1],[1,0,1],[1,1,1],[0,1,1]],f:.98},{n:[0,0,-1],v:[[0,0,0],[0,1,0],[1,1,0],[1,0,0]],f:.58}];
 function shade(hex,f){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;
  if(f>1){const t=f-1;r+=(255-r)*t;g+=(255-g)*t;b+=(255-b)*t}else{r*=f;g*=f;b*=f}return`rgb(${r|0},${g|0},${b|0})`}
+function mkRot(c){const a=c.yaw*Math.PI/180,b=c.pitch*Math.PI/180,r=(c.roll||0)*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b),cr=Math.cos(r),sr=Math.sin(r);
+ return (x,y,z)=>{const x1=x*ca+z*sa,z1=-x*sa+z*ca,y2=y*cb-z1*sb,z2=y*sb+z1*cb;return[x1*cr-y2*sr,x1*sr+y2*cr,z2]}}
 function render3d(){
  const cv=$('#cv'),w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
  const r=(window.devicePixelRatio||1)*S;const bw=Math.round(w*r),bh=Math.round(h*r);
  if(cv.width!==bw||cv.height!==bh){cv.width=bw;cv.height=bh}
  const g=cv.getContext('2d');g.setTransform(r,0,0,r,0,0);g.clearRect(0,0,w,h);
- const sh=cur(),[dx,dy,dz]=sh.dims,ctr=[dx/2,dy/2,dz/2];
- const a=cam.yaw*Math.PI/180,b=cam.pitch*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b);
- const sc=Math.min(w,h)/(Math.max(dx,dy,dz)*2.05+1.5)*cam.zoom;
- const rot=(x,y,z)=>{const x1=x*ca+z*sa,z1=-x*sa+z*ca;return[x1,y*cb-z1*sb,y*sb+z1*cb]};
+ const sh=cur(),SP=spaceNow(),[dx,dy,dz]=SP?SP.ext:sh.dims,ctr=[dx/2,dy/2,dz/2];
+  const sc=Math.min(w,h)/(Math.max(dx,dy,dz)*2.05+1.5)*cam.zoom;
+ const rot=mkRot(cam);
  const pr=(p)=>{const q=rot(p[0]-ctr[0],p[1]-ctr[1],p[2]-ctr[2]);const k=st.persp?64/(64-q[2]):1;return[w/2+cam.px+q[0]*sc*k,h/2+cam.py-q[1]*sc*k,q[2]]};
  const line=(p,q,col,lw,dash)=>{const A=pr(p),B=pr(q);g.beginPath();g.moveTo(A[0],A[1]);g.lineTo(B[0],B[1]);g.strokeStyle=col;g.lineWidth=lw;g.setLineDash(dash||[]);g.stroke();g.setLineDash([])};
  $('#emptyMsg').style.display=sh.vox.size?'none':'grid';
@@ -867,7 +999,18 @@ function render3d(){
  // axes
  if(st.disp.axes){const L=.7;line([0,0,0],[dx+L,0,0],css('--ax'),2.5);line([0,0,0],[0,dy+L,0],css('--ay'),2.5);line([0,0,0],[0,0,dz+L],css('--az'),2.5)}
  // cubes
- lastFaces=[];const cubes=[];sh.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);cubes.push({x,y,z,v,d:rot(x+.5-ctr[0],y+.5-ctr[1],z+.5-ctr[2])[2]})});
+ lastFaces=[];
+ if(SP){const Ld=[-.35,.75,.55],vox=[];sh.vox.forEach((v,k)=>{const c=SP.by.get(k);if(c)vox.push({c,v,d:rot(c.c3[0]-ctr[0],c.c3[1]-ctr[1],c.c3[2]-ctr[2])[2]})});vox.sort((a,b)=>a.d-b.d);
+  vox.forEach(({c,v})=>{const base=st.colorView==='piece'?sh.col:colHex(v.c,sh),al=(v.s==='v'?.5:1)*((st.disp.dim&&editorVisible()&&c.z!==st.layer)?.28:1);
+   if(c.circle){const q=rot(c.c3[0]-ctr[0],c.c3[1]-ctr[1],c.c3[2]-ctr[2]),kk=st.persp?64/(64-q[2]):1,P0=pr(c.c3),R=c.r*sc*kk;
+    const gr=g.createRadialGradient(P0[0]-R*.35,P0[1]-R*.4,R*.08,P0[0],P0[1],R);gr.addColorStop(0,shade(base,st.set.lights?1.35:1));gr.addColorStop(1,shade(base,st.set.lights?.62:.92));
+    g.beginPath();g.arc(P0[0],P0[1],R,0,7);g.globalAlpha=al;g.fillStyle=gr;g.fill();g.globalAlpha=1;g.strokeStyle='rgba(0,0,0,.35)';g.lineWidth=1;g.setLineDash(v.s==='v'?[3,3]:[]);g.stroke();g.setLineDash([]);
+    lastFaces.push({sphere:true,cx:P0[0],cy:P0[1],R,key:c.key,c})}
+   else c.faces.forEach(f=>{const qn=rot(f.n[0],f.n[1],f.n[2]);if(qn[2]<=.0001)return;if(f.nb&&sh.vox.has(f.nb))return;
+    const pts=f.pts.map(pr),lf=.62+.5*Math.max(0,(qn[0]*Ld[0]+qn[1]*Ld[1]+qn[2]*Ld[2])/1.0);
+    g.beginPath();pts.forEach((q,i)=>i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath();g.globalAlpha=al;g.fillStyle=shade(base,st.set.lights?lf:.92);g.fill();g.globalAlpha=1;
+    g.strokeStyle='rgba(0,0,0,.32)';g.lineWidth=1;g.setLineDash(v.s==='v'?[3,3]:[]);g.stroke();g.setLineDash([]);lastFaces.push({pts,key:c.key,nb:f.nb,n:f.n})})})}
+ const cubes=[];if(!SP)sh.vox.forEach((v,k)=>{const [x,y,z]=k.split(',').map(Number);cubes.push({x,y,z,v,d:rot(x+.5-ctr[0],y+.5-ctr[1],z+.5-ctr[2])[2]})});
  cubes.sort((p,q)=>p.d-q.d);
  cubes.forEach(cu=>{const base=st.colorView==='piece'?sh.col:colHex(cu.v.c,sh);
   FACES.forEach(f=>{const nn=rot(f.n[0],f.n[1],f.n[2]);if(nn[2]<=0.0001)return;
@@ -877,7 +1020,7 @@ function render3d(){
    const li=st.plane==='XY'?cu.z:st.plane==='XZ'?cu.y:cu.x;g.globalAlpha=(cu.v.s==='v'?.5:1)*((st.disp.dim&&editorVisible()&&li!==st.layer)?.28:1);g.fillStyle=shade(base,st.set.lights?f.f:.92);g.fill();g.globalAlpha=1;
    g.strokeStyle='rgba(0,0,0,.32)';g.lineWidth=1;g.setLineDash(cu.v.s==='v'?[3,3]:[]);g.stroke();g.setLineDash([])})});
  // active layer slab: the whole one-voxel-thick layer volume (links 2D editor to 3D)
- if(st.disp.layer&&editorVisible()){const L=st.layer,lo=[0,0,0],hi=[dx,dy,dz],ai=st.plane==='XY'?2:st.plane==='XZ'?1:0;lo[ai]=L;hi[ai]=L+1;
+ if(st.disp.layer&&editorVisible()){const L=st.layer,lo=[0,0,0],hi=[dx,dy,dz],ai=st.plane==='XY'?2:st.plane==='XZ'?1:0;{const lzv=SP?SP.lz:1;lo[ai]=L*lzv;hi[ai]=(L+1)*lzv}
   const acc=css('--accent');
   FACES.forEach(f=>{
    const pts=f.v.map(q=>pr([lo[0]+q[0]*(hi[0]-lo[0]),lo[1]+q[1]*(hi[1]-lo[1]),lo[2]+q[2]*(hi[2]-lo[2])]));
@@ -885,7 +1028,16 @@ function render3d(){
   const V=[];for(let i=0;i<8;i++)V.push(pr([i&1?hi[0]:lo[0],i&2?hi[1]:lo[1],i&4?hi[2]:lo[2]]));
   g.strokeStyle=acc;g.lineWidth=1.8;[[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b])=>{g.beginPath();g.moveTo(V[a][0],V[a][1]);g.lineTo(V[b][0],V[b][1]);g.stroke()})}
  // live preview for 3D editing (includes mirror / span ghosts)
- if(hov){
+ if(hov&&SP){const acc=css('--accent'),dng=css('--danger'),cc=colHex(st.color,sh);
+  const gc=(k,fill,stroke,dash,alpha)=>{const c=SP.by.get(k);if(!c)return;
+   if(c.circle){const q=rot(c.c3[0]-ctr[0],c.c3[1]-ctr[1],c.c3[2]-ctr[2]),kk=st.persp?64/(64-q[2]):1,P0=pr(c.c3);g.beginPath();g.arc(P0[0],P0[1],c.r*sc*kk,0,7);g.globalAlpha=alpha;g.fillStyle=fill;g.fill();g.globalAlpha=1;g.strokeStyle=stroke;g.lineWidth=2;g.setLineDash(dash);g.stroke();g.setLineDash([])}
+   else c.faces.forEach(f=>{if(rot(f.n[0],f.n[1],f.n[2])[2]<=.0001)return;const pts=f.pts.map(pr);g.beginPath();pts.forEach((q,i)=>i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath();g.globalAlpha=alpha;g.fillStyle=fill;g.fill();g.globalAlpha=1;g.strokeStyle=stroke;g.lineWidth=2;g.setLineDash(dash);g.stroke();g.setLineDash([])})};
+  const occ=hov.target?sh.vox.get(hov.target):null;
+  if(hov.act==='fixed'||hov.act==='variable'){const want=hov.act==='fixed'?'f':'v';
+   if(hov.valid){if(!occ)gc(hov.target,cc,acc,hov.act==='variable'?[5,4]:[],.55);else if(occ.s!==want||occ.c!==st.color)gc(hov.target,cc,acc,[3,3],.22)}
+   else if(hov.face){g.strokeStyle=dng;g.lineWidth=2.5;g.setLineDash([4,3]);g.beginPath();if(hov.face.sphere)g.arc(hov.face.cx,hov.face.cy,hov.face.R,0,7);else{hov.face.pts.forEach((q,i)=>i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath()}g.stroke();g.setLineDash([])}}
+  else if(hov.act==='erase'){if(occ)gc(hov.target,dng,dng,[],.5)}else if(occ)gc(hov.target,cc,acc,[],.5)}
+ else if(hov){
   const acc=css('--accent'),dng=css('--danger');
   const ghost=(c,fill,stroke,dash,alpha)=>FACES.forEach(f=>{const nn=rot(f.n[0],f.n[1],f.n[2]);if(nn[2]<=0.0001)return;
    const pts=f.v.map(q=>pr([c[0]+q[0],c[1]+q[1],c[2]+q[2]]));g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath();
@@ -897,42 +1049,128 @@ function render3d(){
   }else if(hov.act==='erase')expand([hov.target]).forEach(c=>{if(sh.vox.has(key(...c)))ghost(c,dng,dng,[],.5)});
   else expand([hov.target]).forEach(c=>{if(sh.vox.has(key(...c)))ghost(c,cc,acc,[],.5)});
  }
- // orientation gizmo (Settings ▸ 3D view ▸ Show view cube)
- if(st.set.cube){const gx=54,gy=h-96;[['X','--ax',[1,0,0]],['Y','--ay',[0,1,0]],['Z','--az',[0,0,1]]].forEach(([n,c,e])=>{
-  const q=rot(...e);g.beginPath();g.moveTo(gx,gy);g.lineTo(gx+q[0]*26,gy-q[1]*26);g.strokeStyle=css(c);g.lineWidth=2;g.stroke();
-  g.fillStyle=css(c);g.font='700 11px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(n,gx+q[0]*36,gy-q[1]*36)});}
+ renderCube();
 }
+/* ---------- view cube: perspective-aware, snap to faces / edges / corners, Home, 90-degree steps, smooth animation ---------- */
+const VC={w:156,h:170,cx:78,cy:100,s:30,t:.56,D:5.5};
+const HOME={yaw:-32,pitch:26,roll:0,zoom:1,px:0,py:0};
+const HOME_C=[26,40],ROLLS=[{sg:-1,x:103,y:40},{sg:1,x:134,y:72}];
+let anim=null,vcHover=null;
+let zTarget=null,zRaf=null,zLast=0;
+function zoomBy(f){zTarget=Math.max(.3,Math.min(4,(zTarget==null?cam.zoom:zTarget)*f));if(!zRaf){zLast=performance.now();zRaf=requestAnimationFrame(zStep)}}
+function zStep(now){const dt=Math.min(50,now-zLast);zLast=now;cam.zoom+=(zTarget-cam.zoom)*(1-Math.exp(-dt/90));render3d();
+ if(Math.abs(Math.log(zTarget/cam.zoom))>.0015)zRaf=requestAnimationFrame(zStep);else{cam.zoom=zTarget;render3d();zTarget=null;zRaf=null}}
+function animateTo(t,ms){ms=ms||360;zTarget=null;cancelAnimationFrame(zRaf);zRaf=null;const from={yaw:cam.yaw,pitch:cam.pitch,roll:cam.roll||0,zoom:cam.zoom,px:cam.px,py:cam.py},to=Object.assign({},from,t);
+ const wrap=d=>((d+180)%360+360)%360-180;to.yaw=from.yaw+wrap(to.yaw-from.yaw);to.roll=from.roll+wrap(to.roll-from.roll);
+ const t0=performance.now();cancelAnimationFrame(anim);
+ const step=now=>{const k=Math.min(1,(now-t0)/ms),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;for(const q in from)cam[q]=from[q]+(to[q]-from[q])*e;render3d();if(k<1)anim=requestAnimationFrame(step)};
+ anim=requestAnimationFrame(step)}
+const homeView=()=>animateTo(HOME),fitView=()=>animateTo({zoom:1,px:0,py:0});
+function dirToView(n,keepYaw){const r=Math.hypot(n[0],n[2]);return{yaw:r<1e-6?Math.round(keepYaw/90)*90:Math.atan2(-n[0],n[2])*180/Math.PI,pitch:Math.max(-89,Math.min(89,Math.atan2(n[1],r)*180/Math.PI)),roll:0}}
+function viewToWorld(v){const a=cam.yaw*Math.PI/180,b=cam.pitch*Math.PI/180,r=(cam.roll||0)*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b),cr=Math.cos(r),sr=Math.sin(r);
+ const x1=v[0]*cr+v[1]*sr,y2=-v[0]*sr+v[1]*cr,z2=v[2],y=y2*cb+z2*sb,z1=-y2*sb+z2*cb;return[x1*ca-z1*sa,y,x1*sa+z1*ca]}
+/* geometry: every point of the cube is projected like the main view (perspective follows Display ▸ Projection) */
+function cubeGeo(){const rot=mkRot(cam),persp=st.persp,faces=[];
+ const proj=v=>{const q=rot(v[0],v[1],v[2]),k=persp?VC.D/(VC.D-q[2]):1;return[VC.cx+q[0]*VC.s*k,VC.cy-q[1]*VC.s*k]};
+ for(let k=0;k<3;k++)for(const sg of[1,-1]){const n=[0,0,0];n[k]=sg;const ua=(k+1)%3,va=(k+2)%3,q=rot(...n);
+  const f={k,sg,n,ua,va,nz:q[2],vis:persp?(VC.D*q[2]-1>0):q[2]>1e-4,qn:q};
+  f.pt=(a,b)=>{const v=n.slice();v[ua]+=a;v[va]+=b;return proj(v)};faces.push(f)}
+ return faces}
+function solveAB(f,px,py){let a=0,b=0;for(let i=0;i<10;i++){const p=f.pt(a,b),pa=f.pt(a+1e-3,b),pb=f.pt(a,b+1e-3),Ja=[(pa[0]-p[0])*1e3,(pa[1]-p[1])*1e3],Jb=[(pb[0]-p[0])*1e3,(pb[1]-p[1])*1e3],det=Ja[0]*Jb[1]-Ja[1]*Jb[0];if(Math.abs(det)<1e-9)break;
+  const ex=px-p[0],ey=py-p[1];a+=(ex*Jb[1]-ey*Jb[0])/det;b+=(Ja[0]*ey-Ja[1]*ex)/det}return[a,b]}
+function cubeAligned(){const rot=mkRot(Object.assign({},cam,{roll:0}));for(let k=0;k<3;k++)for(const sg of[1,-1]){const n=[0,0,0];n[k]=sg;if(rot(...n)[2]>.9995)return{k,sg,n}}return null}
+const ARROWS=()=>{const d=VC.s+20;return[['up',VC.cx,VC.cy-d],['down',VC.cx,VC.cy+d],['left',VC.cx-d,VC.cy],['right',VC.cx+d,VC.cy]]};
+function cubeHit(px,py){
+ if(Math.abs(px-HOME_C[0])<=15&&Math.abs(py-HOME_C[1])<=15)return{type:'home'};
+ if(cubeAligned()){for(const [nm,x,y] of ARROWS())if(Math.hypot(px-x,py-y)<=12)return{type:'arrow',nm};
+  for(const r of ROLLS)if(Math.hypot(px-r.x,py-r.y)<=16)return{type:'roll',sg:r.sg}}
+ for(const f of cubeGeo().filter(f=>f.vis).sort((a,b)=>b.nz-a.nz)){
+  const quad=[f.pt(-1,-1),f.pt(1,-1),f.pt(1,1),f.pt(-1,1)];if(!inPoly([px,py],quad))continue;
+  const [a,b]=solveAB(f,px,py),ia=a>VC.t?1:a<-VC.t?-1:0,ib=b>VC.t?1:b<-VC.t?-1:0,dir=f.n.slice();dir[f.ua]+=ia;dir[f.va]+=ib;return{type:'face',f,ia,ib,dir}}
+ return null}
+function rollIcon(g,sg,col){g.save();g.strokeStyle=g.fillStyle=col;g.lineWidth=2.2;g.lineCap='round';g.lineJoin='round';
+ /* two small half-circle arrows around the cube's upper-right corner (radius 9): an arch over the top (counter-clockwise, large head at its left end pointing down) and a ")" down the right side (clockwise, large head at its bottom end pointing left) */
+ const r=9;let hx,hy,tx,ty;
+ if(sg<0){g.beginPath();g.arc(103,44,r,0,-Math.PI,true);g.stroke();hx=103-r;hy=44;tx=0;ty=1}
+ else{g.beginPath();g.arc(132,72,r,-Math.PI/2,Math.PI/2,false);g.stroke();hx=132;hy=72+r;tx=-1;ty=0}
+ const nx=-ty,ny=tx;g.beginPath();g.moveTo(hx+tx*8.5,hy+ty*8.5);g.lineTo(hx+nx*6,hy+ny*6);g.lineTo(hx-nx*6,hy-ny*6);g.closePath();g.fill();g.restore()}
+function renderCube(){const c=document.getElementById('vcube');if(!c)return;if(!st.set.cube){c.style.display='none';return}c.style.display='';
+ const r=(window.devicePixelRatio||1)*S;c.width=Math.round(VC.w*r);c.height=Math.round(VC.h*r);
+ c.style.top=document.getElementById('vp').clientWidth<640?'76px':'';
+ const g=c.getContext('2d');g.setTransform(r,0,0,r,0,0);g.clearRect(0,0,VC.w,VC.h);
+ const dark=isDarkTheme(),ink=dark?'#e7eaf0':'#2a2f3a',faceC=dark?'#4a5262':'#d9dde4',edge=dark?'#aab1bf':'#3a3f4a',hi='#4f7df0';
+ const path=pts=>{g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]));g.closePath()};
+ const reg=(f,a0,a1,b0,b1)=>[f.pt(a0,b0),f.pt(a1,b0),f.pt(a1,b1),f.pt(a0,b1)];
+ const al=cubeAligned(),faces=cubeGeo().filter(f=>f.vis).sort((a,b)=>a.nz-b.nz),axc=['--ax','--ay','--az'];
+ const L=[-.35,.75,.55],Ln=Math.hypot(...L);
+ /* highlight direction (face centre = 1 normal, edge = 2, corner = 3): painted on every visible face that touches it */
+ const hd=vcHover&&vcHover.type==='face'?vcHover.dir:null;
+ if(vcHover&&vcHover.type==='home'){g.fillStyle='rgba(79,125,240,.18)';g.beginPath();g.arc(HOME_C[0],HOME_C[1],15,0,7);g.fill()}
+ g.save();g.translate(HOME_C[0]-19,HOME_C[1]-21);g.fillStyle=ink;g.beginPath();g.moveTo(19,8);g.lineTo(32,20);g.lineTo(28,20);g.lineTo(28,33);g.lineTo(10,33);g.lineTo(10,20);g.lineTo(6,20);g.closePath();g.fill();
+ g.fillStyle=dark?'#1a1d24':'#ffffff';g.fillRect(16,24,6,9);g.restore();
+ faces.forEach(f=>{const dot=(f.qn[0]*L[0]+f.qn[1]*L[1]+f.qn[2]*L[2])/Ln;
+  path(reg(f,-1,1,-1,1));g.fillStyle=shade(faceC,.72+.42*Math.max(0,dot));g.fill();
+  if(hd&&hd[f.k]===f.sg){const t=VC.t,ia=hd[f.ua],ib=hd[f.va],ra=ia===0?[-t,t]:ia>0?[t,1]:[-1,-t],rb=ib===0?[-t,t]:ib>0?[t,1]:[-1,-t];path(reg(f,ra[0],ra[1],rb[0],rb[1]));g.fillStyle=hi;g.fill()}
+  path(reg(f,-1,1,-1,1));g.strokeStyle=edge;g.lineWidth=1.2;g.lineJoin='round';g.stroke();
+  /* label: affine approximation of the face at its centre */
+  const C=f.pt(0,0),U=f.pt(1,0),V=f.pt(0,1),ux=U[0]-C[0],uy=U[1]-C[1];let vx=V[0]-C[0],vy=V[1]-C[1];if(ux*vy-uy*vx<0){vx=-vx;vy=-vy}
+  const single=hd&&hd[f.k]===f.sg&&Math.abs(hd[0])+Math.abs(hd[1])+Math.abs(hd[2])===1;
+  g.save();g.transform(ux,uy,vx,vy,C[0],C[1]);g.font='800 .5px system-ui,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle=single?'#fff':css(axc[f.k]);g.fillText((f.sg>0?'+':'\u2212')+'XYZ'[f.k],0,.04);g.restore()});
+ if(al){ARROWS().forEach(([nm,x,y])=>{const h=vcHover&&vcHover.type==='arrow'&&vcHover.nm===nm;g.fillStyle=h?hi:ink;g.beginPath();
+   const q={up:[[0,-6],[-6,4],[6,4]],down:[[0,6],[-6,-4],[6,-4]],left:[[-6,0],[4,-6],[4,6]],right:[[6,0],[-4,-6],[-4,6]]}[nm];q.forEach((p,i)=>i?g.lineTo(x+p[0],y+p[1]):g.moveTo(x+p[0],y+p[1]));g.closePath();g.fill()});
+  ROLLS.forEach(rl=>rollIcon(g,rl.sg,vcHover&&vcHover.type==='roll'&&vcHover.sg===rl.sg?hi:ink))}
+ const rot=mkRot(cam);[['X',[1,0,0],'--ax'],['Y',[0,1,0],'--ay'],['Z',[0,0,1],'--az']].forEach(([n,e,cv])=>{const q=rot(...e);g.strokeStyle=css(cv);g.lineWidth=2;g.beginPath();g.moveTo(18,152);g.lineTo(18+q[0]*24,152-q[1]*24);g.stroke();g.fillStyle=css(cv);g.font='700 10px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(n,18+q[0]*33,152-q[1]*33)})}
+(function(){const c=document.getElementById('vcube');
+ const pos=e=>{const r=c.getBoundingClientRect();return[(e.clientX-r.left)/S,(e.clientY-r.top)/S]};
+ c.addEventListener('pointermove',e=>{const[px,py]=pos(e);vcHover=cubeHit(px,py);c.style.cursor=vcHover?'pointer':'default';c.title=!vcHover?'':vcHover.type==='home'?'Home — default view, fitted':vcHover.type==='arrow'?'Rotate 90°':vcHover.type==='roll'?'Roll 90°':(vcHover.ia&&vcHover.ib)?'Snap to corner view':(vcHover.ia||vcHover.ib)?'Snap to edge view':'Snap to face view — double-click to stand the label upright';renderCube()});
+ c.addEventListener('pointerleave',()=>{vcHover=null;renderCube()});
+ c.addEventListener('dblclick',e=>{const[px,py]=pos(e),h=cubeHit(px,py);if(!h||h.type!=='face'||h.ia||h.ib)return;
+  const v=dirToView(h.dir,cam.yaw),rr=mkRot({yaw:v.yaw,pitch:v.pitch,roll:0}),U=[0,0,0];U[h.f.ua]=1;const q=rr(...U);
+  v.roll=Math.round(-Math.atan2(q[1],q[0])*180/Math.PI/90)*90;animateTo(v)});
+ c.addEventListener('click',e=>{const[px,py]=pos(e),h=cubeHit(px,py);if(!h)return;
+  if(h.type==='home')homeView();
+  else if(h.type==='face')animateTo(dirToView(h.dir,cam.yaw));
+  else if(h.type==='roll')animateTo({roll:(cam.roll||0)+(h.sg<0?90:-90)});
+  else if(h.type==='arrow'){const v={up:[0,1,0],down:[0,-1,0],left:[-1,0,0],right:[1,0,0]}[h.nm],w=viewToWorld(v).map(Math.round);animateTo(dirToView(w,cam.yaw))}});
+})();
 let hov=null,lastFaces=[],lm=null;
 const mods=e=>({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey});
 function actFor(m){if(m.ctrl)return'erase';if(m.alt)return'variable';if(m.shift)return'fixed';return st.edit3d?st.tool:null}
 function inPoly(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if((a[1]>pt[1])!==(b[1]>pt[1])&&pt[0]<(b[0]-a[0])*(pt[1]-a[1])/(b[1]-a[1])+a[0])c=!c}return c}
 function updateHover(px,py,m){
  const act=actFor(m);hov=null;$('#cv').style.cursor=act?cursorFor(act):'';renderEditBtn((m.ctrl||m.alt||m.shift)?act:null);
- if(act){for(let i=lastFaces.length-1;i>=0;i--){const F=lastFaces[i];if(inPoly([px,py],F.pts)){
-  const add=(act==='fixed'||act==='variable');
-  const t=add?[F.x+F.n[0],F.y+F.n[1],F.z+F.n[2]]:[F.x,F.y,F.z],d=cur().dims;
-  hov={act,face:F,target:t,valid:t.every((v,j)=>v>=0&&v<d[j])};break}}}
+ if(act){const SP=spaceNow();for(let i=lastFaces.length-1;i>=0;i--){const F=lastFaces[i];
+  if(SP){if(!(F.sphere?Math.hypot(px-F.cx,py-F.cy)<=F.R:inPoly([px,py],F.pts)))continue;
+   const add=(act==='fixed'||act==='variable');let t=F.key,valid=true;
+   if(add){if(F.sphere){const nx=(px-F.cx)/F.R,ny=-(py-F.cy)/F.R,nz=Math.sqrt(Math.max(0,1-nx*nx-ny*ny)),w=viewToWorld([nx,ny,nz]);let best=-2;t=null;
+     F.c.nbs.forEach(nb=>{if(cur().vox.has(nb.key))return;const dt=(nb.d[0]*w[0]+nb.d[1]*w[1]+nb.d[2]*w[2])/Math.hypot(...nb.d);if(dt>best){best=dt;t=nb.key}});valid=!!t}
+    else{t=F.nb;valid=!!t}}
+   hov={act,face:F,target:t,valid};break}
+  if(inPoly([px,py],F.pts)){
+   const add=(act==='fixed'||act==='variable');
+   const t=add?[F.x+F.n[0],F.y+F.n[1],F.z+F.n[2]]:[F.x,F.y,F.z],d=cur().dims;
+   hov={act,face:F,target:t,valid:t.every((v,j)=>v>=0&&v<d[j])};break}}}
  render3d();
 }
 (function(){const cv=$('#cv');let d=null;
- cv.addEventListener('pointerdown',e=>{if(e.button===2)return;if(e.button===1)e.preventDefault();cv.setPointerCapture(e.pointerId);
+ cv.addEventListener('pointerdown',e=>{cancelAnimationFrame(anim);if(e.button===2)return;if(e.button===1)e.preventDefault();cv.setPointerCapture(e.pointerId);
   const other=st.mode==='orbit'?'pan':'orbit';
   d={x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,moved:false,btn:e.button,m:e.button===1?'pan':(e.shiftKey?other:st.mode)}});
  cv.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();lm={x:(e.clientX-r.left)/S,y:(e.clientY-r.top)/S};
   if(!d){updateHover(lm.x,lm.y,mods(e));return}
   if(!d.moved){if(Math.hypot(e.clientX-d.sx,e.clientY-d.sy)<=4)return;d.moved=true;hov=null;d.x=e.clientX;d.y=e.clientY}
   const dx=(e.clientX-d.x)/S,dy=(e.clientY-d.y)/S;d.x=e.clientX;d.y=e.clientY;
-  if(d.m==='orbit'){cam.yaw+=dx*.5;cam.pitch=Math.max(-89,Math.min(89,cam.pitch+dy*.5))}
+  if(d.m==='orbit'){const rr=(cam.roll||0)*Math.PI/180,cr=Math.cos(rr),sr=Math.sin(rr);cam.yaw+=(dx*cr-dy*sr)*.5;cam.pitch=Math.max(-89,Math.min(89,cam.pitch+(dx*sr+dy*cr)*.5))}
   else if(d.m==='pan'){cam.px+=dx;cam.py+=dy}else{cam.zoom=Math.max(.3,Math.min(4,cam.zoom*Math.exp(-dy*.01)))}render3d()});
  cv.addEventListener('pointerup',e=>{const was=d;d=null;
   if(was&&was.btn===0&&!was.moved&&hov&&hov.valid){applyTool(hov.act,[hov.target]);renderEditor();updateStatus()}
   if(lm)updateHover(lm.x,lm.y,mods(e));else render3d()});
  cv.addEventListener('pointerleave',()=>{if(!d){hov=null;render3d()}});
- cv.addEventListener('wheel',e=>{e.preventDefault();cam.zoom=Math.max(.3,Math.min(4,cam.zoom*Math.exp(-e.deltaY*(st.set.rev?-1:1)*.0015)));render3d()},{passive:false});
+ cv.addEventListener('wheel',e=>{cancelAnimationFrame(anim);e.preventDefault();const dy=e.deltaY*(e.deltaMode===1?33:1);zoomBy(Math.exp(-dy*(st.set.rev?-1:1)*.0016))},{passive:false});
 })();
 ['keydown','keyup'].forEach(t=>document.addEventListener(t,e=>{if(!(e.key==='Control'||e.key==='Shift'||e.key==='Alt'||e.key==='Meta'))return;if(hc)hover2d(mods(e));else if(lm)updateHover(lm.x,lm.y,mods(e))}));
 $('#bEdit').onclick=()=>{st.edit3d=!st.edit3d;renderEditBtn();if(lm)updateHover(lm.x,lm.y,{ctrl:false,shift:false,alt:false});else render3d()};
- 
+
 /* ---------- keyboard ---------- */
 document.addEventListener('keydown',e=>{
  if(e.target.matches('input')){if(e.key==='Escape'&&$('#scrim').classList.contains('show')){closeSettings();e.target.blur()}return}const k=e.key;
@@ -943,13 +1181,14 @@ document.addEventListener('keydown',e=>{
  else if(k==='F2'){shapeAction('label',st.sel)}else if(k==='Delete'){shapeAction('del',st.sel)}else if((e.ctrlKey||e.metaKey)&&(k==='d'||k==='D')){e.preventDefault();shapeAction('copy',st.sel)}
  else if(k==='PageUp'){e.preventDefault();st.layer=Math.min(P().layers-1,st.layer+1);renderEditor();render3d()}
  else if(k==='PageDown'){e.preventDefault();st.layer=Math.max(0,st.layer-1);renderEditor();render3d()}
- else if(k==='f'||k==='F'){$('#bFit').click()}
+ else if(k==='f'||k==='F'){fitView()}
+ else if(k==='Home'){homeView()}
  else if(k==='Escape'){if($('#scrim').classList.contains('show'))closeSettings();else if(pop.style.display==='block')closePop();else if(st.selCells.size){st.selCells.clear();renderEditor()}else{layout.focus='';applyLayout()}}
 });
- 
+
 /* ---------- status-bar view toggles ---------- */
 function renderStatusTgl(){}
- 
+
 /* ---------- settings dialog ---------- */
 const SET=[
  {id:'general',name:'General',rows:[
@@ -1003,11 +1242,12 @@ $('#setPg').addEventListener('click',e=>{
 $('#setPg').addEventListener('change',e=>{const t=e.target;if(t.tagName==='SELECT'){st.set[t.dataset.k]=+t.value;applySet()}});
 $('#setPg').addEventListener('input',e=>{const t=e.target;if(t.type==='range'){st.set[t.dataset.k]=+t.value;t.nextElementSibling.textContent=t.value}});
 $('#setPg').addEventListener('keydown',e=>{const sw=e.target.closest&&e.target.closest('.switch');if(sw&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.set[sw.dataset.k]=!st.set[sw.dataset.k];applySet();const k=sw.dataset.k;const n=$(`#setPg .switch[data-k="${k}"]`);n&&n.focus()}});
- 
+
 window.__G=G;window.__I=I;
 /* ---------- orchestration ---------- */
 function renderEditor(){renderPlane();renderLayers();renderGrid();renderSelbar()}
-function renderAll(){renderShapes();renderInsp();renderTools();renderMod();renderStatusTgl();renderColors();renderEditor();renderTag();updateStatus();render3d()}
+const _renderInsp0=renderInsp;renderInsp=function(){_renderInsp0();if(spaceNow()){['#btnPrune','#btnCenter','#btnOrigin','#btnMin','#btnFill'].forEach(q=>{const e=$(q);if(e){e.disabled=true;e.title='Mock: not interactive for this voxel type'}});$$('#mulRow button,#surf button').forEach(b=>{b.disabled=true;b.title='Mock: not interactive for this voxel type'})}};
+function renderAll(){renderVType();renderShapes();renderInsp();renderTools();renderMod();renderStatusTgl();renderColors();renderEditor();renderTag();updateStatus();render3d()}
 function fit(){S=Math.min(innerWidth/1600,innerHeight/1000);const wr=$('#wrap');wr.style.width=1600*S+'px';wr.style.height=1000*S+'px';$('#stage').style.transform=`scale(${S})`;renderGrid();render3d()}
 addEventListener('resize',fit);
 new ResizeObserver(()=>render3d()).observe($('#cv'));
@@ -1017,4 +1257,3 @@ fit();renderAll();
 </script>
 </body>
 </html>
- 
