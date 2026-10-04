@@ -33,7 +33,7 @@ body{margin:0;height:100%;overflow:hidden;background:var(--outer);display:grid;p
   font:13px/1.35 -apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--text);font-variant-numeric:tabular-nums}
 #wrap{position:relative}
 #stage{position:absolute;left:0;top:0;width:1600px;height:1000px;transform-origin:0 0;background:var(--bg);
-  display:grid;grid-template-columns:68px 1fr;grid-template-rows:40px 1fr 28px;overflow:hidden;
+  display:grid;grid-template-columns:68px 1fr;grid-template-rows:40px 1fr 28px;align-items:stretch;overflow:hidden;
   --lw:380px;--rw:400px;--cw:1fr}
 button{font:inherit;color:inherit}
 
@@ -67,7 +67,7 @@ button{font:inherit;color:inherit}
 .ax-x{color:var(--ax)} .ax-y{color:var(--ay)} .ax-z{color:var(--az)}
 
 /* ---------- workspace ---------- */
-.body{grid-column:2;grid-row:2;display:grid;grid-template-columns:var(--lw) var(--cw) var(--rw);gap:8px;padding:8px;min-height:0;transition:grid-template-columns .2s ease}
+.body{grid-column:2;grid-row:2;align-self:stretch;display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:var(--lw) var(--cw) var(--rw);gap:8px;padding:8px;min-height:0;transition:grid-template-columns .2s ease}
 #stage.lc{--lw:56px} #stage.rc{--rw:56px}
 #stage.f3d{--lw:56px;--rw:56px}
 #stage.f2d{--lw:56px;--cw:360px;--rw:1fr}
@@ -305,7 +305,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .rbtn.on{background:var(--accentSoft);color:var(--accent)}
 .rbtn.on::before{content:"";position:absolute;left:-6px;top:13px;bottom:13px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
 /* ---- tab switching ---- */
-#stage[data-tab=puzzle].lc,#stage[data-tab=puzzle].rc,#stage[data-tab=puzzle].f2d,#stage[data-tab=solver].lc,#stage[data-tab=solver].rc,#stage[data-tab=solver].f2d{--lw:380px;--rw:400px;--cw:1fr}
+#stage[data-tab=puzzle].f2d,#stage[data-tab=solver].f2d{--lw:380px;--rw:400px;--cw:1fr}
 #stage[data-tab=puzzle].f3d .puz,#stage[data-tab=solver].f3d .slv,#stage[data-tab=solver] .ent,#stage[data-tab=solver] .puz{display:none}
 #stage[data-tab=puzzle].f3d .body,#stage[data-tab=solver].f3d .body{grid-template-columns:1fr}
 #stage:not([data-tab=solver]) .slv{display:none}
@@ -513,6 +513,10 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .pvc.wire .sq{background:transparent;border-style:dotted}
 .slv-sort .seg button{display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;padding:0 4px}
 .slv-sort .seg button .arr{font-style:normal;font-size:8px;line-height:1;opacity:.85}
+.crail{display:none;flex-direction:column;align-items:center;gap:8px;padding:8px 0;flex:1}
+.crail .vt2{writing-mode:vertical-rl;color:var(--muted);font-weight:600;letter-spacing:.5px;margin-top:6px}
+#stage.lc #leftP>*:not(.crail),#stage.lc #leftS>*:not(.crail),#stage.rc #rightP>*:not(.crail),#stage.rc #rightS>*:not(.crail){display:none}
+#stage.lc #leftP>.crail,#stage.lc #leftS>.crail,#stage.rc #rightP>.crail,#stage.rc #rightS>.crail{display:flex}
 </style>
 </head>
 <body>
@@ -529,7 +533,6 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
       <select class="mocksel" id="mockOutcome" style="display:none" title="Mock only: pick the canned solver result to preview each UI state"><option value="A">Mock result: 12 assemblies, 5 disassemble</option><option value="B">Mock result: 10 assemblies, none disassemble</option><option value="C">Mock result: no assemblies</option><option value="D">Mock result: 100 assemblies, 37 disassemble</option></select>
       <button class="btn sm" id="btnZones">Show zones</button>
       <button class="ib" id="btnSettings" title="Settings  (Ctrl+,)"></button>
-      <button class="ib" id="btnTheme" title="Toggle light / dark"></button>
     </div>
   </div>
 
@@ -571,7 +574,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 
     <!-- ================= PUZZLE TAB: PROBLEM & PIECES ================= -->
     <section class="card puz" id="leftP">
-      <div class="ch">Problems <span class="chip" id="pzCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><button class="btn pri sm" id="pzNew">+ New</button></div>
+      <div class="ch">Problems <span class="chip" id="pzCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><button class="btn pri sm" id="pzNew">+ New</button><button class="ib" data-collapse="L" title="Collapse sidebar"></button></div>
       <div class="pz-problems" id="pzProblems"></div>
       <div class="pzh">Result</div>
       <div class="pz-result" id="pzResult"></div>
@@ -583,7 +586,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
     </section>
 
     <section class="card slv" id="leftS">
-      <div class="ch">Solver</div>
+      <div class="ch">Solver<span class="sp"></span><button class="ib" data-collapse="L" title="Collapse sidebar"></button></div>
       <div class="pz-scroll">
         <div class="slv-sec"><div class="slv-lab">Problem</div><button class="slv-prob" id="slvProb"></button></div>
         <div class="slv-sec"><div class="slv-lab">What to check</div><div class="slv-mode" id="slvMode"></div></div>
@@ -638,7 +641,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
     </section>
     <!-- ================= PUZZLE TAB: SELECTED PIECE, GROUPS, COLOURS, OPTIONS ================= -->
     <section class="card puz" id="rightP">
-      <div class="ch">Selected piece</div>
+      <div class="ch">Selected piece<span class="sp"></span><button class="ib" data-collapse="R" title="Collapse sidebar"></button></div>
       <div class="pz-scroll">
         <div class="pzs" id="pzSel"></div>
         <div id="pzGroupsSec"><div class="pzh">Exclusive groups</div><div id="pzGroups" style="padding-top:10px"></div></div>
@@ -649,7 +652,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
     <!-- ================= SOLVER TAB ================= -->
     <section class="card slv" id="rightS">
       <div class="ch">Solutions <span class="chip" id="slvCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span>
-        <div class="seg" id="slvViewSeg"><button data-v="list" class="on" title="All solutions at a glance">List</button><button data-v="slider" title="One solution at a time with a slider">Slider</button></div></div>
+        <div class="seg" id="slvViewSeg"><button data-v="list" class="on" title="All solutions at a glance">List</button><button data-v="slider" title="One solution at a time with a slider">Slider</button></div><button class="ib" data-collapse="R" title="Collapse sidebar"></button></div>
       <div class="slv-sel" id="slvSel"></div>
       <div class="slv-player" id="splayer"></div>
       <div class="slv-sort" id="slvSort"></div>
@@ -830,7 +833,7 @@ let shapes=[
  {id:'S11',label:'F',col:'',dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[0,1,0],[0,0,1]])},
  {id:'S12',label:'G',col:'',dims:[3,1,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0]])}
 ];
-const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:false,z:false},edit3d:false,set:{undo:25,tips:true,cube:true,rev:false,rot:'Drag',lights:true,fade:true,threads:12,lists:false},sel:1,tool:'fixed',plane:'XY',layer:0,color:0,selCells:new Set(),applyAll:false,mode:'orbit',
+const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:false,z:false},edit3d:false,set:{theme:'System',undo:25,tips:true,cube:true,rev:false,rot:'Drag',lights:true,fade:true,threads:12,lists:false},sel:1,tool:'fixed',plane:'XY',layer:0,color:0,selCells:new Set(),applyAll:false,mode:'orbit',
   disp:{axes:true,bounds:true,layer:true,dim:false,xray:true},persp:true};
 ['3,1,2','3,1,3','3,2,3'].forEach(k=>shapes[1].vox.get(k).c=1);shapes[1].vox.get('1,2,2').c=2;shapes[1].vox.get('2,1,3').s='v';
 function renumber(){shapes.forEach((s,i)=>{s.id='S'+(i+1);s.col=SHAPE_COL[i%SHAPE_COL.length]})}
@@ -907,7 +910,7 @@ const axCol=a=>({X:'var(--ax)',Y:'var(--ay)',Z:'var(--az)'})[a];
 $('#menu').innerHTML=['File','Toggle 3D','Export','Status','Edit comment','Help','About'].map(t=>`<button>${t}</button>`).join('');
 $('#btnLC').innerHTML=ic('panelL'); $('#btnRC').innerHTML=ic('panelR'); $('#btnF2D').innerHTML=ic('focus');
 $('#btnFill').innerHTML=ic('holes')+' Fill holes';
-$('#btnTheme').innerHTML=ic('sun');$('#btnSettings').innerHTML=ic('gear');$('#setX').innerHTML=ic('close');
+$('#btnSettings').innerHTML=ic('gear');$('#setX').innerHTML=ic('close');
 $$('.sec>button.sh .chev').forEach(e=>e.innerHTML=ic('chevD',14));
 
 /* toolbar for the 3D viewport — single canonical component */
@@ -980,8 +983,8 @@ function renderShapes(){
   <span class="acts">
    <button class="ib" data-a="label" title="Rename">${ic('edit',14)}</button>
    <button class="ib" data-a="copy" title="Duplicate (added as the last shape)">${ic('copy',14)}</button>
-   <button class="ib w" data-a="wm" title="Weight −1 (Solver only)"><span class="wtxt">W−</span></button>
-   <button class="ib w" data-a="wp" title="Weight +1 (Solver only)"><span class="wtxt">W+</span></button>
+   <button class="ib w" data-a="wm" title="Weight −1 — in the Solver, heavier shapes stay in place and lighter ones move"><span class="wtxt">W−</span></button>
+   <button class="ib w" data-a="wp" title="Weight +1 — in the Solver, heavier shapes stay in place and lighter ones move"><span class="wtxt">W+</span></button>
    <button class="ib del" data-a="del" title="Delete" ${shapes.length<2?'disabled':''}>${ic('trash',14)}</button>
   </span></div>`).join('');
  $('#lrail').innerHTML=`<button class="ib" id="btnLE" title="Expand Shapes">${ic('panelL')}</button>`+
@@ -1243,8 +1246,8 @@ $('#btnRC').onclick=()=>{layout.rc=true;applyLayout()};
 $('#btnF2D').onclick=()=>{layout.focus=layout.focus==='2d'?'':'2d';applyLayout()};
 $('#bF3D').onclick=()=>{layout.focus=layout.focus==='3d'?'':'3d';applyLayout()};
 $('#btnZones').onclick=e=>{const on=$('#stage').classList.toggle('zones');e.currentTarget.textContent=on?'Hide zones':'Show zones'};
-$('#btnTheme').onclick=()=>{const dark=matchMedia('(prefers-color-scheme: dark)').matches;const cd=document.documentElement.dataset.theme||(dark?'dark':'light');
- document.documentElement.dataset.theme=cd==='dark'?'light':'dark';render3d()};
+function applyTheme(){const t=st.set.theme,r=document.documentElement;if(t==='Light')r.dataset.theme='light';else if(t==='Dark')r.dataset.theme='dark';else delete r.dataset.theme;render3d()}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(st.set.theme==='System')render3d()});
 
 /* ---------- status & tag ---------- */
 function updateStatus(){
@@ -1481,6 +1484,7 @@ function renderStatusTgl(){}
 /* ---------- settings dialog ---------- */
 const SET=[
  {id:'general',name:'General',rows:[
+  {k:'theme',t:'Theme',d:'Light, Dark, or System. System follows the operating system’s light/dark choice when the OS provides one, otherwise Light.',type:'seg',opts:['Light','Dark','System'],def:'System'},
   {k:'undo',t:'Undo history depth',d:'Number of undo steps kept in memory. Higher values use more RAM for large puzzles.',type:'select',opts:[25,50,100,200,500],def:25},
   {k:'tips',t:'Show tooltips',d:'Show short help text when the mouse rests on buttons and other controls.',type:'sw',def:true}]},
  {id:'view',name:'3D view',rows:[
@@ -1513,7 +1517,7 @@ function renderSettings(){
  else{const p=SET.find(x=>x.id===setPage);h=`<div class="pgh"><h3>${p.name}</h3><button class="btn sm" data-reset="${p.id}">Reset section</button></div>`+p.rows.map(rowHtml).join('')}
  $('#setPg').innerHTML=h;
 }
-function applySet(){renderSettings();render3d()}
+function applySet(){renderSettings();applyTheme()}
 function openSettings(){$('#scrim').classList.add('show');renderSettings();$('#setSearch').focus()}
 function closeSettings(){$('#scrim').classList.remove('show')}
 $('#btnSettings').onclick=openSettings;$('#setX').onclick=closeSettings;$('#setDone').onclick=closeSettings;
@@ -1676,7 +1680,17 @@ $('#pzUsed').addEventListener('contextmenu',e=>{const t=e.target.closest('.ut');
 $('#pzLib').addEventListener('contextmenu',e=>{const t=e.target.closest('.lc');if(t)pzMenu(e,t.dataset.u)});
 $('#pzLibHead').onclick=()=>{PZ.libOpen=!PZ.libOpen;renderPuzzle()};
 $('#pzMore').innerHTML=ic('more');
-$('#pzMore').onclick=e=>openPop(e.currentTarget,'<button data-k="all">Add one of each piece</button><button data-k="clr">Remove all pieces</button>',k=>{const P=pzP();
+function pzBulkRange(){const P=pzP(),used=shapes.filter(x=>x.uid!==P.resultUid&&pzIn(P.pieces[x.uid]));if(!used.length){flash('No pieces in this puzzle');return}
+ let mn=0,mx=1;const d=document.createElement('div');d.className='cfm-scrim';
+ const draw=()=>{d.innerHTML=`<div class="cfm"><h3>Set range for all pieces</h3><p>Every piece in this puzzle gets the same minimum and maximum count (${used.length} pieces).</p><div style="display:flex;gap:10px;margin-bottom:14px"><div class="step sz inl" style="flex:1"><button data-r="mn-">${ic('minus',12)}</button><span class="il">Min</span><input class="v" value="${mn}" data-r="mn"><button data-r="mn+">${ic('plus',12)}</button></div><div class="step sz inl" style="flex:1"><button data-r="mx-">${ic('minus',12)}</button><span class="il">Max</span><input class="v" value="${mx}" data-r="mx"><button data-r="mx+">${ic('plus',12)}</button></div></div><div class="bt"><button class="btn" data-x="0">Cancel</button><button class="btn pri" data-x="1">Apply</button></div></div>`};
+ draw();$('#stage').appendChild(d);
+ const fix=()=>{mn=Math.max(0,mn);mx=Math.max(1,mx);if(mn>mx)mx=mn};
+ d.onclick=e=>{const b=e.target.closest('[data-r],[data-x]');if(e.target===d){d.remove();return}if(!b)return;
+  if(b.dataset.x==='0'){d.remove();return}
+  if(b.dataset.x==='1'){used.forEach(x=>{const c=pzCfg(x.uid);c.min=mn;c.max=mx;c.lock=mn===mx});d.remove();pzChanged();return}
+  const r=b.dataset.r;if(r==='mn-')mn--;else if(r==='mn+')mn++;else if(r==='mx-')mx--;else if(r==='mx+')mx++;else return;fix();draw()};
+ d.addEventListener('change',e=>{const i=e.target;if(i.dataset.r==='mn')mn=Math.round(+i.value)||0;else if(i.dataset.r==='mx')mx=Math.round(+i.value)||1;fix();draw()})}
+$('#pzMore').onclick=e=>openPop(e.currentTarget,'<button data-k="all">Add one of each piece</button><button data-k="range">Set range for all pieces…</button><button data-k="clr">Remove all pieces</button>',k=>{const P=pzP();if(k==='range'){pzBulkRange();return}
  shapes.forEach(x=>{if(x.uid===P.resultUid)return;const c=pzCfg(x.uid);if(k==='all'){if(c.max<=0){c.lock=true;c.min=c.max=1}else pzSet(x.uid,'max',c.max+1)}else{c.min=c.max=0;c.grp=null}});pzChanged()});
 /* ---- drag & drop between "All pieces" and "In this puzzle" ---- */
 const pzDragStart=(e,u,from)=>{PZ.drag={u,from};e.dataTransfer.setData('text/plain',u);e.dataTransfer.effectAllowed='move';setTimeout(()=>{(from==='lib'?$('#pzUsed'):$('#pzLib')).classList.add('drop-ok');if(from==='used'&&!PZ.libOpen){}},0)};
@@ -1699,10 +1713,19 @@ $('#pzSel').addEventListener('change',e=>{const i=e.target;if(i.dataset.sf){pzSe
 $('#pzGroups').addEventListener('click',e=>{const b=e.target.closest('[data-delg]');if(!b)return;const P=pzP(),g=+b.dataset.delg;P.groups=P.groups.filter(x=>x!==g);Object.values(P.pieces).forEach(c=>{if(c.grp===g)c.grp=null});pzChanged()});
 $('#pzRules').addEventListener('click',e=>{const P=pzP(),c=e.target.closest('.mxc');if(c){P.rules[+c.dataset.i][+c.dataset.j]=!P.rules[+c.dataset.i][+c.dataset.j];renderPzRules();return}
  const r=e.target.closest('[data-rule]');if(r){P.rules=PZC.map((_,i)=>PZC.map((__,j)=>r.dataset.rule==='all'?true:r.dataset.rule==='none'?false:i===j));renderPzRules()}});
+/* ---- collapsible side cards in Puzzle and Solver (same behaviour as Entities) + per-workspace layout memory ---- */
+(function(){const defs=[['#leftP','L','Puzzle problems','Problems'],['#leftS','L','Solver','Solver'],['#rightP','R','Selected piece','Selected piece'],['#rightS','R','Solutions','Solutions']];
+ defs.forEach(([sel,side,ttl,lab])=>{$(sel).insertAdjacentHTML('beforeend',`<div class="crail"><button class="ib" data-expand="${side}" title="Expand ${ttl}">${ic(side==='L'?'panelL':'panelR')}</button><span class="vt2">${lab}</span></div>`)});
+ $$('[data-collapse]').forEach(b=>b.innerHTML=ic(b.dataset.collapse==='L'?'panelL':'panelR'));
+ document.addEventListener('click',e=>{const c=e.target.closest('[data-collapse]'),x=e.target.closest('[data-expand]');
+  if(c){layout[c.dataset.collapse==='L'?'lc':'rc']=true;applyLayout()}
+  else if(x&&x.closest('.crail')){layout[x.dataset.expand==='L'?'lc':'rc']=false;applyLayout()}});
+})();
+const LAYS={};
 /* ---- workspace rail ---- */
 const HINT_ENT=$('#vhint').innerHTML;
 function renderRail(){$('#appRail').innerHTML=[['entities','Entities','cube','Entities — create and edit pieces'],['puzzle','Puzzle','puzzle','Puzzle — choose the result, the pieces and the rules'],['solver','Solver','play','Solver — run and browse solutions']].map(([id,n,ico,ttl])=>`<button class="rbtn ${st.tab===id?'on':''}" data-tab="${id}" title="${ttl}">${ic(ico,22)}<span>${n}</span></button>`).join('')}
-function setTab(t){st.tab=t;$('#stage').dataset.tab=t;renderRail();layout.focus='';layout.lc=false;layout.rc=false;applyLayout();hov=null;PZ.hover=null;
+function setTab(t){LAYS[st.tab]={lc:layout.lc,rc:layout.rc};st.tab=t;$('#stage').dataset.tab=t;renderRail();layout.focus='';const L=LAYS[t]||{lc:false,rc:false};layout.lc=L.lc;layout.rc=L.rc;applyLayout();hov=null;PZ.hover=null;
  const nav=$('#navHint')?$('#navHint').textContent:'Drag orbit · Shift/middle-drag pan · Wheel zoom';
  if(t!=='solver'){SV.playing=false;cancelAnimationFrame(SV.anim)}$('#mockOutcome').style.display=t==='solver'?'':'none';
  $('#vhint').innerHTML=t==='solver'?`<div id="navHint">${nav}</div>`:t==='puzzle'?`<div>Click a piece to select it · drag to rotate every piece in place</div><div id="navHint">${nav}</div>`:HINT_ENT.replace(/<div id="navHint">.*?<\/div>/,`<div id="navHint">${nav}</div>`);
