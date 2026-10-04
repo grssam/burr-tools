@@ -33,8 +33,9 @@ body{margin:0;height:100%;overflow:hidden;background:var(--outer);display:grid;p
   font:13px/1.35 -apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--text);font-variant-numeric:tabular-nums}
 #wrap{position:relative}
 #stage{position:absolute;left:0;top:0;width:1600px;height:1000px;transform-origin:0 0;background:var(--bg);
-  display:grid;grid-template-columns:68px 1fr;grid-template-rows:40px 1fr 28px;align-items:stretch;overflow:hidden;
-  --lw:380px;--rw:400px;--cw:1fr}
+  display:grid;grid-template-columns:var(--wrail) 1fr;grid-template-rows:var(--toph) 1fr var(--stath);align-items:stretch;overflow:hidden;
+  --lw:var(--lwx);--rw:var(--rwx);--cw:1fr}
+:root{--lwx:380px;--rwx:400px;--wrail:68px;--toph:40px;--stath:28px;--railw:56px}
 button{font:inherit;color:inherit}
 
 /* ---------- top bar ---------- */
@@ -68,9 +69,9 @@ button{font:inherit;color:inherit}
 
 /* ---------- workspace ---------- */
 .body{grid-column:2;grid-row:2;align-self:stretch;display:grid;grid-template-rows:minmax(0,1fr);grid-template-columns:var(--lw) var(--cw) var(--rw);gap:8px;padding:8px;min-height:0;transition:grid-template-columns .2s ease}
-#stage.lc{--lw:56px} #stage.rc{--rw:56px}
-#stage.f3d{--lw:56px;--rw:56px}
-#stage.f2d{--lw:56px;--cw:360px;--rw:1fr}
+#stage.lc{--lw:var(--railw)} #stage.rc{--rw:var(--railw)}
+#stage.f3d{--lw:var(--railw);--rw:var(--railw)}
+#stage.f2d{--lw:var(--railw);--cw:360px;--rw:1fr}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden;position:relative}
 .ch{height:44px;flex:none;display:flex;align-items:center;gap:8px;padding:0 8px 0 14px;border-bottom:1px solid var(--line);font-weight:600}
 .ch .sub{font-weight:400;color:var(--muted);font-size:12px}
@@ -305,7 +306,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .rbtn.on{background:var(--accentSoft);color:var(--accent)}
 .rbtn.on::before{content:"";position:absolute;left:-6px;top:13px;bottom:13px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
 /* ---- tab switching ---- */
-#stage[data-tab=puzzle].f2d,#stage[data-tab=solver].f2d{--lw:380px;--rw:400px;--cw:1fr}
+#stage[data-tab=puzzle].f2d,#stage[data-tab=solver].f2d{--lw:var(--lwx);--rw:var(--rwx);--cw:1fr}
 #stage[data-tab=puzzle].f3d .puz,#stage[data-tab=solver].f3d .slv,#stage[data-tab=solver] .ent,#stage[data-tab=solver] .puz{display:none}
 #stage[data-tab=puzzle].f3d .body,#stage[data-tab=solver].f3d .body{grid-template-columns:1fr}
 #stage:not([data-tab=solver]) .slv{display:none}
@@ -517,6 +518,196 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .crail .vt2{writing-mode:vertical-rl;color:var(--muted);font-weight:600;letter-spacing:.5px;margin-top:6px}
 #stage.lc #leftP>*:not(.crail),#stage.lc #leftS>*:not(.crail),#stage.rc #rightP>*:not(.crail),#stage.rc #rightS>*:not(.crail){display:none}
 #stage.lc #leftP>.crail,#stage.lc #leftS>.crail,#stage.rc #rightP>.crail,#stage.rc #rightS>.crail{display:flex}
+
+/* ===================== Interface density: Standard (formerly "Compact"; the old Comfortable spacing is retired) ===================== */
+html[data-density=standard]{--lwx:320px;--rwx:340px;--wrail:60px;--toph:36px;--stath:24px;--railw:48px}
+html[data-density=standard] .body{gap:4px;padding:4px}
+html[data-density=standard] .card{border-radius:8px}
+html[data-density=standard] .ch,html[data-density=standard] .pzh{height:36px;padding:0 6px 0 10px}
+html[data-density=standard] .row{height:34px;border-radius:6px}
+html[data-density=standard] .sec>button.sh{height:32px;padding:0 10px}
+html[data-density=standard] .sec .sb{padding:2px 10px 10px}
+html[data-density=standard] .btn{height:28px;padding:0 10px;border-radius:7px}
+html[data-density=standard] .step{height:28px;border-radius:7px}
+html[data-density=standard] .seg button{height:22px;padding:0 10px}
+html[data-density=standard] .gbtn,html[data-density=standard] .abtn{border-radius:6px}
+html[data-density=standard] .tools{gap:4px;padding:6px 8px}
+html[data-density=standard] .tools .gbtn{height:48px}
+html[data-density=standard] .mrow{padding:6px 10px;gap:10px}
+html[data-density=standard] .mrow .grp .gbtn{height:44px}
+html[data-density=standard] .pseg .gbtn{width:54px;height:46px}
+html[data-density=standard] .tmat .gbtn{height:42px}
+html[data-density=standard] .surf .gbtn,html[data-density=standard] .two .gbtn{height:46px}
+html[data-density=standard] .abtn{min-height:40px;padding:3px 8px}
+html[data-density=standard] .subbar{padding:6px 10px}
+html[data-density=standard] .colfoot{padding:7px 10px}
+html[data-density=standard] .bigsw{width:32px;height:32px;border-radius:8px}
+html[data-density=standard] .colfoot{gap:10px}
+html[data-density=standard] .colmeta{flex:none;min-width:0}
+html[data-density=standard] .colmeta small{white-space:nowrap}
+html[data-density=standard] .pal{flex-wrap:nowrap;gap:5px;margin-left:auto}
+html[data-density=standard] .lstrip{width:48px;padding:6px 0}
+html[data-density=standard] .lchip{width:32px;height:24px;border-radius:6px}
+html[data-density=standard] .tbn{width:48px;height:44px;border-radius:8px}
+html[data-density=standard] .vt{top:8px;padding:3px;border-radius:10px}
+html[data-density=standard] .vt .sep{height:28px}
+html[data-density=standard] .rail{gap:4px;padding:6px 0}
+html[data-density=standard] .rbtn{width:52px;height:50px;border-radius:10px}
+html[data-density=standard] .rbtn.on::before{left:-4px;top:11px;bottom:11px}
+html[data-density=standard] .menu button{height:26px;padding:0 8px}
+html[data-density=standard] .status{font-size:11.5px}
+html[data-density=standard] .slv-sec{padding:9px 12px}
+html[data-density=standard] .slv-lab{margin-bottom:6px}
+html[data-density=standard] .mcard{padding:7px 9px;border-radius:8px}
+html[data-density=standard] .slv-opts .row2{min-height:28px}
+html[data-density=standard] .slv-run button{height:30px;border-radius:7px}
+html[data-density=standard] .slv-nav{padding:9px 12px}
+html[data-density=standard] .slv-player{height:112px;padding:8px 12px 10px}
+html[data-density=standard] .slv-pcs{height:104px;padding:8px 10px 10px}
+html[data-density=standard] .pvc{height:26px;border-radius:6px}
+html[data-density=standard] .lrow{height:28px;border-radius:6px}
+html[data-density=standard] .pz-result{padding:8px 10px}
+html[data-density=standard] .pz-sum{padding:8px 12px}
+html[data-density=standard] .ut{width:96px;height:50px;border-radius:8px}
+html[data-density=standard] .pz-used{padding:8px;gap:5px}
+html[data-density=standard] .pzh{white-space:nowrap;gap:6px}
+html[data-density=standard] .pz-lib{padding:6px 8px 8px}
+html[data-density=standard] .lc{height:26px;border-radius:6px}
+html[data-density=standard] .slv-prob{padding:6px 8px;border-radius:8px}
+
+/* ===================== Interface density: Minimal ===================== */
+html[data-density=minimal]{--lwx:300px;--rwx:320px;--wrail:44px;--toph:32px;--stath:22px;--railw:40px}
+/* chrome-less panels: flush cards separated by hairlines, no corners, no shadows */
+html[data-density=minimal] .body{gap:1px;padding:0;background:var(--line)}
+html[data-density=minimal] .card{border-radius:0;border:0;box-shadow:none}
+html[data-density=minimal] .ch,html[data-density=minimal] .pzh{height:30px;padding:0 4px 0 10px;font-size:12.5px}
+html[data-density=minimal] .row{height:30px;border-radius:5px;gap:6px}
+html[data-density=minimal] .sec>button.sh{height:28px;padding:0 8px;font-size:12.5px}
+html[data-density=minimal] .sec .sb{padding:2px 8px 8px}
+html[data-density=minimal] .btn{height:26px;padding:0 8px;border-radius:6px}
+html[data-density=minimal] .step{height:26px;border-radius:6px}
+html[data-density=minimal] .seg button{height:22px;padding:0 8px}
+html[data-density=minimal] .ib.tb{width:28px;height:28px}
+/* icon + caption -> icon only (caption moves to the tooltip) */
+html[data-density=minimal] .tbn span,html[data-density=minimal] .rbtn span,html[data-density=minimal] .gbtn span,
+html[data-density=minimal] .gbtn .kb,html[data-density=minimal] .tbn .kb,html[data-density=minimal] .abtn b,html[data-density=minimal] .abtn small,
+html[data-density=minimal] .btn .lt,html[data-density=minimal] .brand .bt{display:none}
+/* helper / descriptive text -> tooltip */
+html[data-density=minimal] .sec .sum,html[data-density=minimal] #vhint,html[data-density=minimal] .lfoot,html[data-density=minimal] .advnote,
+html[data-density=minimal] .mcard .d,html[data-density=minimal] .slv-opts .row2 .t small,html[data-density=minimal] .mg .gl2,
+html[data-density=minimal] .lstrip .lh,html[data-density=minimal] .colmeta,html[data-density=minimal] .slv-player .ttl,
+html[data-density=minimal] .slv-prob .meta span,html[data-density=minimal] .pz-result .meta span,html[data-density=minimal] .dhelp,html[data-density=minimal] .pzr .cap{display:none}
+html[data-density=minimal] .pz-used{padding:8px;gap:5px}
+html[data-density=minimal] .ut{width:84px}
+html[data-density=minimal] .pz-lib{padding:6px 8px 8px;gap:4px}
+/* compact icon geometry */
+html[data-density=minimal] .tbn{width:34px;height:32px;border-radius:7px;gap:0}
+html[data-density=minimal] .vt{top:6px;padding:2px;border-radius:9px;gap:1px}
+html[data-density=minimal] .vt .sep{height:22px}
+html[data-density=minimal] .rail{gap:2px;padding:4px 0}
+html[data-density=minimal] .rbtn{width:36px;height:36px;border-radius:8px;gap:0}
+html[data-density=minimal] .rbtn.on::before{left:-4px;top:8px;bottom:8px}
+html[data-density=minimal] .gbtn{border-radius:6px;padding:2px}
+html[data-density=minimal] .tools{gap:4px;padding:5px 8px}
+html[data-density=minimal] .tools .gbtn{height:36px}
+html[data-density=minimal] .mrow{padding:5px 8px;gap:8px}
+html[data-density=minimal] .mrow .grp .gbtn{height:32px}
+html[data-density=minimal] .pseg{gap:4px}
+html[data-density=minimal] .pseg .gbtn{width:38px;height:34px}
+html[data-density=minimal] .tmat{gap:3px}
+html[data-density=minimal] .tmat .gbtn{height:30px}
+html[data-density=minimal] .surf .gbtn,html[data-density=minimal] .two .gbtn{height:32px}
+html[data-density=minimal] .abtn{min-height:32px;width:36px;padding:2px;justify-content:center;display:inline-flex;margin:0 4px 4px 0;vertical-align:top}
+html[data-density=minimal] .two{display:inline-flex;gap:0;margin:0!important}
+html[data-density=minimal] .subbar{padding:4px 8px;gap:6px}
+html[data-density=minimal] .colfoot{padding:5px 8px;gap:8px}
+html[data-density=minimal] .bigsw{width:26px;height:26px;border-radius:6px}
+html[data-density=minimal] .lstrip{width:40px;padding:4px 0;gap:3px}
+html[data-density=minimal] .lchip{width:30px;height:22px;border-radius:5px;font-size:11px}
+html[data-density=minimal] .menu button{height:24px;padding:0 7px}
+html[data-density=minimal] .top{padding:0 6px 0 10px}
+html[data-density=minimal] .status{font-size:11px;padding:0 10px}
+html[data-density=minimal] .vtag{left:10px;top:8px}
+/* Puzzle */
+html[data-density=minimal] .pz-result{padding:6px 8px;gap:8px}
+html[data-density=minimal] .pz-sum{padding:6px 10px;font-size:11.5px}
+html[data-density=minimal] .ut{width:88px;height:46px;border-radius:6px}
+html[data-density=minimal] .ut .t1 .pl{display:none}
+html[data-density=minimal] .lc{height:24px;border-radius:5px;gap:4px}
+/* Solver */
+html[data-density=minimal] .slv-sec{padding:7px 10px}
+html[data-density=minimal] .slv-lab{margin-bottom:5px;font-size:10px}
+html[data-density=minimal] .slv-prob{padding:4px 6px;border-radius:6px}
+html[data-density=minimal] .mcard{padding:5px 8px;border-radius:6px;align-items:center}
+html[data-density=minimal] .mcard .rd{margin-top:0}
+html[data-density=minimal] .slv-opts .row2{min-height:26px}
+html[data-density=minimal] .slv-run{gap:4px}
+html[data-density=minimal] .slv-run button{height:28px;border-radius:6px}
+html[data-density=minimal] .slv-adv button{height:28px;border-radius:6px}
+html[data-density=minimal] .slv-nav{padding:7px 10px}
+html[data-density=minimal] .slv-meta{padding:0 10px 8px;gap:4px}
+html[data-density=minimal] .slv-meta div{padding:3px 6px;border-radius:6px}
+html[data-density=minimal] .slv-player{height:84px;padding:6px 10px}
+html[data-density=minimal] .slv-player .ttlrow{margin-bottom:4px;justify-content:flex-end}
+html[data-density=minimal] .slv-player .tb{width:26px;height:26px;border-radius:6px}
+html[data-density=minimal] .slv-player .tr2{margin-top:6px}
+html[data-density=minimal] .slv-sort,html[data-density=minimal] .slv-act{padding:0 10px 8px}
+html[data-density=minimal] .slv-pcs{height:76px;padding:6px 8px 8px;gap:4px}
+html[data-density=minimal] .pvc{height:24px;padding:0 7px 0 5px;gap:5px;border-radius:5px;font-size:11.5px}
+html[data-density=minimal] .lhead,html[data-density=minimal] .lrow{grid-template-columns:34px 1fr 76px 30px 24px}
+html[data-density=minimal] .lrow{height:26px;border-radius:5px;font-size:12px}
+html[data-density=minimal] .lhead{padding:4px 8px 4px 10px}
+/* Minimal: the viewport toolbar auto-hides (shown near the top edge of the 3D view, on focus, while its menu is open, briefly after a mode key) */
+html[data-density=minimal] .vt{opacity:0;transform:translate(-50%,-10px);pointer-events:none;transition:opacity .16s ease,transform .16s ease}
+html[data-density=minimal] .vt.show{opacity:1;transform:translateX(-50%);pointer-events:auto}
+.vthandle{display:none}
+html[data-density=minimal] .vthandle{display:block;position:absolute;top:5px;left:50%;transform:translateX(-50%);width:40px;height:4px;border-radius:2px;background:var(--muted);opacity:.45;z-index:3;transition:opacity .16s ease;pointer-events:none}
+html[data-density=minimal] .vthandle.off{opacity:0}
+.abtn .sh{display:none;font-style:normal}
+/* ---- Minimal refinements ---- */
+html[data-density=minimal]{--lwx:264px}
+/* action buttons: icon + short inline label, no description, no stray gap */
+html[data-density=minimal] .abtn{width:auto;gap:6px;padding:2px 9px 2px 4px;min-height:32px;margin:0 4px 4px 0;justify-content:flex-start}
+html[data-density=minimal] .abtn>span{display:inline}
+html[data-density=minimal] .abtn .sh{display:inline;font-weight:600;font-size:12px;white-space:nowrap}
+/* Fit & scale glyph buttons: icon + inline caption side by side */
+html[data-density=minimal] #secFit .gbtn{flex-direction:row;gap:6px;height:32px;padding:2px 9px 2px 4px}
+html[data-density=minimal] #secFit .gbtn span{display:inline;font-size:11.5px;white-space:nowrap}
+html[data-density=minimal] #secFit .two{display:inline-flex;flex-wrap:wrap;gap:4px;vertical-align:top}
+html[data-density=minimal] #secFit .abtn{padding:2px 7px 2px 3px;gap:4px}
+html[data-density=minimal] .abtn svg.gx,html[data-density=minimal] #secFit .gbtn svg.gx{width:24px;height:24px}
+html[data-density=minimal] #secFit .gbtn{padding:2px 7px 2px 3px;gap:4px}
+html[data-density=minimal] #secFit .two .abtn,html[data-density=minimal] #secFit .two .gbtn{margin:0}
+/* Surface voxels / Repair: keep the first line, drop the second */
+html[data-density=minimal] .surf .sl small{display:none}
+html[data-density=minimal] .surf{grid-template-columns:1fr 52px 52px;gap:4px}
+html[data-density=minimal] .surf .sl b{font-size:12px}
+/* workspace rail: icon + caption rotated 90° (vertical space is plentiful) */
+html[data-density=minimal] .rail{gap:4px;padding:6px 0}
+html[data-density=minimal] .rail .rbtn{height:auto;padding:8px 0 10px;gap:6px}
+html[data-density=minimal] .rail .rbtn span{display:block;writing-mode:vertical-rl;font-size:11px;letter-spacing:.3px;line-height:1}
+html[data-density=minimal] .rail .rbtn.on::before{top:8px;bottom:8px}
+/* narrower left card: tighter Puzzle tiles, Solver run row */
+html[data-density=minimal] .pz-used{padding:6px;gap:5px}
+html[data-density=minimal] .ut{width:78px}
+html[data-density=minimal] .slv-run button{font-size:11.5px;padding:0 2px}
+html[data-density=minimal] .slv-adv button{font-size:11.5px;padding:0 2px}
+html[data-density=minimal] .slv-stat{gap:3px 8px;font-size:11.5px}
+html[data-density=minimal] .pzh{white-space:nowrap;gap:6px}
+html[data-density=minimal] .pzh .seg button{padding:0 6px;font-size:11.5px}
+#slvList:focus{box-shadow:inset 0 0 0 2px var(--accentSoft)}
+#slvList:focus .lrow.sel{box-shadow:0 0 0 1px var(--accent)}
+#slvSlider:focus-visible,#slvMove:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.pvc:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#shapeList:focus{outline:none;box-shadow:inset 0 0 0 2px var(--accentSoft)}
+#shapeList:focus .row.sel{box-shadow:0 0 0 1px var(--accent)}
+.kbnote{color:var(--muted);font-size:12px;margin:-4px 0 6px;line-height:1.5}
+.kbgrp{margin:16px 0 4px;font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.kbgrp small{text-transform:none;letter-spacing:0;font-weight:400;margin-left:6px}
+.kbrow{gap:16px}.kbrow>span:first-child{flex:1;min-width:0}
+.kbrow .k{flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:3px;max-width:58%}
+.kbrow .k i{font-style:normal;color:var(--muted);font-size:11px;padding:0 2px}
+.kbrow .k em{font-style:normal;font-size:11.5px;color:var(--text);background:var(--panel2);border:1px dashed var(--line2);border-radius:4px;padding:1px 5px}
 </style>
 </head>
 <body>
@@ -525,12 +716,13 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 
   <!-- top bar (menu & app tabs are out of scope; kept as-is) -->
   <div class="top">
-    <div class="brand"><i></i>BurrTools</div>
+    <div class="brand"><i></i><span class="bt">BurrTools</span></div>
     <div class="menu" id="menu"></div>
     <div class="right">
       <span class="fname" title="E:\Girish\Puzzles\designs\TIC\Final\TIC 2.99 - Clutch 4 - Level 31R10.8.R14.xmpuzzle">TIC 2.99 – Clutch 4 – Level 31R10.8.R14.xmpuzzle</span>
       <select class="mocksel" id="mockVType" title="Mock only: the voxel type is chosen once in File ▸ New and cannot change afterwards"><option value="brick">Mock voxel type: Brick</option><option value="prism">Mock voxel type: Triangular Prism</option><option value="spheres">Mock voxel type: Spheres</option><option value="rhombic">Mock voxel type: Rhombic Tetrahedra</option><option value="tetoct">Mock voxel type: Tetrahedra-Octahedra</option></select>
       <select class="mocksel" id="mockOutcome" style="display:none" title="Mock only: pick the canned solver result to preview each UI state"><option value="A">Mock result: 12 assemblies, 5 disassemble</option><option value="B">Mock result: 10 assemblies, none disassemble</option><option value="C">Mock result: no assemblies</option><option value="D">Mock result: 100 assemblies, 37 disassemble</option></select>
+      <select class="mocksel" id="mockDensity" title="Mock only: same as Settings ▸ General ▸ Interface density"><option>Standard</option><option>Minimal</option></select>
       <button class="btn sm" id="btnZones">Show zones</button>
       <button class="ib" id="btnSettings" title="Settings  (Ctrl+,)"></button>
     </div>
@@ -543,7 +735,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
     <section class="card ent" id="left">
       <div class="lfull">
         <div class="ch">Shapes <span class="chip" id="shapeCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span>
-          <button class="btn pri sm" id="btnNew">+ New</button>
+          <button class="btn pri sm" id="btnNew" title="New shape (Ctrl+N)">+<span class="lt"> New</span></button>
           <button class="ib" id="btnLC" title="Collapse sidebar"></button>
         </div>
         <div class="shapes" id="shapeList"></div>
@@ -574,13 +766,13 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 
     <!-- ================= PUZZLE TAB: PROBLEM & PIECES ================= -->
     <section class="card puz" id="leftP">
-      <div class="ch">Problems <span class="chip" id="pzCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><button class="btn pri sm" id="pzNew">+ New</button><button class="ib" data-collapse="L" title="Collapse sidebar"></button></div>
+      <div class="ch">Problems <span class="chip" id="pzCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><button class="btn pri sm" id="pzNew" title="New problem">+<span class="lt"> New</span></button><button class="ib" data-collapse="L" title="Collapse sidebar"></button></div>
       <div class="pz-problems" id="pzProblems"></div>
       <div class="pzh">Result</div>
       <div class="pz-result" id="pzResult"></div>
       <div class="pzh">In this puzzle <span class="chip" id="pzPieceCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><div class="seg" id="pzViewSeg"><button data-v="chips" class="on">Chips</button><button data-v="table">Table</button></div><button class="ib" id="pzMore" title="More piece actions"></button></div>
       <div class="pz-used" id="pzUsed"></div>
-      <div class="pzh" id="pzLibHead" style="cursor:pointer">All pieces <span class="chip" id="pzLibCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><span class="mute" style="font-size:11px;font-weight:400">drag, double-click or + to add</span><button class="ib" id="pzLibTog" title="Show / hide the list"></button></div>
+      <div class="pzh" id="pzLibHead" style="cursor:pointer">All pieces <span class="chip" id="pzLibCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><span class="mute dhelp" style="font-size:11px;font-weight:400">drag, double-click or + to add</span><button class="ib" id="pzLibTog" title="Show / hide the list"></button></div>
       <div class="pz-lib" id="pzLib"></div>
       <div class="pz-sum" id="pzSummary"></div>
     </section>
@@ -595,7 +787,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
           <div class="slv-run" id="slvRun"></div>
           <div class="slv-prog"><div class="bar"><i id="slvBar"></i></div><span id="slvPct">0%</span></div>
           <div class="slv-stat" id="slvStat"></div></div>
-        <div class="slv-sec"><div class="slv-lab">Step-by-step explorer<span class="sp"></span><span style="text-transform:none;letter-spacing:0;font-weight:400">advanced</span></div>
+        <div class="slv-sec"><div class="slv-lab">Step-by-step explorer<span class="sp"></span><span class="dhelp" style="text-transform:none;letter-spacing:0;font-weight:400">advanced</span></div>
           <div class="slv-adv" id="slvAdv"></div>
           <div class="advnote">Placements browses the assembly search; Movements browses the disassembly search; Step advances the assembler one step.</div></div>
       </div>
@@ -630,7 +822,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
         </div>
         <div class="gbody">
           <div class="lstrip" id="lstrip"></div>
-          <div id="garea"></div>
+          <div id="garea" title="Click or drag: active tool (Shift fixed · Alt variable · Ctrl erase) · Right-click or right-drag: erase"></div>
           <div class="selbar" id="selbar"></div>
         </div>
         <div class="gsize" id="gridSize"><div class="gsh"><span class="gl2">Grid size</span><span class="sp"></span><div class="switch" id="applyAll" title="Size changes apply to every shape"><span class="tr"></span><span>Apply to all shapes</span></div></div><div class="size3" id="sizeSteppers"></div></div>
@@ -811,7 +1003,8 @@ const cursorFor=tool=>'url("data:image/svg+xml,'+encodeURIComponent(ptrSvg(tool)
 window.__PTR=ptrSvg;window.__BADGE=badgeSvg;
 window.__cam=()=>cam;
 const tbn=(icn,cap)=>`${ic(icn,20)}<span>${cap}</span>`;
-const abtnSet=(sel,g,t,sm)=>{$(sel).innerHTML=`${g}<span><b>${t}</b><small>${sm}</small></span>`};
+const ABSHORT={btnPrune:'Prune',btnCenter:'Center',btnOrigin:'Origin',btnMin:'Minimize',btnFill:'Fill holes'};
+const abtnSet=(sel,g,t,sm)=>{const el=$(sel);el.innerHTML=`${g}<span><b>${t}</b><small>${sm}</small><em class="sh">${ABSHORT[el.id]||t}</em></span>`;el.title=t+' — '+sm};
 
 /* ---------- model ---------- */
 const COLORS=[{n:'Default',h:null},{n:'C1',h:'#f59e0b'},{n:'C2',h:'#8b5cf6'}];  // index 0 = Default = the piece's own colour
@@ -833,7 +1026,7 @@ let shapes=[
  {id:'S11',label:'F',col:'',dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[0,1,0],[0,0,1]])},
  {id:'S12',label:'G',col:'',dims:[3,1,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0]])}
 ];
-const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:false,z:false},edit3d:false,set:{theme:'System',undo:25,tips:true,cube:true,rev:false,rot:'Drag',lights:true,fade:true,threads:12,lists:false},sel:1,tool:'fixed',plane:'XY',layer:0,color:0,selCells:new Set(),applyAll:false,mode:'orbit',
+const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:false,z:false},edit3d:false,set:{density:'Standard',theme:'System',undo:25,tips:true,cube:true,rev:false,rot:'Drag',lights:true,fade:true,threads:12,lists:false},sel:1,tool:'fixed',plane:'XY',layer:0,color:0,selCells:new Set(),applyAll:false,mode:'orbit',
   disp:{axes:true,bounds:true,layer:true,dim:false,xray:true},persp:true};
 ['3,1,2','3,1,3','3,2,3'].forEach(k=>shapes[1].vox.get(k).c=1);shapes[1].vox.get('1,2,2').c=2;shapes[1].vox.get('2,1,3').s='v';
 function renumber(){shapes.forEach((s,i)=>{s.id='S'+(i+1);s.col=SHAPE_COL[i%SHAPE_COL.length]})}
@@ -937,7 +1130,7 @@ function renderTools(){renderEditBtn();
 
 /* ---------- voxel space types (chosen once in File > New, read-only afterwards) ---------- */
 const VTYPES={brick:'Brick',prism:'Triangular Prism',spheres:'Spheres',rhombic:'Rhombic Tetrahedra',tetoct:'Tetrahedra-Octahedra'};
-st.vtype='brick';st.tab='entities';
+st.vtype='brick';st.tab='entities';document.documentElement.dataset.density='standard';
 /* transform matrix per voxel type — glyphs mirror the legacy axis-frame icons */
 function renderTransform(){
  const tb=(o,i,sg,g,cap,ttl,mock)=>`<button class="gbtn" ${mock?'data-mock="1"':`data-o="${o}" data-ax="${i}" data-sg="${sg}"`} title="${ttl}">${g}<span>${cap}</span></button>`;
@@ -1016,6 +1209,10 @@ list.addEventListener('click',e=>{
  if(!b){if(!e.target.closest('input'))selectShape(i);return}
  e.stopPropagation();shapeAction(b.dataset.a,i)});
 list.addEventListener('dblclick',e=>{const r=e.target.closest('.row');if(r&&!e.target.closest('[data-a],input'))shapeAction('label',+r.dataset.i)});
+list.tabIndex=0;list.addEventListener('mousedown',e=>{if(!e.target.closest('input,button'))setTimeout(()=>list.focus({preventScroll:true}),0)});
+list.addEventListener('keydown',e=>{if(e.target.matches('input'))return;const k=e.key;
+ if(k==='ArrowUp'||k==='ArrowDown'){e.preventDefault();e.stopPropagation();if(e.altKey){shapeAction(k==='ArrowUp'?'up':'down',st.sel)}else{const j=Math.max(0,Math.min(shapes.length-1,st.sel+(k==='ArrowUp'?-1:1)));selectShape(j)}list.focus({preventScroll:true});const r=$$('#shapeList .row')[st.sel];if(r&&r.scrollIntoView)r.scrollIntoView({block:'nearest'})}
+ else if(k==='Enter'){e.preventDefault();e.stopPropagation();shapeAction('label',st.sel)}});
 list.addEventListener('contextmenu',e=>{const r=e.target.closest('.row');if(!r)return;e.preventDefault();const i=+r.dataset.i;selectShape(i);const n=shapes.length;
  openPopAt(e.clientX,e.clientY,`<div class="ph">Shape ${shapes[i].id}</div><button data-k="label">Rename…<span class="kb">F2</span></button><button data-k="copy">Duplicate<span class="kb">Ctrl D</span></button><hr><button data-k="up" ${i===0?'disabled':''}>Move earlier</button><button data-k="down" ${i===n-1?'disabled':''}>Move later</button><hr><button data-k="wp">Weight +1 <span class="kb">W+</span></button><button data-k="wm" ${shapes[i].w===0?'disabled':''}>Weight −1 <span class="kb">W−</span></button><hr><button data-k="del" ${n<2?'disabled':''} style="color:var(--danger)">Delete<span class="kb">Del</span></button>`,k=>shapeAction(k,i))});
 let dragI=null;
@@ -1168,13 +1365,14 @@ function renderMod(){
 }
 $('#modRow').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.parentElement.dataset.g;st[k][b.dataset.a]=!st[k][b.dataset.a];renderMod()});
 function afterEdit(){renderGrid();renderSelbar();renderLayers();render3d();updateStatus();if(hc)hover2d(lastMods)}
-$('#garea').addEventListener('mousedown',e=>{const c=e.target.closest('.cell');if(!c)return;e.preventDefault();down=true;strokeTool=eff2d({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey});if(c.dataset.key)applyTool(strokeTool,[c.dataset.key]);else applyCell(+c.dataset.c,+c.dataset.r,true);afterEdit()});
+$('#garea').addEventListener('contextmenu',e=>{if(e.target.closest('.cell'))e.preventDefault()});
+$('#garea').addEventListener('mousedown',e=>{const c=e.target.closest('.cell');if(!c||e.button===1)return;e.preventDefault();down=true;strokeTool=e.button===2?'erase':eff2d({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey});if(e.button===2){$('#garea').style.cursor=cursorFor('erase')}if(c.dataset.key)applyTool(strokeTool,[c.dataset.key]);else applyCell(+c.dataset.c,+c.dataset.r,true);afterEdit()});
 $('#garea').addEventListener('mouseover',e=>{const c=e.target.closest('.cell');if(!c)return;
  const p=P();
  if(c.dataset.key){$('#stCursor').textContent='Cell '+c.dataset.key;hc={key:c.dataset.key}}else{$('#stCursor').textContent=`Cursor ${p.ca}${c.dataset.c} ${p.ra}${c.dataset.r} · ${p.la}${st.layer}`;hc={c:+c.dataset.c,r:+c.dataset.r}}
  if(down){if(c.dataset.key)applyTool(strokeTool||st.tool,[c.dataset.key]);else applyCell(+c.dataset.c,+c.dataset.r,false);afterEdit()}else hover2d({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey})});
 $('#garea').addEventListener('mouseleave',()=>{$('#stCursor').textContent='';clear2d()});
-window.addEventListener('mouseup',()=>{down=false;strokeTool=null});
+window.addEventListener('mouseup',()=>{const wasRight=strokeTool==='erase'&&down;down=false;strokeTool=null;if(wasRight&&hc)hover2d(lastMods||{})});
 
 $('#toolStrip').addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(!b)return;st.tool=b.dataset.t;renderTools()});
 
@@ -1246,6 +1444,7 @@ $('#btnRC').onclick=()=>{layout.rc=true;applyLayout()};
 $('#btnF2D').onclick=()=>{layout.focus=layout.focus==='2d'?'':'2d';applyLayout()};
 $('#bF3D').onclick=()=>{layout.focus=layout.focus==='3d'?'':'3d';applyLayout()};
 $('#btnZones').onclick=e=>{const on=$('#stage').classList.toggle('zones');e.currentTarget.textContent=on?'Hide zones':'Show zones'};
+$('#mockDensity').onchange=e=>{st.set.density=e.target.value;applyDensity();if($('#scrim').classList.contains('show'))renderSettings()};
 function applyTheme(){const t=st.set.theme,r=document.documentElement;if(t==='Light')r.dataset.theme='light';else if(t==='Dark')r.dataset.theme='dark';else delete r.dataset.theme;render3d()}
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(st.set.theme==='System')render3d()});
 
@@ -1466,16 +1665,25 @@ $('#bEdit').onclick=()=>{st.edit3d=!st.edit3d;renderEditBtn();if(lm)updateHover(
 document.addEventListener('keydown',e=>{
  if(e.target.matches('input')){if(e.key==='Escape'&&$('#scrim').classList.contains('show')){closeSettings();e.target.blur()}return}const k=e.key;
  if((e.ctrlKey||e.metaKey)&&k===','){e.preventDefault();openSettings();return}
+ if(k==='F1'){e.preventDefault();openSettings();setPage='keys';setQ='';const sq=$('#setSearch');if(sq)sq.value='';renderSettings();return}
+ if($('#scrim').classList.contains('show')&&k!=='Escape')return;
+ if((e.ctrlKey||e.metaKey)&&/^[123]$/.test(k)){e.preventDefault();setTab(['entities','puzzle','solver'][+k-1]);return}
+ if((e.ctrlKey||e.metaKey)&&(k===' '||e.code==='Space')){e.preventDefault();$('#bF3D').click();return}
+ if((e.ctrlKey||e.metaKey)&&(k==='['||k===']')){e.preventDefault();if(layout.focus){layout.focus=''}const sd=k==='['?'lc':'rc';layout[sd]=!layout[sd];applyLayout();return}
+ if(!e.ctrlKey&&!e.metaKey&&!e.altKey&&(k==='o'||k==='O'||k==='p'||k==='P')){const b=$(`.tbn[data-m="${k.toLowerCase()==='o'?'orbit':'pan'}"]`);if(b)b.click();return}
+ if(st.tab==='puzzle'&&PZ.sel&&!e.ctrlKey&&!e.metaKey){const u=PZ.sel;if(k==='+'||k==='='){pzAdd(u,1);return}if(k==='-'||k==='_'){pzBump(u,-1);pzChanged();return}if(k==='Delete'){const c=pzCfg(u);c.min=c.max=0;c.grp=null;pzChanged();flash('Removed from the puzzle');return}}
  if($('#scrim').classList.contains('show')&&k!=='Escape')return;
  if(st.tab!=='entities'&&/^[1-4eE]$/.test(k))return;
  if(k>='1'&&k<='4'){st.tool=TOOLS[+k-1].id;renderTools();if(hc)hover2d(lastMods)}
  else if((k==='e'||k==='E')&&!e.ctrlKey&&!e.metaKey&&!e.altKey){$('#bEdit').click()}
+ else if(st.tab!=='entities'&&/^(F2|Delete|PageUp|PageDown)$/.test(k)){}
+ else if(st.tab!=='entities'&&(e.ctrlKey||e.metaKey)&&(k==='d'||k==='D')){}
  else if(k==='F2'){shapeAction('label',st.sel)}else if(k==='Delete'){shapeAction('del',st.sel)}else if((e.ctrlKey||e.metaKey)&&(k==='d'||k==='D')){e.preventDefault();shapeAction('copy',st.sel)}
  else if(k==='PageUp'){e.preventDefault();st.layer=Math.min(P().layers-1,st.layer+1);renderEditor();render3d()}
  else if(k==='PageDown'){e.preventDefault();st.layer=Math.max(0,st.layer-1);renderEditor();render3d()}
  else if(k==='f'||k==='F'){fitView()}
  else if(k==='Home'){homeView()}
- else if(k==='Escape'){if($('#scrim').classList.contains('show'))closeSettings();else if(pop.style.display==='block')closePop();else if(st.selCells.size){st.selCells.clear();renderEditor()}else{layout.focus='';applyLayout()}}
+ else if(k==='Escape'){if($('#scrim').classList.contains('show'))closeSettings();else if(pop.style.display==='block')closePop();else if(st.tab==='solver'&&SV.playing){SV.playing=false;renderSolverPlayer()}else if(st.selCells.size){st.selCells.clear();renderEditor()}else{layout.focus='';applyLayout()}}
 });
 
 /* ---------- status-bar view toggles ---------- */
@@ -1484,6 +1692,7 @@ function renderStatusTgl(){}
 /* ---------- settings dialog ---------- */
 const SET=[
  {id:'general',name:'General',rows:[
+  {k:'density',t:'Interface density',d:'Standard is the default. Minimal shows icons without captions, moves helper text into tooltips, hides the viewport toolbar until you point at the top of the 3D view and narrows the side cards. Every function stays available in both.',type:'seg',opts:['Standard','Minimal'],def:'Standard'},
   {k:'theme',t:'Theme',d:'Light, Dark, or System. System follows the operating system’s light/dark choice when the OS provides one, otherwise Light.',type:'seg',opts:['Light','Dark','System'],def:'System'},
   {k:'undo',t:'Undo history depth',d:'Number of undo steps kept in memory. Higher values use more RAM for large puzzles.',type:'select',opts:[25,50,100,200,500],def:25},
   {k:'tips',t:'Show tooltips',d:'Show short help text when the mouse rests on buttons and other controls.',type:'sw',def:true}]},
@@ -1508,16 +1717,92 @@ function rowHtml(r){const v=st.set[r.k];let c='';
  else if(r.type==='slider')c=`<div style="display:flex;align-items:center;gap:10px;width:230px"><input type="range" min="${r.min}" max="${r.max}" value="${v}" data-k="${r.k}" style="flex:1;accent-color:var(--accent)"><b style="width:26px;text-align:right">${v}</b></div>`;
  else if(r.type==='seg')c=`<div class="seg">${r.opts.map(o=>`<button class="${o===v?'on':''}" data-k="${r.k}" data-o="${o}">${o}</button>`).join('')}</div>`;
  return `<div class="setrow"><div class="t"><b>${r.t}</b><span>${r.d}</span></div>${c}</div>`}
+const HELP=[
+ {g:'Everywhere',rows:[
+  ['Ctrl+1 / Ctrl+2 / Ctrl+3','Switch to Entities / Puzzle / Solver'],
+  ['F1','Keyboard shortcuts (this list)'],
+  ['Ctrl+,','Settings'],
+  ['Ctrl+[ / Ctrl+]','Collapse or expand the left / right card'],
+  ['Ctrl+Space','Focus the 3D view (toggle)'],
+  ['Esc','Step back: close dialog → close menu → cancel rename → pause playback → exit focus mode'],
+  ['Tab / Shift+Tab','Move keyboard focus between controls'],
+  ['Enter / Space','Activate the focused button, switch or chip']]},
+ {g:'3D view',sub:'every workspace',rows:[
+  ['@Left-drag','Orbit (Orbit mode) or pan (Pan mode)'],
+  ['Shift+@Left-drag','The other of orbit / pan'],
+  ['@Middle-drag','Pan'],
+  ['@Wheel','Zoom'],
+  ['O / P','Orbit mode / Pan mode'],
+  ['Home','Home view — default orientation, framed'],
+  ['F','Fit the shape to the view, orientation kept'],
+  ['@Click view-cube face, edge or corner','Turn to that view'],
+  ['@Double-click a view-cube face','Upright view of that face'],
+  ['@Point at the top of the view / Tab / O / P / E / F','Minimal density: show the auto-hidden toolbar']]},
+ {g:'Entities',sub:'drawing',rows:[
+  ['1 / 2 / 3 / 4','Tool: Fixed / Variable / Erase / Paint'],
+  ['E','3D edit mode (toggle) — a plain click uses the active tool'],
+  ['Shift+@Click','Quick tool 1 — fixed voxel (3D view and 2D grid)'],
+  ['Alt+@Click','Quick tool 2 — variable voxel (⌘ on macOS)'],
+  ['Ctrl+@Click','Quick tool 3 — erase voxel'],
+  ['@Right-click / @Right-drag','2D grid: erase, whatever tool is active'],
+  ['@Drag across cells','2D grid: apply the tool to every cell entered (one undo step)'],
+  ['PgUp / PgDn','Next / previous layer']]},
+ {g:'Entities',sub:'shapes list',rows:[
+  ['↑ / ↓','Previous / next shape (list focused)'],
+  ['Alt+↑ / Alt+↓','Move the shape earlier / later — shapes renumber'],
+  ['F2 / Enter / @Double-click','Rename the shape label; Enter commits, Esc cancels'],
+  ['Del','Delete the shape'],
+  ['Ctrl+D','Duplicate the shape'],
+  ['@Right-click a row','Shape menu'],
+  ['@Drag a row','Reorder']]},
+ {g:'Puzzle',rows:[
+  ['+ / −','One more / one fewer copy of the selected piece'],
+  ['Del','Remove the selected piece from the puzzle'],
+  ['@Double-click a chip / +','Add one copy from All pieces'],
+  ['@Drag a chip in / @Drag a tile out','Add a piece / remove it from the puzzle'],
+  ['@Right-click a tile or chip','Piece menu — one more, one fewer, remove, set as result'],
+  ['@Click a piece in the 3D view','Select it (the view rotates each piece in place)']]},
+ {g:'Solver',sub:'focus on the solutions list, solution slider or move seekbar',rows:[
+  ['Space / Enter','Play / pause the disassembly'],
+  ['← / →','One move back / forward'],
+  ['Shift+← / Shift+→','Jump to assembled / fully disassembled'],
+  ['↑ / ↓','Previous / next solution'],
+  ['Home / End','First / last solution (on the seekbar: start / end of the moves)'],
+  ['PgUp / PgDn','8 solutions back / forward'],
+  ['Del','Remove the selected solution (list; asks first)'],
+  ['Esc','Pause playback'],
+  ['@Double-click a row','Select and play'],
+  ['@Click a column header','Sort; click again to reverse'],
+  ['Space / Enter · ← / →','Piece chip: cycle solid → wireframe → hidden · move between chips'],
+  ['@Orbit or click in the 3D view','Keyboard focus stays in the Solutions card']]},
+ {g:'Dialogs and menus',rows:[
+  ['Esc','Close the dialog or menu'],
+  ['Enter','Commit an inline rename or a number field'],
+  ['Space / Enter','Toggle the focused switch']]}];
+const kbKeys=spec=>spec.split(' / ').map(alt=>alt.split(' · ').map(part=>part.startsWith('@')?`<em>${part.slice(1)}</em>`:part.split('+').map((t,i,a)=>t.startsWith('@')?`<em>${t.slice(1)}</em>`:`<kbd>${t}</kbd>`).join('<i>+</i>')).join('<i>·</i>')).join('<i>/</i>');
+const kbRow=([k,t])=>`<div class="kbrow"><span>${t}</span><span class="k">${kbKeys(k)}</span></div>`;
 function renderSettings(){
- $('#setNav').innerHTML=SET.map(p=>`<button class="${!setQ&&p.id===setPage?'on':''}" data-p="${p.id}">${p.name}</button>`).join('')+`<button class="${!setQ&&setPage==='keys'?'on':''}" data-p="keys">Shortcuts</button>`;
+ $('#setNav').innerHTML=SET.map(p=>`<button class="${!setQ&&p.id===setPage?'on':''}" data-p="${p.id}">${p.name}</button>`).join('')+`<button class="${!setQ&&setPage==='keys'?'on':''}" data-p="keys">Keyboard shortcuts</button>`;
  let h='';
  if(setQ){const q=setQ.toLowerCase();SET.forEach(p=>{const rs=p.rows.filter(r=>(r.t+' '+r.d).toLowerCase().includes(q));if(rs.length)h+=`<h3>${p.name}</h3>`+rs.map(rowHtml).join('')});
-  if(!h)h=`<div class="mute" style="padding:60px 0;text-align:center">No settings match “${esc(setQ)}”</div>`}
- else if(setPage==='keys')h=`<div class="pgh"><h3>Shortcuts</h3></div>`+KEYS.map(([k,t])=>`<div class="kbrow"><span>${t}</span><span class="k">${k.map(x=>`<kbd>${x}</kbd>`).join('')}</span></div>`).join('');
+  const hk=[];HELP.forEach(G=>G.rows.forEach(r=>{if((r[0]+' '+r[1]+' '+G.g).toLowerCase().includes(q))hk.push(kbRow(r))}));if(hk.length)h+=`<h3>Keyboard shortcuts</h3>`+hk.join('');
+  if(!h)h=`<div class="mute" style="padding:60px 0;text-align:center">No settings or shortcuts match “${esc(setQ)}”</div>`}
+ else if(setPage==='keys')h=`<div class="pgh"><h3>Keyboard shortcuts</h3></div><div class="kbnote">Grouped by workspace. In the application this list lives in <b>Help ▸ Keyboard shortcuts</b> (F1). Keys act when focus is not in a text field; menu shortcuts (File, Edit, …) are shown in the menus.</div>`+HELP.map(G=>`<div class="kbgrp">${G.g}${G.sub?`<small>${G.sub}</small>`:''}</div>`+G.rows.map(kbRow).join('')).join('');
  else{const p=SET.find(x=>x.id===setPage);h=`<div class="pgh"><h3>${p.name}</h3><button class="btn sm" data-reset="${p.id}">Reset section</button></div>`+p.rows.map(rowHtml).join('')}
  $('#setPg').innerHTML=h;
 }
-function applySet(){renderSettings();applyTheme()}
+function applyDensity(){if(window.svToolbarReset)svToolbarReset();const d=(st.set.density||'Standard').toLowerCase();document.documentElement.dataset.density=d;const m=$('#mockDensity');if(m&&m.value!==st.set.density)m.value=st.set.density;svDensityTitles();render3d()}
+/* minimal mode hides captions/help text: make sure every affected control still carries that text as its tooltip */
+function svDensityTitles(){const T=(el,txt)=>{if(el&&!el.title&&txt)el.title=txt.replace(/\s+/g,' ').trim()};
+ $$('.tbn,.rbtn,.gbtn').forEach(b=>{const sp=b.querySelector('span');T(b,sp&&sp.textContent)});
+ $$('.abtn').forEach(b=>{const bb=b.querySelector('b'),sm=b.querySelector('small');T(b,(bb?bb.textContent:'')+(sm?' — '+sm.textContent:''))});
+ $$('.sec>button.sh').forEach(b=>{const su=b.querySelector('.sum');T(b,su&&su.textContent)});
+ $$('.mcard').forEach(b=>{const d=b.querySelector('.d');T(b,d&&d.textContent)});
+ $$('.slv-opts .row2').forEach(r=>{const sm=r.querySelector('.t small');T(r,sm&&sm.textContent)});
+ const pr=$('#pzRules'),cap=pr&&pr.querySelector('.cap');if(pr&&cap)T(pr,cap.textContent);
+ const cm=$('.colmeta'),bs=$('.bigsw');if(cm&&bs)bs.title='Drawing colour: '+cm.textContent.replace(/^\s*drawing colour/i,'').trim()}
+let svDT=0;new MutationObserver(()=>{if(document.documentElement.dataset.density!=='minimal')return;cancelAnimationFrame(svDT);svDT=requestAnimationFrame(svDensityTitles)}).observe(document.getElementById('stage'),{childList:true,subtree:true});
+function applySet(){renderSettings();applyTheme();applyDensity()}
 function openSettings(){$('#scrim').classList.add('show');renderSettings();$('#setSearch').focus()}
 function closeSettings(){$('#scrim').classList.remove('show')}
 $('#btnSettings').onclick=openSettings;$('#setX').onclick=closeSettings;$('#setDone').onclick=closeSettings;
@@ -1594,7 +1879,7 @@ function renderPzSel(){const P=pzP(),x=PZ.sel&&pzShape(PZ.sel),box=$('#pzSel');
  <div class="lab">Exclusive group</div><div class="gseg"><button data-grp="0" class="${c.grp==null?'on':''}">None</button>${gs}<button data-grp="new" title="Create a new group and put this piece in it">+ New</button></div>`}
 function renderPzGroups(){const P=pzP(),sec=$('#pzGroupsSec'),box=$('#pzGroups');sec.style.display=P.groups.length?'':'none';
  box.innerHTML=P.groups.map(g=>{const mem=shapes.filter(x=>x.uid!==P.resultUid&&(P.pieces[x.uid]||{}).grp===g&&pzIn(P.pieces[x.uid]));
-  return `<div class="pzg"><div class="gh">Group ${g}<span class="mute" style="font-weight:400;font-size:11px">pieces in a group are exclusive</span><span class="sp"></span><button class="ib" data-delg="${g}" title="Remove group">${ic('trash',14)}</button></div><div class="mem">${mem.length?mem.map(x=>`<span class="ptile" style="background:${x.col}"><b>${x.id}</b>${x.label?`<span class="pl">${esc2(x.label)}</span>`:''}<span class="pb">${pzCount(P.pieces[x.uid])}</span></span>`).join(''):'<span class="mute" style="font-size:12px">No members — pick this group on a piece</span>'}</div></div>`}).join('')}
+  return `<div class="pzg"><div class="gh" title="Pieces in a group are exclusive">Group ${g}<span class="mute dhelp" style="font-weight:400;font-size:11px">pieces in a group are exclusive</span><span class="sp"></span><button class="ib" data-delg="${g}" title="Remove group">${ic('trash',14)}</button></div><div class="mem">${mem.length?mem.map(x=>`<span class="ptile" style="background:${x.col}"><b>${x.id}</b>${x.label?`<span class="pl">${esc2(x.label)}</span>`:''}<span class="pb">${pzCount(P.pieces[x.uid])}</span></span>`).join(''):'<span class="mute" style="font-size:12px">No members — pick this group on a piece</span>'}</div></div>`}).join('')}
 function renderPzRules(){const P=pzP(),sw=(c,t)=>`<span class="sw2" title="${t}" style="background:${c.h||'#fff'}"></span>`;
  $('#pzRules').innerHTML=`<div class="cap">Columns = <b>result</b> colour, rows = <b>piece</b> colour. A ticked cell lets a piece voxel of the row colour sit on a result voxel of the column colour.</div><div class="mx"><div class="mxr"><span></span>${PZC.map(c=>sw(c,'Result colour '+c.n)).join('')}</div>${PZC.map((c,i)=>`<div class="mxr">${sw(c,'Piece colour '+c.n)}${PZC.map((d,j)=>`<button class="mxc ${P.rules[i][j]?'on':''}" data-i="${i}" data-j="${j}" title="Piece ${c.n} on result ${d.n}: ${P.rules[i][j]?'allowed':'not allowed'}"></button>`).join('')}</div>`).join('')}</div>
  <div class="btnrow"><button class="btn sm" data-rule="ident">Each colour on itself</button><button class="btn sm" data-rule="all">Allow all</button><button class="btn sm" data-rule="none">Clear</button></div>`}
@@ -1816,7 +2101,8 @@ function renderSolver(){
 function svMetaHTML(cur,i,n){const si=svPlayInfo(cur),has=svHasInfo(cur),lv=has?svLevel(cur).join('.'):'—';
  return `<div><small>Assembly</small><b>#${cur.id}</b></div><div><small>Level</small><b title="${lv}">${lv}</b></div><div><small>Moves</small><b>${has?si.total:'—'}</b></div><div><small>Pieces</small><b>${cur.pieces}</b></div><div><small>Disassembly</small><b>${cur.hasDA?'stored':cur.info?'level only':cur.noDA?'none exists':'not checked'}</b></div><div><small>Position</small><b>${i+1} / ${n}</b></div>`}
 function svDaCell(a){return a.hasDA?['ok',ic('check',14),'Disassembly stored']:a.info?['','◐','Level only — moves not stored']:a.noDA?['bad',ic('close',12),'Cannot be disassembled']:['','·','Disassembly not checked']}
-function renderSvSel(){const list=svShown(),n=list.length,cur=svCur(),run=SV.state==='running',st0=SV.state,box=$('#slvSel');
+function renderSvSel(){svKeepFocus(renderSvSel0)}
+function renderSvSel0(){const list=svShown(),n=list.length,cur=svCur(),run=SV.state==='running',st0=SV.state,box=$('#slvSel');
  $('#slvCount').textContent=n;$$('#slvViewSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v===SV.view));
  if(!n){let why;
   if(run||st0==='preparing')why='<b>Searching…</b>Solutions appear here as they are found.';
@@ -1827,15 +2113,16 @@ function renderSvSel(){const list=svShown(),n=list.length,cur=svCur(),run=SV.sta
  const i=SV.sel;
  if(SV.view==='list'){const mx=Math.max(1,...list.map(a=>svHasInfo(a)?svPlayInfo(a).total:0)),dirOf=k=>SV.sortDir*svDefDir(k)>0?'▲':'▼',anyInfo=list.some(svHasInfo);
   const hd=[['number','#'],['level','Level'],['moves','Moves'],['pieces','Pcs']].map(([k,t])=>{const off=(k==='level'||k==='moves')&&!anyInfo;return `<button data-sort="${k}" class="${SV.sortBy===k?'on':''}" ${off?'disabled':''} title="${SVSORT.find(x=>x[0]===k)[2]}${SV.sortBy===k?' — click again to reverse':''}">${t}${SV.sortBy===k?' '+dirOf(k):''}</button>`}).join('');
-  box.innerHTML=`<div class="lhead">${hd}<span title="Disassembly status">DA</span></div><div class="lbody" id="slvList" tabindex="0" role="listbox" aria-label="Solutions">${list.map((a,k)=>{const has=svHasInfo(a),si=svPlayInfo(a),da=svDaCell(a);return `<div class="lrow ${k===i?'sel':''}" role="option" data-i="${k}" data-id="${a.id}"><span class="c1">${a.id}</span><span class="c2 ${has?'':'mut'}">${has?svLevel(a).join('.'):'—'}</span><span class="c3 ${has?'':'mut'}">${has?`<i style="width:${Math.round(si.total/mx*100)}%"></i><b>${si.total}</b>`:'—'}</span><span class="c4">${a.pieces}</span><span class="c5 ${da[0]}" title="${da[2]}">${da[1]}</span></div>`}).join('')}</div><div class="lfoot"><span>${n} solution${n===1?'':'s'}</span><span>↑ ↓ to browse · double-click to play</span></div>`;
+  box.innerHTML=`<div class="lhead">${hd}<span title="Disassembly status">DA</span></div><div class="lbody" id="slvList" tabindex="0" role="listbox" aria-label="Solutions">${list.map((a,k)=>{const has=svHasInfo(a),si=svPlayInfo(a),da=svDaCell(a);return `<div class="lrow ${k===i?'sel':''}" role="option" data-i="${k}" data-id="${a.id}"><span class="c1">${a.id}</span><span class="c2 ${has?'':'mut'}">${has?svLevel(a).join('.'):'—'}</span><span class="c3 ${has?'':'mut'}">${has?`<i style="width:${Math.round(si.total/mx*100)}%"></i><b>${si.total}</b>`:'—'}</span><span class="c4">${a.pieces}</span><span class="c5 ${da[0]}" title="${da[2]}">${da[1]}</span></div>`}).join('')}</div><div class="lfoot"><span>${n} solution${n===1?'':'s'}</span><span>↑↓ solution · ←→ move · Space play</span></div>`;
   const r=$('#slvList .lrow.sel');if(r&&r.scrollIntoView)r.scrollIntoView({block:'nearest'})}
  else{box.innerHTML=`<div class="slv-nav"><div class="big"><b id="slvNavT">Solution ${i+1}</b><span id="slvNavO">of ${n}${svDis()?'':' assemblies'}</span></div><div class="ctl"><button class="nb" data-n="-1" title="Previous solution" ${i<=0?'disabled':''}>${ic('chevD',14)}</button><input type="range" id="slvSlider" min="1" max="${n}" value="${i+1}" ${n<2?'disabled':''}><button class="nb" data-n="1" title="Next solution" ${i>=n-1?'disabled':''}>${ic('chevD',14)}</button></div></div><div class="slv-meta" id="slvMeta">${svMetaHTML(cur,i,n)}</div>`;
   const nb=$$('#slvSel .nb');nb[0].firstElementChild.style.transform='rotate(90deg)';nb[1].firstElementChild.style.transform='rotate(-90deg)'}}
 function renderSvSortAct(){const list=svShown(),n=list.length,anyInfo=list.some(svHasInfo);
  $('#slvSort').innerHTML=(n&&SV.view==='slider')?`<div class="slv-lab">Sort by</div><div class="seg">${SVSORT.map(([k,t,tip])=>`<button data-sort="${k}" class="${SV.sortBy===k?'on':''}" title="${tip}${SV.sortBy===k?' — click again to reverse':''}" ${(n<2||((k==='level'||k==='moves')&&!anyInfo))?'disabled':''}><span>${t}</span>${SV.sortBy===k?`<i class="arr">${SV.sortDir*svDefDir(k)>0?'▲':'▼'}</i>`:''}</button>`).join('')}</div>`:'';
  $('#slvAct').innerHTML=`<button class="btn" data-a="manage" ${(!n||SV.busy)?'disabled':''}>Manage solutions ▾</button><button class="btn" data-a="stl" ${n?'':'disabled'}>Export to STL</button>`}
-function renderPcs(){const cur=svCur(),present=cur?SVPIECES.filter(pc=>!(cur.pieces===6&&pc.id==='S5.2')):SVPIECES;
- $('#slvPcs').innerHTML=present.map(pc=>{const v=SV.vis[pc.id]||0;return `<div class="pvc ${v===1?'wire':v===2?'hid':''}" data-p="${pc.id}" style="--c:${pc.col}" title="${pc.id} — ${['solid','wireframe','hidden'][v]}. Click to cycle: solid → wireframe → hidden"><i class="sq"></i>${pc.id}</div>`}).join('')}
+function renderPcs(){svKeepFocus(renderPcs0)}
+function renderPcs0(){const cur=svCur(),present=cur?SVPIECES.filter(pc=>!(cur.pieces===6&&pc.id==='S5.2')):SVPIECES;
+ $('#slvPcs').innerHTML=present.map(pc=>{const v=SV.vis[pc.id]||0;return `<div class="pvc ${v===1?'wire':v===2?'hid':''}" data-p="${pc.id}" style="--c:${pc.col}" tabindex="0" role="button" title="${pc.id} — ${['solid','wireframe','hidden'][v]}. Click, Space or Enter to cycle: solid → wireframe → hidden"><i class="sq"></i>${pc.id}</div>`}).join('')}
 /* selecting a solution never rebuilds the control being dragged (keeps scrubbing smooth) */
 let svRaf=0;
 function svSelect(i){const n=svShown().length;if(!n)return;SV.sel=Math.max(0,Math.min(n-1,i));SV.t=0;SV.playing=false;SV.stepK=null;const cur=svCur();
@@ -1847,7 +2134,9 @@ function svSelect(i){const n=svShown().length;if(!n)return;SV.sel=Math.max(0,Mat
  svTag();svStatus();cancelAnimationFrame(svRaf);svRaf=requestAnimationFrame(render3d)}
 function svTag(){const P=PZ.probs[SV.prob]||PZ.probs[0],cur=svCur();$('#vtag').innerHTML=`<span class="chip" style="background:#2f6df6">P${SV.prob+1}</span><span>${esc2(P.name)||'Problem'}</span>${cur?`<span class="mute">· Solution ${SV.sel+1} of ${svShown().length}</span>`:''}`}
 function svStatus(){const n=svShown().length;$('#stText').innerHTML=`Problem <b>P${SV.prob+1}</b> — ${SV.revealed} assemblies found${svDis()?`, ${n} can be disassembled`:''} · Activity: ${SV.activity}`;$('#stCursor').textContent=''}
-function renderSolverPlayer(){const pl=$('#splayer'),cur=svCur();
+function svKeepFocus(fn){const a=document.activeElement,id=a&&a.id,pc=a&&a.dataset&&a.dataset.p;fn();if(id){const n=document.getElementById(id);if(n&&n!==document.activeElement)n.focus({preventScroll:true})}else if(pc){const n=document.querySelector(`#slvPcs .pvc[data-p="${pc}"]`);if(n)n.focus({preventScroll:true})}}
+function renderSolverPlayer(){svKeepFocus(renderSolverPlayer0)}
+function renderSolverPlayer0(){const pl=$('#splayer'),cur=svCur();
  const head=(r)=>`<div class="ttlrow"><span class="ttl">Disassembly player</span>${r||''}</div>`;
  if(!cur){pl.innerHTML=head()+`<div class="msg"><span>Nothing to play yet — run the solver to find assemblies.</span></div>`;return}
  const si=svPlayInfo(cur);
@@ -1916,15 +2205,61 @@ function svWire(){
  document.addEventListener('mousedown',e=>{if(SV.menuOpen&&!e.target.closest('#pop')&&!e.target.closest('#slvAct')){SV.menuOpen=false;svPreview(null)}});
  $('#slvPcs').addEventListener('click',e=>{const c=e.target.closest('.pvc');if(!c)return;SV.vis[c.dataset.p]=((SV.vis[c.dataset.p]||0)+1)%3;renderPcs();render3d()});
  $('#slvShowAll').onclick=()=>{SV.vis={};renderPcs();render3d()};
+ $('#splayer').addEventListener('mousedown',e=>{const a=document.activeElement;if(e.target.closest('button[data-t]')&&a&&a.closest&&a.closest('#slvList,#slvSlider'))e.preventDefault()});
  $('#splayer').addEventListener('click',e=>{const a=e.target.closest('[data-a="analyse"]');if(a){svManage('adc');return}const b=e.target.closest('button[data-t]');if(!b)return;const cur=svCur(),total=svPlayInfo(cur).total,k=b.dataset.t;
   if(k==='play'){SV.playing=!SV.playing;if(SV.playing&&SV.t>=total)SV.t=0;svPlayLoop()}else{SV.playing=false;SV.t=k==='start'?0:k==='end'?total:k==='back'?Math.max(0,Math.ceil(SV.t)-1):Math.min(total,Math.floor(SV.t)+1)}renderSolverPlayer();render3d()});
  $('#splayer').addEventListener('input',e=>{if(e.target.id==='slvMove'){SV.playing=false;SV.t=+e.target.value;$('#splayer .lbl').textContent=`Move ${SV.t.toFixed(1)} / ${svPlayInfo(svCur()).total}`;cancelAnimationFrame(svRaf);svRaf=requestAnimationFrame(render3d)}});
  $('#splayer').addEventListener('change',e=>{if(e.target.id==='slvSpeed')SV.speed=+e.target.value});
  $('#mockOutcome').onchange=e=>{SV.outcome=e.target.value;svBuild();SV.revealed=SV.asms.length;SV.progress=1;SV.state='finished';SV.activity='finished';svFinishFlags();SV.sel=0;SV.t=0;SV.stepK=null;renderSolver()};
 }
-function svPlayLoop(){cancelAnimationFrame(SV.anim);if(!SV.playing)return;let last=performance.now();const step=now=>{const dt=(now-last)/1000;last=now;const total=svPlayInfo(svCur()).total;SV.t=Math.min(total,SV.t+dt*1.2*SV.speed);const sl=$('#slvMove');if(sl){sl.value=SV.t;$('#splayer .lbl').textContent=`Move ${SV.t.toFixed(1)} / ${total}`}render3d();if(SV.t>=total){SV.playing=false;renderSolverPlayer()}else SV.anim=requestAnimationFrame(step)};SV.anim=requestAnimationFrame(step)}
+/* ---- Solver keyboard model: list / solution slider / move seekbar share one key map ---- */
+function svPlayerSync(){const total=svPlayInfo(svCur()).total,sl=$('#slvMove'),lb=$('#splayer .lbl');if(sl)sl.value=SV.t;if(lb)lb.textContent=`Move ${SV.t.toFixed(1)} / ${total}`;cancelAnimationFrame(svRaf);svRaf=requestAnimationFrame(render3d)}
+function svTogglePlay(){const c=svCur();if(!c)return;if(!c.hasDA){flash(c.noDA?'This assembly cannot be taken apart':'No disassembly stored — use Analyse disassembly');return}
+ const total=svPlayInfo(c).total;SV.playing=!SV.playing;if(SV.playing&&SV.t>=total)SV.t=0;renderSolverPlayer();svPlayLoop()}
+function svSeek(to){const c=svCur();if(!c||!c.hasDA){if(c)flash('No disassembly to step through');return}const total=svPlayInfo(c).total;SV.playing=false;
+ SV.t=to==='start'?0:to==='end'?total:to<0?Math.max(0,Math.ceil(SV.t)-1):Math.min(total,Math.floor(SV.t)+1);renderSolverPlayer();svPlayerSync()}
+function svKey(e,ctx){const n=svShown().length,k=e.key;let done=true;
+ if(k===' '||k==='Enter')svTogglePlay();
+ else if(k==='ArrowLeft')svSeek(e.shiftKey?'start':-1);
+ else if(k==='ArrowRight')svSeek(e.shiftKey?'end':1);
+ else if(k==='ArrowUp')svSelect(SV.sel-1);
+ else if(k==='ArrowDown')svSelect(SV.sel+1);
+ else if(k==='Home')ctx==='seek'?svSeek('start'):svSelect(0);
+ else if(k==='End')ctx==='seek'?svSeek('end'):svSelect(n-1);
+ else if(k==='PageUp')svSelect(SV.sel-8);
+ else if(k==='PageDown')svSelect(SV.sel+8);
+ else if((k==='Delete'||k==='Backspace')&&ctx==='list')svManage('at');
+ else if(k==='Escape'&&SV.playing){SV.playing=false;cancelAnimationFrame(SV.anim);renderSolverPlayer()}
+ else done=false;
+ if(done){e.preventDefault();e.stopPropagation()}}
+document.addEventListener('keydown',e=>{if(st.tab!=='solver')return;const t=e.target;
+ if(t.closest&&t.closest('#slvList'))svKey(e,'list');
+ else if(t.id==='slvSlider')svKey(e,'slider');
+ else if(t.id==='slvMove')svKey(e,'seek');
+ else if(t.classList&&t.classList.contains('pvc')){if(e.key===' '||e.key==='Enter'){e.preventDefault();e.stopPropagation();SV.vis[t.dataset.p]=((SV.vis[t.dataset.p]||0)+1)%3;renderPcs();render3d()}
+  else if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();const ch=$$('#slvPcs .pvc'),i=ch.indexOf(t),j=Math.max(0,Math.min(ch.length-1,i+(e.key==='ArrowRight'?1:-1)));ch[j].focus()}}},true);
+/* sticky keyboard focus: orbiting / panning / clicking in the 3D view (or its toolbar and view cube) never takes focus away from the Solutions card */
+$('#vp').addEventListener('mousedown',e=>{if(st.tab!=='solver')return;const a=document.activeElement;if(a&&a.closest&&a.closest('#rightS')&&!e.target.closest('input,select,textarea'))e.preventDefault()},true);
+function svPlayLoop(){cancelAnimationFrame(SV.anim);if(!SV.playing)return;let last=performance.now();const step=now=>{if(!SV.playing)return;const dt=(now-last)/1000;last=now;const total=svPlayInfo(svCur()).total;SV.t=Math.min(total,SV.t+dt*1.2*SV.speed);const sl=$('#slvMove');if(sl){sl.value=SV.t;$('#splayer .lbl').textContent=`Move ${SV.t.toFixed(1)} / ${total}`}render3d();if(SV.t>=total){SV.playing=false;renderSolverPlayer()}else SV.anim=requestAnimationFrame(step)};SV.anim=requestAnimationFrame(step)}
 svWire();svBuild();SV.revealed=SV.asms.length;svFinishFlags();
 
+/* ---- Minimal density: auto-hiding viewport toolbar ---- */
+(function(){const vt=$('#vt'),vp=$('#vp');let tHide=0;
+ vp.insertAdjacentHTML('beforeend','<div class="vthandle" id="vthandle"></div>');
+ const handle=$('#vthandle'),minimal=()=>document.documentElement.dataset.density==='minimal';
+ const popOpen=()=>pop.offsetParent!==null||getComputedStyle(pop).display!=='none'&&pop.style.display!=='none'&&pop.childElementCount>0&&pop.getBoundingClientRect().width>0;
+ const show=()=>{clearTimeout(tHide);vt.classList.add('show');handle.classList.add('off')};
+ const hideSoon=(ms=700)=>{clearTimeout(tHide);tHide=setTimeout(()=>{if(vt.matches(':hover')||vt.querySelector(':focus-visible')||popOpen())return hideSoon(400);vt.classList.remove('show');handle.classList.remove('off')},ms)};
+ vp.addEventListener('pointermove',e=>{if(!minimal())return;const r=vp.getBoundingClientRect(),k=r.height/(vp.offsetHeight||r.height);if(e.clientY-r.top<72*k)show();else if(!vt.matches(':hover'))hideSoon()});
+ vp.addEventListener('pointerleave',()=>{if(minimal())hideSoon(500)});
+ vt.addEventListener('focusin',()=>{if(minimal()&&vt.querySelector(':focus-visible'))show()});
+ vt.addEventListener('focusout',()=>{if(minimal())hideSoon()});
+ document.addEventListener('keydown',e=>{if(!minimal()||e.target.closest('input,textarea,select'))return;if(/^[oOpPeEfF]$/.test(e.key)){show();hideSoon(1400)}});
+ const dropFocus=()=>{if(vt.contains(document.activeElement))document.activeElement.blur()};
+ vp.addEventListener('pointerdown',e=>{if(minimal()&&!e.target.closest('#vt'))dropFocus()});
+ document.addEventListener('keydown',e=>{if(minimal()&&e.key==='Escape'){dropFocus();hideSoon(600)}});
+ window.svToolbarReset=()=>{clearTimeout(tHide);vt.classList.remove('show');handle.classList.remove('off')};
+})();
 /* ---------- orchestration ---------- */
 function renderEditor(){renderPlane();renderLayers();renderGrid();renderSelbar()}
 const _renderInsp0=renderInsp;renderInsp=function(){_renderInsp0();if(spaceNow()){['#btnPrune','#btnCenter','#btnOrigin','#btnMin','#btnFill'].forEach(q=>{const e=$(q);if(e){e.disabled=true;e.title='Mock: not interactive for this voxel type'}});$$('#mulRow button,#surf button').forEach(b=>{b.disabled=true;b.title='Mock: not interactive for this voxel type'})}};
