@@ -33,12 +33,12 @@ body{margin:0;height:100%;overflow:hidden;background:var(--outer);display:grid;p
   font:13px/1.35 -apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--text);font-variant-numeric:tabular-nums}
 #wrap{position:relative}
 #stage{position:absolute;left:0;top:0;width:1600px;height:1000px;transform-origin:0 0;background:var(--bg);
-  display:grid;grid-template-rows:40px 1fr 28px;overflow:hidden;
+  display:grid;grid-template-columns:68px 1fr;grid-template-rows:40px 1fr 28px;overflow:hidden;
   --lw:288px;--rw:400px;--cw:1fr}
 button{font:inherit;color:inherit}
 
 /* ---------- top bar ---------- */
-.top{display:flex;align-items:center;gap:2px;padding:0 10px 0 14px;background:var(--panel);border-bottom:1px solid var(--line);position:relative}
+.top{grid-column:1/3;display:flex;align-items:center;gap:2px;padding:0 10px 0 14px;background:var(--panel);border-bottom:1px solid var(--line);position:relative}
 .brand{font-weight:700;letter-spacing:.2px;margin-right:12px;display:flex;align-items:center;gap:8px}
 .brand i{width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--ax),var(--az));display:block}
 .menu button{border:0;background:transparent;height:28px;padding:0 9px;border-radius:6px;color:var(--text);cursor:pointer}
@@ -67,7 +67,7 @@ button{font:inherit;color:inherit}
 .ax-x{color:var(--ax)} .ax-y{color:var(--ay)} .ax-z{color:var(--az)}
 
 /* ---------- workspace ---------- */
-.body{display:grid;grid-template-columns:var(--lw) var(--cw) var(--rw);gap:8px;padding:8px;min-height:0;transition:grid-template-columns .2s ease}
+.body{grid-column:2;grid-row:2;display:grid;grid-template-columns:var(--lw) var(--cw) var(--rw);gap:8px;padding:8px;min-height:0;transition:grid-template-columns .2s ease}
 #stage.lc{--lw:56px} #stage.rc{--rw:56px}
 #stage.f3d{--lw:56px;--rw:56px}
 #stage.f2d{--lw:56px;--cw:360px;--rw:1fr}
@@ -297,19 +297,124 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
 .mocksel{height:26px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);color:var(--text);padding:0 6px;font:inherit;font-size:12px}
 .cell.sp{cursor:inherit}
 .cell.sp:hover{stroke:var(--accent);stroke-width:2.6}
+.status{grid-column:2;grid-row:3}
+/* ---- vertical workspace rail ---- */
+.rail{grid-column:1;grid-row:2/4;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0}
+.rbtn{position:relative;width:56px;height:58px;border:0;background:transparent;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted);font-size:10.5px;font-weight:600;cursor:pointer}
+.rbtn:hover{background:var(--panel2);color:var(--text)}
+.rbtn.on{background:var(--accentSoft);color:var(--accent)}
+.rbtn.on::before{content:"";position:absolute;left:-6px;top:13px;bottom:13px;width:3px;border-radius:0 3px 3px 0;background:var(--accent)}
+/* ---- tab switching ---- */
+#stage[data-tab=puzzle]{--lw:380px;--rw:360px}
+#stage[data-tab=puzzle].lc,#stage[data-tab=puzzle].rc,#stage[data-tab=puzzle].f2d{--lw:380px;--rw:360px;--cw:1fr}
+#stage[data-tab=puzzle].f3d .puz,#stage[data-tab=solver] .ent,#stage[data-tab=solver] .puz,#stage[data-tab=solver] #center{display:none}
+#stage[data-tab=puzzle].f3d .body,#stage[data-tab=solver] .body{grid-template-columns:1fr}
+#stage[data-tab=puzzle] .ent,#stage[data-tab=puzzle] .ent-only{display:none}
+#stage:not([data-tab=puzzle]) .puz{display:none}
+#stage:not([data-tab=solver]) .sol{display:none}
+.sol{place-items:center;text-align:center;color:var(--muted);padding:40px}
+/* ---- Puzzle tab ---- */
+.pz-scroll{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column}
+.pz-problems{padding:6px;overflow:auto;max-height:140px;flex:none}
+.pzsec{border-top:1px solid var(--line);flex:none}
+.pzh{height:44px;display:flex;align-items:center;gap:8px;padding:0 8px 0 14px;font-weight:600;border-top:1px solid var(--line);flex:none}
+.pzh .sp{flex:1}.pzh .btn{flex:none}
+.pz-result{padding:10px 12px 12px;display:flex;align-items:center;gap:10px;flex:none}
+.pz-result .meta{flex:1;min-width:0}.pz-result .meta b{display:block;font-weight:600}.pz-result .meta span{color:var(--muted);font-size:12px}
+.pz-pieces{padding:10px;flex:1;min-height:90px;overflow:auto;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+.ptile{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 4px 0 8px;border-radius:8px;color:#fff;font-size:11.5px;cursor:pointer;position:relative;text-shadow:0 1px 1px rgba(0,0,0,.28);outline:2px solid transparent;outline-offset:2px;user-select:none}
+.ptile.off{opacity:.36}
+.ptile.sel{outline-color:var(--accent)}
+.ptile .pl{opacity:.9;font-size:10.5px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ptile .pb{background:rgba(0,0,0,.3);border-radius:5px;padding:0 5px;min-width:24px;text-align:center;font-weight:700;font-size:10.5px;line-height:18px}
+.ptile .pm{display:none;gap:2px}
+.ptile:hover .pb{display:none}.ptile:hover .pm{display:inline-flex}
+.ptile .pm button{width:18px;height:18px;border:0;border-radius:5px;background:rgba(0,0,0,.38);color:#fff;font-weight:800;line-height:16px;cursor:pointer;padding:0}
+.ptile .pm button:hover{background:rgba(0,0,0,.6)}
+.pz-sum{flex:none;border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;align-items:flex-start;font-size:12px}
+.pz-sum b{display:block;font-size:12.5px}.pz-sum span{color:var(--muted)}
+.pz-sum.ok svg{color:var(--ay)}.pz-sum.warn svg{color:#d97706}.pz-sum.warn b{color:#b45309}
+.pzt{width:100%;border-collapse:collapse;font-size:12px}
+.pzt th{position:sticky;top:0;background:var(--panel);text-align:center;font-size:11px;font-weight:600;color:var(--muted);padding:4px 2px;text-transform:uppercase;letter-spacing:.3px}
+.pzt td{padding:2px;text-align:center}
+.pzt td.sh{text-align:left;color:#fff;font-weight:600;padding:5px 8px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.pzt input{width:46px;height:26px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);color:var(--text);text-align:center;font:inherit}
+.pzt tr.sel td.sh{outline:2px solid var(--accent);outline-offset:-2px}
+.pzt-wrap{padding:6px 8px;overflow:auto;flex:1}
+.pzs{padding:12px 14px 14px;flex:none}
+.pzs .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}.pzs .hd b{display:block;font-weight:600}.pzs .hd span.m{color:var(--muted);font-size:12px}
+.pzs .lab{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);margin:10px 0 6px}
+.pzs .rng{display:flex;gap:8px;align-items:center}
+.pzs .rng .f{flex:1 1 0;min-width:0}.pzs .rng .step.sz{min-width:0}.pzs .rng .step input.v{min-width:0}.pzs .rng .f small{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}
+.pzs .gw{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.pzs .gw .step{width:112px}
+.pz-empty{color:var(--muted);font-size:12px;line-height:1.5;padding:14px}
+.pzg{margin:0 12px 10px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--panel2)}
+.pzg .gh{display:flex;align-items:center;gap:8px;font-weight:600;margin-bottom:6px}.pzg .gh .sp{flex:1}
+.pzg .mem{display:flex;flex-wrap:wrap;gap:5px}
+.pzg .mem .ptile{height:24px;font-size:10.5px;cursor:default}
+.pzr{padding:8px 14px 12px;flex:none}
+.pzr .cap{color:var(--muted);font-size:11px;margin-bottom:6px;line-height:1.4}
+.mx{display:grid;gap:4px;width:max-content}
+.mxr{display:grid;grid-template-columns:30px repeat(5,34px);gap:4px;align-items:center}
+.sw2{width:24px;height:24px;border-radius:7px;border:1px solid rgba(0,0,0,.25);justify-self:center}
+.mxc{width:34px;height:28px;border:1px solid var(--line2);background:var(--panel);border-radius:7px;cursor:pointer;padding:0;position:relative}
+.mxc:hover{border-color:var(--accent)}
+.mxc.on{background:var(--accent);border-color:var(--accent)}
+.mxc.on::after{content:"";position:absolute;left:11px;top:5px;width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.pzr .btnrow{margin-top:8px}
+.pzo{padding:10px 14px 14px;flex:none}
+.pzo input{width:100%;height:30px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);color:var(--text);padding:0 10px;font:inherit}
+.pzo small{display:block;color:var(--muted);margin-top:4px;font-size:11px}
+.pz-used{padding:10px;flex:1 1 120px;min-height:96px;overflow:auto;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;transition:background .12s,outline-color .12s;outline:2px dashed transparent;outline-offset:-4px;border-radius:10px}
+.pz-lib{padding:8px 10px 10px;max-height:210px;overflow:auto;display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start;flex:0 1 auto;min-height:48px;border-radius:10px;outline:2px dashed transparent;outline-offset:-4px}
+.pz-lib.closed{display:none}
+.drop-ok{outline-color:var(--accent)!important;background:var(--accentSoft)}
+.ut{position:relative;display:flex;width:114px;height:54px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);cursor:grab;overflow:hidden;user-select:none}
+.ut:hover{border-color:var(--accent)}
+.ut.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);background:var(--accentSoft)}
+.ut .uc{width:6px;flex:none}
+.ut .gripd{color:var(--line2);display:inline-flex;margin-left:-3px;flex:none}
+.ut .ub{flex:1;min-width:0;padding:5px 6px 5px 7px;display:flex;flex-direction:column;justify-content:space-between}
+.ut .t1{display:flex;align-items:center;gap:4px;font-size:11.5px;height:18px;overflow:hidden}
+.ut .t1 b{font-weight:700}.ut .t1 .pl{color:var(--muted);font-size:10.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ut .gb{margin-left:auto;font-size:9.5px;font-weight:700;background:var(--accent);color:#fff;border-radius:5px;padding:0 4px;line-height:14px}
+.ut .t2{display:flex;align-items:center;justify-content:space-between;height:22px}
+.ut .t2 button{width:22px;height:22px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);color:var(--text);font-weight:700;line-height:18px;cursor:pointer;padding:0}
+.ut .t2 button:hover{border-color:var(--accent);background:var(--accentSoft)}
+.ut .t2 .cnt{font-weight:700;font-size:12px;min-width:34px;text-align:center}
+.lc{display:inline-flex;align-items:center;height:28px;gap:6px;padding:0 4px 0 4px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);cursor:grab;font-size:11.5px;user-select:none}
+.lc:hover{border-color:var(--accent);background:var(--accentSoft)}
+.lc.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.lc .gripd{color:var(--line2);display:inline-flex}
+.lc .sq{width:10px;height:10px;border-radius:3px;flex:none}
+.lc b{font-weight:700}.lc .pl{color:var(--muted);font-size:10.5px;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lc .la{min-width:34px;height:20px;border:0;border-radius:6px;background:transparent;color:var(--muted);font-weight:700;font-size:11px;cursor:pointer;padding:0}
+.lc .la:hover{background:var(--accent);color:#fff}
+.lc.in .la{color:var(--text)}
+.lc.in{background:var(--panel)}
+.pzs .cnt1{display:flex;align-items:center;justify-content:space-between}
+.pzs .cnt1 .step.sz{width:150px;flex:none;min-width:0}.pzs .cnt1 .step.sz input.v{min-width:0;width:100%}
+.pzs .gseg{display:flex;flex-wrap:wrap;gap:6px}
+.pzs .gseg button{height:28px;min-width:44px;padding:0 10px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);cursor:pointer;font-weight:600}
+.pzs .gseg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.pzs .gseg button:hover:not(.on){border-color:var(--accent)}
+.step.sz.inl .il{font-size:12px;font-weight:600;color:var(--muted);padding-left:4px;flex:none}
+.step.sz.inl input.v{text-align:right;padding-right:8px;border:0;outline:0;background:transparent;box-shadow:none}
+.pzt td.cn{white-space:nowrap}.pzt td.cn input{width:40px}.pzt td.cn .dash{color:var(--muted);padding:0 2px}
+.pzt input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent)}
+.pzt select{height:26px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);color:var(--text);font:inherit;font-size:12px;max-width:74px}
+.pzt th.l{text-align:left}
 </style>
 </head>
 <body>
 <div id="wrap">
-<div id="stage">
+<div id="stage" data-tab="entities">
 
   <!-- top bar (menu & app tabs are out of scope; kept as-is) -->
   <div class="top">
     <div class="brand"><i></i>BurrTools</div>
     <div class="menu" id="menu"></div>
-    <div class="tabs seg" id="apptabs">
-      <button class="on">Entities</button><button>Puzzle</button><button>Solver</button>
-    </div>
     <div class="right">
       <span class="fname" title="E:\Girish\Puzzles\designs\TIC\Final\TIC 2.99 - Clutch 4 - Level 31R10.8.R14.xmpuzzle">TIC 2.99 – Clutch 4 – Level 31R10.8.R14.xmpuzzle</span>
       <select class="mocksel" id="mockVType" title="Mock only: the voxel type is chosen once in File ▸ New and cannot change afterwards"><option value="brick">Mock voxel type: Brick</option><option value="prism">Mock voxel type: Triangular Prism</option><option value="spheres">Mock voxel type: Spheres</option><option value="rhombic">Mock voxel type: Rhombic Tetrahedra</option><option value="tetoct">Mock voxel type: Tetrahedra-Octahedra</option></select>
@@ -319,9 +424,11 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
     </div>
   </div>
 
+  <nav class="rail" id="appRail" aria-label="Workspace"></nav>
+
   <div class="body">
     <!-- ================= LEFT: OBJECT SCOPE ================= -->
-    <section class="card" id="left">
+    <section class="card ent" id="left">
       <div class="lfull">
         <div class="ch">Shapes <span class="chip" id="shapeCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span>
           <button class="btn pri sm" id="btnNew">+ New</button>
@@ -353,6 +460,19 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
       <div class="zt z1"><b>OBJECT SCOPE</b>Which shape, and what happens to the whole shape.</div>
     </section>
 
+    <!-- ================= PUZZLE TAB: PROBLEM & PIECES ================= -->
+    <section class="card puz" id="leftP">
+      <div class="ch">Problems <span class="chip" id="pzCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><button class="btn pri sm" id="pzNew">+ New</button></div>
+      <div class="pz-problems" id="pzProblems"></div>
+      <div class="pzh">Result</div>
+      <div class="pz-result" id="pzResult"></div>
+      <div class="pzh">In this puzzle <span class="chip" id="pzPieceCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><div class="seg" id="pzViewSeg"><button data-v="chips" class="on">Chips</button><button data-v="table">Table</button></div><button class="ib" id="pzMore" title="More piece actions"></button></div>
+      <div class="pz-used" id="pzUsed"></div>
+      <div class="pzh" id="pzLibHead" style="cursor:pointer">All pieces <span class="chip" id="pzLibCount" style="background:var(--muted);min-width:22px;height:20px"></span><span class="sp"></span><span class="mute" style="font-size:11px;font-weight:400">drag, double-click or + to add</span><button class="ib" id="pzLibTog" title="Show / hide the list"></button></div>
+      <div class="pz-lib" id="pzLib"></div>
+      <div class="pz-sum" id="pzSummary"></div>
+    </section>
+
     <!-- ================= CENTER: SPATIAL VIEW ================= -->
     <section class="card" id="center">
       <div class="vp" id="vp">
@@ -367,7 +487,7 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
     </section>
 
     <!-- ================= RIGHT: VOXEL SCOPE ================= -->
-    <section class="card" id="right">
+    <section class="card ent" id="right">
       <div class="rfull">
         <div class="ch"><span>Voxel editor</span><span class="vtchip" id="vtChip"></span><span class="sp"></span>
           <button class="ib" id="btnF2D" title="Focus 2D editor (Esc to exit)"></button>
@@ -391,6 +511,17 @@ kbd{font:11px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--lin
       <div class="rrail" id="rrail"></div>
       <div class="zt z3"><b>VOXEL SCOPE</b>Draw. Tool, plane, layer, grid size and colour stay together — no tab switching.</div>
     </section>
+    <!-- ================= PUZZLE TAB: SELECTED PIECE, GROUPS, COLOURS, OPTIONS ================= -->
+    <section class="card puz" id="rightP">
+      <div class="ch">Selected piece</div>
+      <div class="pz-scroll">
+        <div class="pzs" id="pzSel"></div>
+        <div id="pzGroupsSec"><div class="pzh">Exclusive groups</div><div id="pzGroups" style="padding-top:10px"></div></div>
+        <div class="pzh">Colour rules</div>
+        <div class="pzr" id="pzRules"></div>
+      </div>
+    </section>
+    <section class="card sol" id="solStub"><div><b style="font-size:15px;color:var(--text)">Solver</b><br><br>Not part of this iteration — the legacy Solver content is unchanged.<br>The workspace rail on the left already hosts it.</div></section>
   </div>
 
   <div class="status">
@@ -459,6 +590,10 @@ const I={
  edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/>',
  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
  close:'<path d="M6 6l12 12M18 6L6 18"/>',
+ puzzle:'<path d="M10 4.5a2 2 0 1 1 4 0V7h3a1 1 0 0 1 1 1v3h-1.5a2 2 0 1 0 0 4H18v3a1 1 0 0 1-1 1h-3v-1.5a2 2 0 1 0-4 0V19H7a1 1 0 0 1-1-1v-3h1.5a2 2 0 1 0 0-4H6V8a1 1 0 0 1 1-1h3z"/>',
+ play:'<path d="M8 5l11 7-11 7z"/>',
+ warn:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2v.1"/>',
+ okc:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',
  ptplus:'<path d="M5 3l12 6-5 2-2 5z"/><path d="M17 15v6M14 18h6"/>'
 };
 const ic=(n,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
@@ -550,7 +685,15 @@ let shapes=[
  {id:'S1',label:'',col:SHAPE_COL[0],dims:[3,3,3],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0],[0,1,0],[0,2,0],[0,0,1],[0,0,2]])},
  {id:'S2',label:'Arm piece',col:SHAPE_COL[1],dims:[4,3,4],w:1,vox:mkVox([[1,0,0],[1,1,0],[0,0,1],[1,0,1],[1,1,1],[2,1,1],[1,1,2],[2,1,2],[3,1,2],[1,2,2],[2,1,3],[3,1,3],[3,2,3],[2,2,3]])},
  {id:'S3',label:'',col:SHAPE_COL[2],dims:[4,1,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0],[3,0,0]])},
- {id:'S4',label:'',col:SHAPE_COL[3],dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,1,1]])}
+ {id:'S4',label:'',col:SHAPE_COL[3],dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[0,1,0],[1,1,0],[0,0,1],[1,1,1]])},
+ {id:'S5',label:'Target',col:'',dims:[3,3,3],w:1,vox:mkVox((()=>{const a=[];for(let x=0;x<3;x++)for(let y=0;y<3;y++)for(let z=0;z<3;z++)if(!(x%2===0&&y%2===0&&z%2===0))a.push([x,y,z]);return a})())},
+ {id:'S6',label:'A',col:'',dims:[3,2,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0],[2,1,0]])},
+ {id:'S7',label:'B',col:'',dims:[3,2,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0],[1,1,0]])},
+ {id:'S8',label:'C',col:'',dims:[3,2,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[1,1,0],[2,1,0]])},
+ {id:'S9',label:'D',col:'',dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[1,1,0],[1,1,1]])},
+ {id:'S10',label:'E',col:'',dims:[3,3,1],w:1,vox:mkVox([[1,0,0],[0,1,0],[1,1,0],[2,1,0],[1,2,0]])},
+ {id:'S11',label:'F',col:'',dims:[2,2,2],w:1,vox:mkVox([[0,0,0],[1,0,0],[0,1,0],[0,0,1]])},
+ {id:'S12',label:'G',col:'',dims:[3,1,1],w:1,vox:mkVox([[0,0,0],[1,0,0],[2,0,0]])}
 ];
 const st={colorView:'piece',mirror:{x:false,y:false,z:false},span:{x:false,y:false,z:false},edit3d:false,set:{undo:25,tips:true,cube:true,rev:false,rot:'Drag',lights:true,fade:true,threads:12,lists:false},sel:1,tool:'fixed',plane:'XY',layer:0,color:0,selCells:new Set(),applyAll:false,mode:'orbit',
   disp:{axes:true,bounds:true,layer:true,dim:false},persp:true};
@@ -601,6 +744,8 @@ function getSpace(kind,dims){const ck=kind+':'+dims.join('x');if(spaceCache.has(
 const spaceNow=()=>st.vtype==='brick'?null:getSpace(kindOf(st.vtype),cur().dims);
 const defDims=()=>st.vtype==='brick'||st.vtype==='spheres'?[3,3,3]:[3,3,2];
 function cloneShape(s){return Object.assign({},s,{dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,Object.assign({},v)]))})}
+let UIDN=0;const nuid=()=>'u'+(++UIDN);
+shapes.forEach(s=>{s.uid=s.uid||nuid()});renumber();
 const BRICK_DOC=shapes.map(cloneShape);
 const DEMO={
  spheres:{dims:[3,3,3],sets:[['0,0,0','1,1,0'],['0,0,0','1,1,0','2,2,0','1,0,1!','1,1,2'],['0,0,0','2,0,0','1,1,0','0,2,0'],['1,1,0','1,0,1','0,1,1','2,1,1','1,2,1','1,1,2']]},
@@ -608,8 +753,8 @@ const DEMO={
  tetra:{dims:[3,3,2],sets:[['1,1,0,0','1,1,1,0'],['1,1,0,0','1,1,1,0','1,1,2,0!','1,1,3,0','0,1,1,0','1,1,0,1'],['0,0,0,0','0,0,1,0','1,0,3,0','1,0,0,0'],['1,1,2,0','1,2,0,0','2,1,3,0']]}};
 function setVType(t){st.vtype=t;st.plane='XY';st.mirror={x:false,y:false,z:false};st.span={x:false,y:false,z:false};st.layer=0;st.sel=1;
  if(t==='brick')shapes=BRICK_DOC.map(cloneShape);
- else{const D=DEMO[kindOf(t)];shapes=D.sets.map((ks,i)=>{const vox=new Map();ks.forEach(k=>{const v=k.endsWith('!');vox.set(v?k.slice(0,-1):k,{s:v?'v':'f',c:0})});return{id:'',label:i===1?'Demo piece':'',col:'',dims:[...D.dims],w:1,vox}})}
- renumber();renderAll();render3d()}
+ else{const D=DEMO[kindOf(t)];shapes=D.sets.map((ks,i)=>{const vox=new Map();ks.forEach(k=>{const v=k.endsWith('!');vox.set(v?k.slice(0,-1):k,{s:v?'v':'f',c:0})});return{uid:nuid(),id:'',label:i===1?'Demo piece':'',col:'',dims:[...D.dims],w:1,vox}})}
+ renumber();initPuzzle();renderAll();render3d()}
 const cam={yaw:-32,pitch:26,roll:0,zoom:1,px:0,py:0};
 const cur=()=>shapes[st.sel];
 let S=1; // stage scale
@@ -635,7 +780,7 @@ const vt=$('#vt');
 vt.innerHTML=
  `<button class="tbn on" data-m="orbit" title="Left-drag orbits. Shift-drag pans. Middle-drag always pans.">${tbn('orbit','Orbit')}</button>`+
  `<button class="tbn" data-m="pan" title="Left-drag pans. Shift-drag orbits. Middle-drag always pans.">${tbn('pan','Pan')}</button><span class="sep"></span>`+
- `<button class="tbn" id="bEdit" title="3D edit mode — a plain click uses the active voxel tool">${tbn('ptplus','Edit')}</button><span class="sep"></span>`+
+ `<button class="tbn ent-only" id="bEdit" title="3D edit mode — a plain click uses the active voxel tool">${tbn('ptplus','Edit')}</button><span class="sep ent-only"></span>`+
  `<button class="tbn" id="bDisp" title="Display options">${tbn('eye','Display')}</button><span class="sep"></span>`+
  `<button class="tbn" id="bF3D" title="Focus 3D viewport (Esc to exit)">${tbn('focus','Focus')}</button>`;
 $('#planeSeg').innerHTML=['XY','XZ','YZ'].map(p=>`<button class="gbtn" data-p="${p}" title="Edit the ${p} plane">${G.plane(p,30)}<span>${p}</span></button>`).join('');
@@ -713,14 +858,14 @@ function renderShapes(){
 }
 function selectShape(i){st.sel=i;st.selCells.clear();st.layer=Math.min(st.layer,P().layers-1);renderAll()}
 function newShape(){
- shapes.push({id:'',label:'',col:'',dims:defDims(),w:1,vox:new Map()});renumber();
+ shapes.push({uid:nuid(),id:'',label:'',col:'',dims:defDims(),w:1,vox:new Map()});renumber();
  selectShape(shapes.length-1);
 }
 $('#btnNew').onclick=newShape;
 const list=$('#shapeList');
 function shapeAction(a,i){
  const s=shapes[i];if(!s)return;
- if(a==='copy'){shapes.push({...s,dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,{...v}]))});renumber();selectShape(shapes.length-1)}
+ if(a==='copy'){shapes.push({...s,uid:nuid(),dims:[...s.dims],vox:new Map([...s.vox].map(([k,v])=>[k,{...v}]))});renumber();selectShape(shapes.length-1)}
  else if(a==='del'){if(shapes.length<2)return;shapes.splice(i,1);renumber();st.sel=Math.max(0,Math.min(st.sel,shapes.length-1));if(i<st.sel)st.sel--;renderAll()}
  else if(a==='wp'){s.w++;renderShapes()}else if(a==='wm'){s.w=Math.max(0,s.w-1);renderShapes()}
  else if(a==='up'||a==='down'){const j=i+(a==='up'?-1:1);if(j<0||j>=shapes.length)return;const sel=cur();[shapes[i],shapes[j]]=[shapes[j],shapes[i]];renumber();st.sel=shapes.indexOf(sel);renderAll();flash('Order changed — shapes renumbered S1…S'+shapes.length)}
@@ -968,10 +1113,11 @@ $('#btnTheme').onclick=()=>{const dark=matchMedia('(prefers-color-scheme: dark)'
 
 /* ---------- status & tag ---------- */
 function updateStatus(){
+ if(st.tab==='puzzle'){pzStatus();return}
  const v=[...cur().vox.values()],f=v.filter(x=>x.s==='f').length,va=v.length-f;
  $('#stText').innerHTML=`Shape <b>${cur().id}</b> has <b>${v.length}</b> voxels (${f} fixed, ${va} variable)`;
 }
-function renderTag(){const s=cur();$('#vtag').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>${s.label||''}</span>`}
+function renderTag(){if(st.tab==='puzzle'){pzTag();return}const s=cur();$('#vtag').innerHTML=`<span class="chip" style="background:${s.col}">${s.id}</span><span>${s.label||''}</span>`}
 
 /* ---------- 3D renderer ---------- */
 const FACES=[
@@ -987,6 +1133,7 @@ function render3d(){
  const r=(window.devicePixelRatio||1)*S;const bw=Math.round(w*r),bh=Math.round(h*r);
  if(cv.width!==bw||cv.height!==bh){cv.width=bw;cv.height=bh}
  const g=cv.getContext('2d');g.setTransform(r,0,0,r,0,0);g.clearRect(0,0,w,h);
+ if(st.tab==='puzzle'){renderPuzzleScene(g,w,h);renderCube();return}
  const sh=cur(),SP=spaceNow(),[dx,dy,dz]=SP?SP.ext:sh.dims,ctr=[dx/2,dy/2,dz/2];
   const sc=Math.min(w,h)/(Math.max(dx,dy,dz)*2.05+1.5)*cam.zoom;
  const rot=mkRot(cam);
@@ -1138,6 +1285,7 @@ const mods=e=>({ctrl:e.ctrlKey,shift:e.shiftKey,alt:e.altKey||e.metaKey});
 function actFor(m){if(m.ctrl)return'erase';if(m.alt)return'variable';if(m.shift)return'fixed';return st.edit3d?st.tool:null}
 function inPoly(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if((a[1]>pt[1])!==(b[1]>pt[1])&&pt[0]<(b[0]-a[0])*(pt[1]-a[1])/(b[1]-a[1])+a[0])c=!c}return c}
 function updateHover(px,py,m){
+ if(st.tab==='puzzle'){puzHoverAt(px,py);return}
  const act=actFor(m);hov=null;$('#cv').style.cursor=act?cursorFor(act):'';renderEditBtn((m.ctrl||m.alt||m.shift)?act:null);
  if(act){const SP=spaceNow();for(let i=lastFaces.length-1;i>=0;i--){const F=lastFaces[i];
   if(SP){if(!(F.sphere?Math.hypot(px-F.cx,py-F.cy)<=F.R:inPoly([px,py],F.pts)))continue;
@@ -1163,9 +1311,10 @@ function updateHover(px,py,m){
   if(d.m==='orbit'){const rr=(cam.roll||0)*Math.PI/180,cr=Math.cos(rr),sr=Math.sin(rr);cam.yaw+=(dx*cr-dy*sr)*.5;cam.pitch=Math.max(-89,Math.min(89,cam.pitch+(dx*sr+dy*cr)*.5))}
   else if(d.m==='pan'){cam.px+=dx;cam.py+=dy}else{cam.zoom=Math.max(.3,Math.min(4,cam.zoom*Math.exp(-dy*.01)))}render3d()});
  cv.addEventListener('pointerup',e=>{const was=d;d=null;
+  if(st.tab==='puzzle'){if(was&&was.btn===0&&!was.moved&&lm)puzClick(lm.x,lm.y);return}
   if(was&&was.btn===0&&!was.moved&&hov&&hov.valid){applyTool(hov.act,[hov.target]);renderEditor();updateStatus()}
   if(lm)updateHover(lm.x,lm.y,mods(e));else render3d()});
- cv.addEventListener('pointerleave',()=>{if(!d){hov=null;render3d()}});
+ cv.addEventListener('pointerleave',()=>{if(!d){hov=null;PZ.hover=null;render3d()}});
  cv.addEventListener('wheel',e=>{cancelAnimationFrame(anim);e.preventDefault();const dy=e.deltaY*(e.deltaMode===1?33:1);zoomBy(Math.exp(-dy*(st.set.rev?-1:1)*.0016))},{passive:false});
 })();
 ['keydown','keyup'].forEach(t=>document.addEventListener(t,e=>{if(!(e.key==='Control'||e.key==='Shift'||e.key==='Alt'||e.key==='Meta'))return;if(hc)hover2d(mods(e));else if(lm)updateHover(lm.x,lm.y,mods(e))}));
@@ -1176,6 +1325,7 @@ document.addEventListener('keydown',e=>{
  if(e.target.matches('input')){if(e.key==='Escape'&&$('#scrim').classList.contains('show')){closeSettings();e.target.blur()}return}const k=e.key;
  if((e.ctrlKey||e.metaKey)&&k===','){e.preventDefault();openSettings();return}
  if($('#scrim').classList.contains('show')&&k!=='Escape')return;
+ if(st.tab==='puzzle'&&/^[1-4eE]$/.test(k))return;
  if(k>='1'&&k<='4'){st.tool=TOOLS[+k-1].id;renderTools();if(hc)hover2d(lastMods)}
  else if((k==='e'||k==='E')&&!e.ctrlKey&&!e.metaKey&&!e.altKey){$('#bEdit').click()}
  else if(k==='F2'){shapeAction('label',st.sel)}else if(k==='Delete'){shapeAction('del',st.sel)}else if((e.ctrlKey||e.metaKey)&&(k==='d'||k==='D')){e.preventDefault();shapeAction('copy',st.sel)}
@@ -1243,11 +1393,187 @@ $('#setPg').addEventListener('change',e=>{const t=e.target;if(t.tagName==='SELEC
 $('#setPg').addEventListener('input',e=>{const t=e.target;if(t.type==='range'){st.set[t.dataset.k]=+t.value;t.nextElementSibling.textContent=t.value}});
 $('#setPg').addEventListener('keydown',e=>{const sw=e.target.closest&&e.target.closest('.switch');if(sw&&(e.key===' '||e.key==='Enter')){e.preventDefault();st.set[sw.dataset.k]=!st.set[sw.dataset.k];applySet();const k=sw.dataset.k;const n=$(`#setPg .switch[data-k="${k}"]`);n&&n.focus()}});
 
-window.__G=G;window.__I=I;
+(function(){const bd=$('#bDisp').onclick;$('#bDisp').onclick=e=>{bd(e);if(st.tab==='puzzle'){[...pop.querySelectorAll('[data-k=axes],[data-k=bounds],[data-k=layer],[data-k=dim]')].forEach(b=>b.remove());const ph=pop.querySelector('.ph');if(ph)ph.remove();const hr=pop.querySelector('hr');if(hr)hr.remove()}}})();
+window.__G=G;window.__I=I;window.__pzBoxes=()=>PZ.boxes;window.__pz=()=>PZ;
+/* ===================== PUZZLE TAB (draft 2) ===================== */
+const PZC=[{n:'Default',h:null},{n:'C2',h:'#00f050'},{n:'C3',h:'#00a63c'},{n:'C4',h:'#005c22'},{n:'C5',h:'#d4d4d4'}];
+const PZ={probs:[],cur:0,sel:null,hover:null,boxes:[],libOpen:true,drag:null,view:'chips'};
+const pzShape=u=>shapes.find(x=>x.uid===u);
+const pzP=()=>PZ.probs[PZ.cur];
+const pzIdent=()=>PZC.map((_,i)=>PZC.map((__,j)=>i===j));
+const pzIn=c=>!!c&&c.max>0;
+function pzCfg(u){const P=pzP();return P.pieces[u]||(P.pieces[u]={min:0,max:0,lock:true,grp:null})}
+function initPuzzle(){const S=shapes,U=i=>S[i]?S[i].uid:null;
+ if(st.vtype==='brick'&&S.length>=12){
+  PZ.probs=[{name:'Small',resultUid:U(4),pieces:{},groups:[1],rules:pzIdent()},{name:'Large',resultUid:U(1),pieces:{},groups:[],rules:pzIdent()}];
+  const set=(P,a)=>{P.pieces[U(a[0])]={min:a[1],max:a[2],lock:a[1]===a[2],grp:a[3]||null}};
+  [[2,1,1,1],[3,1,1,1],[9,1,1],[11,1,1],[5,0,1]].forEach(a=>set(PZ.probs[0],a));
+  [[2,1,1],[3,1,1],[11,2,2]].forEach(a=>set(PZ.probs[1],a));PZ.sel=U(9)}
+ else{const big=S.reduce((m,x,i)=>x.vox.size>S[m].vox.size?i:m,0);PZ.probs=[{name:'',resultUid:U(big),pieces:{},groups:[],rules:pzIdent()}];S.forEach((x,i)=>{if(i!==big)PZ.probs[0].pieces[x.uid]={min:1,max:1,lock:true,grp:null}});PZ.sel=S.find((x,i)=>i!==big).uid}
+ PZ.cur=0}
+const esc2=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rng=(a,b,sep)=>a===b?String(a):a+(sep||'–')+b;
+function pzStats(){const P=pzP(),R=pzShape(P.resultUid),rf=[...R.vox.values()].filter(v=>v.s==='f').length;let pmin=0,pmax=0,nmin=0,nmax=0;
+ shapes.forEach(x=>{if(x.uid===P.resultUid)return;const c=P.pieces[x.uid];if(!pzIn(c))return;nmin+=c.min;nmax+=c.max;pmin+=c.min*x.vox.size;pmax+=c.max*x.vox.size});
+ return{R,rmin:rf,rmax:R.vox.size,pmin,pmax,nmin,nmax,fit:pmax>=rf&&pmin<=R.vox.size}}
+const pzCount=c=>!c||c.max<=0?'0':c.min===c.max?'×'+c.max:c.min+'–'+c.max;
+function pzStatus(){const a=pzStats();$('#stText').innerHTML=`Problem <b>P${PZ.cur+1}</b> result can contain ${rng(a.rmin,a.rmax,' - ')} voxels, pieces (n = ${rng(a.nmin,a.nmax,' - ')}) contain ${rng(a.pmin,a.pmax,' - ')} voxels`;$('#stCursor').textContent=''}
+function pzTag(){const P=pzP(),R=pzShape(P.resultUid);$('#vtag').innerHTML=`<span class="chip" style="background:#2f6df6">P${PZ.cur+1}</span><span>${esc2(P.name)||'Problem'}</span><span class="mute">· Result</span><span class="chip" style="background:${R.col}">${R.id}</span>`}
+function pzUsedTile(x,P){const c=P.pieces[x.uid];return `<div class="ut ${PZ.sel===x.uid?'sel':''}" data-u="${x.uid}" draggable="true" title="${x.id}${x.label?' – '+esc2(x.label):''} · ${x.vox.size} voxels — drag onto “All pieces” to remove"><i class="uc" style="background:${x.col}"></i><div class="ub"><div class="t1"><span class="gripd">${ic('grip',12)}</span><b>${x.id}</b>${x.label?`<span class="pl">${esc2(x.label)}</span>`:''}${c.grp?`<span class="gb">G${c.grp}</span>`:''}</div><div class="t2"><button data-d="-1" title="One fewer (at 0 the piece leaves the puzzle)">−</button><span class="cnt">${c.min===c.max?'×'+c.max:c.min+'–'+c.max}</span><button data-d="1" title="One more">+</button></div></div></div>`}
+function pzLibChip(x,P){const c=P.pieces[x.uid],n=pzIn(c)?c.max:0;return `<div class="lc ${n?'in':''} ${PZ.sel===x.uid?'sel':''}" data-u="${x.uid}" draggable="true" title="${x.id}${x.label?' – '+esc2(x.label):''} · ${x.vox.size} voxels — drag into “In this puzzle”, double-click, or press + to add one"><span class="gripd">${ic('grip',12)}</span><i class="sq" style="background:${x.col}"></i><b>${x.id}</b>${x.label?`<span class="pl">${esc2(x.label)}</span>`:''}<button class="la" data-add="1" title="Add one to the puzzle">${n?'×'+n+' +':'+'}</button></div>`}
+function renderPuzzle(){
+ const P=pzP(),a=pzStats(),R=a.R;
+ $('#pzCount').textContent=PZ.probs.length;
+ $('#pzProblems').innerHTML=PZ.probs.map((q,i)=>`<div class="row ${i===PZ.cur?'sel':''}" draggable="true" data-i="${i}" title="Drag the handle to reorder — double-click to rename"><span class="grip" title="Drag to reorder">${ic('grip',14)}</span><span class="chip" style="background:#2f6df6">P${i+1}</span><span class="lbl">${esc2(q.name)}</span><span class="acts"><button class="ib" data-a="rename" title="Rename">${ic('edit',14)}</button><button class="ib" data-a="dup" title="Duplicate">${ic('copy',14)}</button><button class="ib del" data-a="del" title="Delete" ${PZ.probs.length<2?'disabled':''}>${ic('trash',14)}</button></span></div>`).join('');
+ $('#pzResult').innerHTML=`<span class="chip" style="background:${R.col}">${R.id}</span><div class="meta"><b>${esc2(R.label)||'Result piece'}</b><span>${R.vox.size} voxels · can hold ${rng(a.rmin,a.rmax,'–')}</span></div><button class="btn sm" id="pzChange">Change…</button>`;
+ const others=shapes.filter(x=>x.uid!==P.resultUid),used=others.filter(x=>pzIn(P.pieces[x.uid]));
+ $('#pzPieceCount').textContent=used.length;$('#pzLibCount').textContent=others.length;
+ $$('#pzViewSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v===PZ.view));
+ const ub=$('#pzUsed');ub.classList.toggle('tbl',PZ.view==='table');
+ if(!used.length)ub.innerHTML='<div class="pz-empty" style="padding:6px">No pieces yet. Add them from <b>All pieces</b> below — drag, double-click, or press +.</div>';
+ else if(PZ.view==='chips')ub.innerHTML=used.map(x=>pzUsedTile(x,P)).join('');
+ else ub.innerHTML=`<table class="pzt"><thead><tr><th class="l">Shape</th><th>Count</th><th title="Allow a min–max range">Range</th><th>Group</th></tr></thead><tbody>${used.map(x=>{const c=P.pieces[x.uid],rg=!c.lock;return `<tr class="${PZ.sel===x.uid?'sel':''}" data-u="${x.uid}"><td class="sh" style="background:${x.col}">${x.id}${x.label?' – '+esc2(x.label):''}</td><td class="cn">${rg?`<input type="number" min="0" data-f="min" value="${c.min}"><span class="dash">–</span><input type="number" min="0" data-f="max" value="${c.max}">`:`<input type="number" min="0" data-f="max" value="${c.max}">`}</td><td><input type="checkbox" data-range ${rg?'checked':''}></td><td><select data-grp><option value="">–</option>${P.groups.map(g=>`<option value="${g}" ${c.grp===g?'selected':''}>G${g}</option>`).join('')}<option value="new">+ New</option></select></td></tr>`}).join('')}</tbody></table>`;
+ $('#pzLib').innerHTML=others.map(x=>pzLibChip(x,P)).join('');$('#pzLib').classList.toggle('closed',!PZ.libOpen);$('#pzLibTog').innerHTML=ic('chevD',16);$('#pzLibTog').style.transform=PZ.libOpen?'':'rotate(-90deg)';
+ $('#pzSummary').className='pz-sum '+(a.fit?'ok':'warn');
+ const holes=(a.pmin===a.pmax&&a.rmin===a.rmax)?(a.rmax-a.pmin>=0?`Holes: ${a.rmax-a.pmin}`:`Pieces exceed the result by ${a.pmin-a.rmax}`):'Holes depend on the counts';
+ $('#pzSummary').innerHTML=`${ic(a.fit?'okc':'warn',18)}<div><b>${a.fit?'Pieces can fill the result':(a.pmin>a.rmax?'Pieces are too large for the result':'Pieces cannot reach the result')}</b><span>Result ${rng(a.rmin,a.rmax)} voxels · Pieces n = ${rng(a.nmin,a.nmax)} → ${rng(a.pmin,a.pmax)} voxels · ${holes}</span></div>`;
+ renderPzSel();renderPzGroups();renderPzRules();pzTag();pzStatus();
+}
+function renderPzSel(){const P=pzP(),x=PZ.sel&&pzShape(PZ.sel),box=$('#pzSel');
+ if(!x||x.uid===P.resultUid){box.innerHTML='<div class="pz-empty" style="padding:4px 0">Select a piece in the lists or click it in the 3D view to set how many copies the puzzle uses.</div>';return}
+ const c=pzCfg(x.uid),f=[...x.vox.values()].filter(v=>v.s==='f').length,range=!c.lock;
+ const stp=(fld,v,lab)=>`<div class="step sz ${lab?'inl':''}"><button data-sf="${fld}" data-d="-1" title="Decrease">${ic('minus',12)}</button>${lab?`<span class="il">${lab}</span>`:''}<input class="v" data-sf="${fld}" value="${v}"><button data-sf="${fld}" data-d="1" title="Increase">${ic('plus',12)}</button></div>`;
+ const gs=P.groups.map(g=>`<button data-grp="${g}" class="${c.grp===g?'on':''}">G${g}</button>`).join('');
+ box.innerHTML=`<div class="hd"><span class="chip" style="background:${x.col}">${x.id}</span><div><b>${esc2(x.label)||'Piece'}</b><span class="m">${x.vox.size} voxels · ${f} fixed · ${x.vox.size-f} variable</span></div></div>
+ ${range?`<div class="lab">Count range</div><div class="rng"><div class="f">${stp('min',c.min,'Min')}</div><div class="f">${stp('max',c.max,'Max')}</div></div>`:`<div class="lab">Copies in the puzzle</div><div class="cnt1"><span class="mute" style="font-size:12px">${c.max?'Fixed count':'Not in this puzzle'}</span>${stp('max',c.max)}</div>`}
+ <div class="switch ${range?'on':''}" id="pzRange" style="margin-top:12px"><span class="tr"></span><span>Allow a range (min–max) instead of a fixed count</span></div>
+ <div class="lab">Exclusive group</div><div class="gseg"><button data-grp="0" class="${c.grp==null?'on':''}">None</button>${gs}<button data-grp="new" title="Create a new group and put this piece in it">+ New</button></div>`}
+function renderPzGroups(){const P=pzP(),sec=$('#pzGroupsSec'),box=$('#pzGroups');sec.style.display=P.groups.length?'':'none';
+ box.innerHTML=P.groups.map(g=>{const mem=shapes.filter(x=>x.uid!==P.resultUid&&(P.pieces[x.uid]||{}).grp===g&&pzIn(P.pieces[x.uid]));
+  return `<div class="pzg"><div class="gh">Group ${g}<span class="mute" style="font-weight:400;font-size:11px">pieces in a group are exclusive</span><span class="sp"></span><button class="ib" data-delg="${g}" title="Remove group">${ic('trash',14)}</button></div><div class="mem">${mem.length?mem.map(x=>`<span class="ptile" style="background:${x.col}"><b>${x.id}</b>${x.label?`<span class="pl">${esc2(x.label)}</span>`:''}<span class="pb">${pzCount(P.pieces[x.uid])}</span></span>`).join(''):'<span class="mute" style="font-size:12px">No members — pick this group on a piece</span>'}</div></div>`}).join('')}
+function renderPzRules(){const P=pzP(),sw=(c,t)=>`<span class="sw2" title="${t}" style="background:${c.h||'#fff'}"></span>`;
+ $('#pzRules').innerHTML=`<div class="cap">Columns = <b>result</b> colour, rows = <b>piece</b> colour. A ticked cell lets a piece voxel of the row colour sit on a result voxel of the column colour.</div><div class="mx"><div class="mxr"><span></span>${PZC.map(c=>sw(c,'Result colour '+c.n)).join('')}</div>${PZC.map((c,i)=>`<div class="mxr">${sw(c,'Piece colour '+c.n)}${PZC.map((d,j)=>`<button class="mxc ${P.rules[i][j]?'on':''}" data-i="${i}" data-j="${j}" title="Piece ${c.n} on result ${d.n}: ${P.rules[i][j]?'allowed':'not allowed'}"></button>`).join('')}</div>`).join('')}</div>
+ <div class="btnrow"><button class="btn sm" data-rule="ident">Each colour on itself</button><button class="btn sm" data-rule="all">Allow all</button><button class="btn sm" data-rule="none">Clear</button></div>`}
+/* ---- count helpers ---- */
+function pzSet(u,f,v){const c=pzCfg(u);v=Math.max(0,Math.round(+v)||0);
+ if(f==='max'){c.max=v;if(c.lock||c.min>v)c.min=c.lock?v:Math.min(c.min,v)}
+ else{c.min=Math.min(v,c.max);if(c.lock){c.max=c.min}}
+ if(c.max<=0){c.min=0;c.grp=null}}
+const pzBump=(u,d)=>{const c=pzCfg(u);pzSet(u,'max',c.max+d)};
+const pzChanged=()=>{renderPuzzle();render3d()};
+function pzAdd(u,n){const c=pzCfg(u);if(c.max<=0){c.lock=true;c.min=c.max=1}else pzBump(u,n||1);PZ.sel=u;pzChanged()}
+/* ---- 3D scene: layout is fixed on screen; rotation turns each piece about its own centre; pan/zoom move the whole layout ---- */
+function puzLayout(){const P=pzP(),R=pzShape(P.resultUid),items=[{role:'result',s:R,pos:[0,0]}];
+ const sel=PZ.sel&&pzShape(PZ.sel);if(sel&&sel.uid!==R.uid)items.push({role:'selected',s:sel,pos:[7.5,0]});
+ const list=[];shapes.forEach(x=>{if(x.uid===R.uid)return;const c=P.pieces[x.uid];if(!pzIn(c))return;for(let k=0;k<c.max;k++)list.push({s:x,inst:k+1,total:c.max,opt:k>=c.min})});
+ const cols=Math.min(5,Math.max(1,list.length));
+ list.forEach((q,i)=>{items.push({role:'piece',s:q.s,inst:q.inst,total:q.total,opt:q.opt,pos:[3.75+((i%cols)-(cols-1)/2)*5.9,-7.2-Math.floor(i/cols)*5.6]})});return items}
+function renderPuzzleScene(g,w,h){
+ const P=pzP(),items=puzLayout();$('#emptyMsg').style.display='none';PZ.boxes=[];
+ let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;items.forEach(it=>{x0=Math.min(x0,it.pos[0]-2);x1=Math.max(x1,it.pos[0]+2);y0=Math.min(y0,it.pos[1]-2.2);y1=Math.max(y1,it.pos[1]+2.2)});
+ const ctr=[(x0+x1)/2,(y0+y1)/2],rot=mkRot(cam),sc=Math.min(w/((x1-x0)+3),h/((y1-y0)+3))*.92*cam.zoom,brick=st.vtype==='brick';
+ const anchor=it=>[w/2+cam.px+(it.pos[0]-ctr[0])*sc,h/2+cam.py-(it.pos[1]-ctr[1])*sc];   /* fixed screen position of each piece copy */
+ const acc=css('--accent'),mut=css('--muted'),txt=css('--text'),Ld=[-.35,.75,.55];g.textAlign='center';
+ items.forEach(it=>{const s=it.s,d=s.dims,an=anchor(it),pr=p=>{const q=rot(p[0],p[1],p[2]),k=st.persp?64/(64-q[2]):1;return[an[0]+q[0]*sc*k,an[1]-q[1]*sc*k]};   /* p is local to the piece centre */
+  const bb=[1e9,1e9,-1e9,-1e9],bbAdd=(x,y)=>{bb[0]=Math.min(bb[0],x);bb[1]=Math.min(bb[1],y);bb[2]=Math.max(bb[2],x);bb[3]=Math.max(bb[3],y)},ga=it.opt?.42:1;
+  if(brick){const cubes=[];s.vox.forEach((v,k)=>{const [ix,iy,iz]=k.split(',').map(Number),lx=ix-d[0]/2,ly=iy-d[1]/2,lz=iz-d[2]/2;cubes.push({v,ix,iy,iz,lx,ly,lz,d:rot(lx+.5,ly+.5,lz+.5)[2]})});
+   cubes.sort((a,b)=>a.d-b.d);
+   cubes.forEach(c=>{const base=st.colorView==='piece'?s.col:colHex(c.v.c,s);
+    FACES.forEach(f=>{if(rot(f.n[0],f.n[1],f.n[2])[2]<=.0001)return;if(s.vox.has(key(c.ix+f.n[0],c.iy+f.n[1],c.iz+f.n[2])))return;
+     const pts=f.v.map(q=>pr([c.lx+q[0],c.ly+q[1],c.lz+q[2]]));pts.forEach(q=>bbAdd(q[0],q[1]));
+     g.beginPath();pts.forEach((q,i)=>i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath();g.globalAlpha=(c.v.s==='v'?.5:1)*ga;g.fillStyle=shade(base,st.set.lights?f.f:.92);g.fill();g.globalAlpha=1;
+     g.strokeStyle='rgba(0,0,0,.32)';g.lineWidth=1;g.setLineDash(c.v.s==='v'||it.opt?[3,3]:[]);g.stroke();g.setLineDash([])})})}
+  else{const SP=getSpace(kindOf(st.vtype),d),cen=SP.ext.map(v=>v/2),prs=p=>pr([p[0]-cen[0],p[1]-cen[1],p[2]-cen[2]]),list=[];
+   s.vox.forEach((v,k)=>{const c=SP.by.get(k);if(c)list.push({c,v,d:rot(c.c3[0]-cen[0],c.c3[1]-cen[1],c.c3[2]-cen[2])[2]})});list.sort((a,b)=>a.d-b.d);
+   list.forEach(({c,v})=>{const base=st.colorView==='piece'?s.col:colHex(v.c,s),al=(v.s==='v'?.5:1)*ga;
+    if(c.circle){const q=rot(c.c3[0]-cen[0],c.c3[1]-cen[1],c.c3[2]-cen[2]),kk=st.persp?64/(64-q[2]):1,P0=prs(c.c3),R=c.r*sc*kk;bbAdd(P0[0]-R,P0[1]-R);bbAdd(P0[0]+R,P0[1]+R);
+     const gr=g.createRadialGradient(P0[0]-R*.35,P0[1]-R*.4,R*.08,P0[0],P0[1],R);gr.addColorStop(0,shade(base,st.set.lights?1.35:1));gr.addColorStop(1,shade(base,st.set.lights?.62:.92));
+     g.beginPath();g.arc(P0[0],P0[1],R,0,7);g.globalAlpha=al;g.fillStyle=gr;g.fill();g.globalAlpha=1;g.strokeStyle='rgba(0,0,0,.35)';g.lineWidth=1;g.setLineDash(v.s==='v'||it.opt?[3,3]:[]);g.stroke();g.setLineDash([])}
+    else c.faces.forEach(f=>{const qn=rot(f.n[0],f.n[1],f.n[2]);if(qn[2]<=.0001)return;if(f.nb&&s.vox.has(f.nb))return;
+     const pts=f.pts.map(prs),lf=.62+.5*Math.max(0,qn[0]*Ld[0]+qn[1]*Ld[1]+qn[2]*Ld[2]);pts.forEach(q=>bbAdd(q[0],q[1]));
+     g.beginPath();pts.forEach((q,i)=>i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath();g.globalAlpha=al;g.fillStyle=shade(base,st.set.lights?lf:.92);g.fill();g.globalAlpha=1;
+     g.strokeStyle='rgba(0,0,0,.32)';g.lineWidth=1;g.setLineDash(v.s==='v'||it.opt?[3,3]:[]);g.stroke();g.setLineDash([])})})}
+  if(bb[0]>bb[2])return;const half=Math.max(an[0]-bb[0],bb[2]-an[0]),pad=8,bx=an[0]-half-pad,bw=2*(half+pad),by=bb[1]-pad,bh=bb[3]-bb[1]+2*pad;   /* box centred on the anchor so it does not jitter while rotating */
+  PZ.boxes.push({uid:s.uid,role:it.role,x0:bx,y0:by,x1:bx+bw,y1:by+bh});
+  const hv=PZ.hover===s.uid&&it.role!=='result',sel=PZ.sel===s.uid&&it.role!=='result';
+  if(it.role==='selected'||(sel&&it.role==='piece')||hv){g.strokeStyle=acc;g.lineWidth=it.role==='selected'?2:1.6;g.setLineDash(it.role==='selected'||sel?[]:[4,3]);g.beginPath();g.roundRect(bx,by,bw,bh,10);g.stroke();g.setLineDash([])}
+  g.font='700 10.5px system-ui';g.fillStyle=it.role==='piece'?txt:acc;
+  if(it.role==='result')g.fillText('RESULT · '+s.id,an[0],by-5);
+  else if(it.role==='selected')g.fillText('SELECTED · '+s.id,an[0],by-5);
+  else{g.fillStyle=txt;g.font='600 11px system-ui';g.fillText(s.id+(it.total>1?'  ·  '+it.inst+'/'+it.total:'')+(it.opt?'  (optional)':''),an[0],by+bh+13)}})}
+function puzPick(px,py){let best=null,ba=1e12;PZ.boxes.forEach(b=>{if(px>=b.x0&&px<=b.x1&&py>=b.y0&&py<=b.y1&&b.role!=='result'){const ar=(b.x1-b.x0)*(b.y1-b.y0);if(ar<ba){ba=ar;best=b}}});return best}
+function puzHoverAt(px,py){const b=puzPick(px,py),u=b?b.uid:null;$('#cv').style.cursor=b?'pointer':'';if(u!==PZ.hover){PZ.hover=u;render3d()}}
+function puzClick(px,py){const b=puzPick(px,py);if(!b)return;PZ.sel=b.uid;renderPuzzle();render3d();const t=$(`#pzUsed [data-u="${b.uid}"]`);if(t&&t.scrollIntoView)t.scrollIntoView({block:'nearest'})}
+/* ---- events: problems ---- */
+$('#pzNew').onclick=()=>{PZ.probs.push({name:'',resultUid:shapes[0].uid,pieces:{},groups:[],rules:pzIdent()});PZ.cur=PZ.probs.length-1;pzChanged()};
+function pzRename(i){PZ.cur=i;renderPuzzle();const lb=$$('#pzProblems .row')[i].querySelector('.lbl');lb.innerHTML=`<input value="${esc2(PZ.probs[i].name)}" placeholder="Label">`;const inp=lb.querySelector('input');inp.focus();inp.select();inp.onblur=()=>{PZ.probs[i].name=inp.value;renderPuzzle()};inp.onkeydown=ev=>{if(ev.key==='Enter')inp.blur();if(ev.key==='Escape'){inp.value=PZ.probs[i].name;inp.blur()}}}
+$('#pzProblems').addEventListener('click',e=>{const row=e.target.closest('.row');if(!row)return;const i=+row.dataset.i,b=e.target.closest('[data-a]');
+ if(!b){if(!e.target.closest('input')){PZ.cur=i;pzChanged()}return}
+ if(b.dataset.a==='dup'){PZ.probs.push(JSON.parse(JSON.stringify(PZ.probs[i])));PZ.cur=PZ.probs.length-1;pzChanged()}
+ else if(b.dataset.a==='del'&&PZ.probs.length>1){PZ.probs.splice(i,1);PZ.cur=Math.min(PZ.cur,PZ.probs.length-1);pzChanged()}
+ else if(b.dataset.a==='rename')pzRename(i)});
+$('#pzProblems').addEventListener('dblclick',e=>{const row=e.target.closest('.row');if(row&&!e.target.closest('[data-a]'))pzRename(+row.dataset.i)});
+let pzDragP=null;
+$('#pzProblems').addEventListener('dragstart',e=>{const r=e.target.closest('.row');if(r){pzDragP=+r.dataset.i;e.dataTransfer.effectAllowed='move'}});
+$('#pzProblems').addEventListener('dragover',e=>{const r=e.target.closest('.row');if(r&&pzDragP!==null){e.preventDefault();$$('#pzProblems .row').forEach(x=>x.classList.remove('dragover'));r.classList.add('dragover')}});
+$('#pzProblems').addEventListener('drop',e=>{const r=e.target.closest('.row');if(r&&pzDragP!==null){e.preventDefault();const to=+r.dataset.i,cur=pzP(),[m]=PZ.probs.splice(pzDragP,1);PZ.probs.splice(to,0,m);PZ.cur=PZ.probs.indexOf(cur);pzDragP=null;pzChanged()}});
+$('#pzProblems').addEventListener('dragend',()=>{pzDragP=null;$$('#pzProblems .row').forEach(x=>x.classList.remove('dragover'))});
+/* ---- events: result, pieces ---- */
+$('#pzResult').addEventListener('click',e=>{const b=e.target.closest('#pzChange');if(!b)return;
+ openPop(b,'<div class="ph">Use as result</div>'+shapes.map(x=>`<button data-k="${x.uid}"><span class="chip" style="background:${x.col};min-width:30px;height:20px;font-size:10px">${x.id}</span>${esc2(x.label)||'&nbsp;'}<span class="kb">${x.vox.size} vox</span></button>`).join(''),u=>{pzP().resultUid=u;if(PZ.sel===u)PZ.sel=null;pzChanged()})});
+$('#pzViewSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;PZ.view=b.dataset.v;renderPuzzle()};
+$('#pzUsed').addEventListener('change',e=>{const i=e.target,tr=i.closest('tr');if(!tr)return;const u=tr.dataset.u,c=pzCfg(u),P=pzP();PZ.sel=u;
+ if(i.dataset.f)pzSet(u,i.dataset.f,i.value);
+ else if(i.dataset.range!==undefined){c.lock=!i.checked;if(c.lock)c.min=c.max}
+ else if(i.dataset.grp!==undefined){const v=i.value;if(v==='new'){const n=(P.groups.length?Math.max(...P.groups):0)+1;P.groups.push(n);c.grp=n}else c.grp=v===''?null:+v}
+ pzChanged()});
+$('#pzUsed').addEventListener('click',e=>{const tr=e.target.closest('tr[data-u]');if(tr){if(!e.target.closest('input,select')){PZ.sel=tr.dataset.u;pzChanged()}return}const t=e.target.closest('.ut');if(!t)return;const u=t.dataset.u,b=e.target.closest('.t2 button');PZ.sel=u;if(b)pzBump(u,+b.dataset.d);pzChanged()});
+$('#pzLib').addEventListener('click',e=>{const t=e.target.closest('.lc');if(!t)return;const u=t.dataset.u;if(e.target.closest('[data-add]')){pzAdd(u,1);return}PZ.sel=u;pzChanged()});
+$('#pzLib').addEventListener('dblclick',e=>{const t=e.target.closest('.lc');if(t&&!e.target.closest('[data-add]'))pzAdd(t.dataset.u,1)});
+const pzMenu=(e,u)=>{e.preventDefault();PZ.sel=u;renderPuzzle();openPopAt(e.clientX,e.clientY,'<button data-k="up">One more (+1)</button><button data-k="dn">One fewer (−1)</button><button data-k="off">Remove from puzzle</button><hr><button data-k="res">Set as result</button>',k=>{
+ if(k==='up')pzAdd(u,1);else{if(k==='dn')pzBump(u,-1);else if(k==='off'){const c=pzCfg(u);c.min=c.max=0;c.grp=null}else if(k==='res'){pzP().resultUid=u;PZ.sel=null}pzChanged()}})};
+$('#pzUsed').addEventListener('contextmenu',e=>{const t=e.target.closest('.ut');if(t)pzMenu(e,t.dataset.u)});
+$('#pzLib').addEventListener('contextmenu',e=>{const t=e.target.closest('.lc');if(t)pzMenu(e,t.dataset.u)});
+$('#pzLibHead').onclick=()=>{PZ.libOpen=!PZ.libOpen;renderPuzzle()};
+$('#pzMore').innerHTML=ic('more');
+$('#pzMore').onclick=e=>openPop(e.currentTarget,'<button data-k="all">Add one of each piece</button><button data-k="clr">Remove all pieces</button>',k=>{const P=pzP();
+ shapes.forEach(x=>{if(x.uid===P.resultUid)return;const c=pzCfg(x.uid);if(k==='all'){if(c.max<=0){c.lock=true;c.min=c.max=1}else pzSet(x.uid,'max',c.max+1)}else{c.min=c.max=0;c.grp=null}});pzChanged()});
+/* ---- drag & drop between "All pieces" and "In this puzzle" ---- */
+const pzDragStart=(e,u,from)=>{PZ.drag={u,from};e.dataTransfer.setData('text/plain',u);e.dataTransfer.effectAllowed='move';setTimeout(()=>{(from==='lib'?$('#pzUsed'):$('#pzLib')).classList.add('drop-ok');if(from==='used'&&!PZ.libOpen){}},0)};
+const pzDragEnd=()=>{PZ.drag=null;$('#pzUsed').classList.remove('drop-ok');$('#pzLib').classList.remove('drop-ok')};
+$('#pzLib').addEventListener('dragstart',e=>{const t=e.target.closest('.lc');if(t)pzDragStart(e,t.dataset.u,'lib')});
+$('#pzUsed').addEventListener('dragstart',e=>{const t=e.target.closest('.ut');if(t)pzDragStart(e,t.dataset.u,'used')});
+['#pzLib','#pzUsed'].forEach(q=>$(q).addEventListener('dragend',pzDragEnd));
+$('#pzUsed').addEventListener('dragover',e=>{if(PZ.drag&&PZ.drag.from==='lib')e.preventDefault()});
+$('#pzUsed').addEventListener('drop',e=>{if(PZ.drag&&PZ.drag.from==='lib'){e.preventDefault();const u=PZ.drag.u;pzDragEnd();pzAdd(u,1)}});
+$('#pzLib').addEventListener('dragover',e=>{if(PZ.drag&&PZ.drag.from==='used')e.preventDefault()});
+$('#pzLib').addEventListener('drop',e=>{if(PZ.drag&&PZ.drag.from==='used'){e.preventDefault();const u=PZ.drag.u,c=pzCfg(u);c.min=c.max=0;c.grp=null;pzDragEnd();pzChanged()}});
+$('#pzLibHead').addEventListener('dragover',e=>{if(PZ.drag&&PZ.drag.from==='used')e.preventDefault()});
+$('#pzLibHead').addEventListener('drop',e=>{if(PZ.drag&&PZ.drag.from==='used'){e.preventDefault();const c=pzCfg(PZ.drag.u);c.min=c.max=0;c.grp=null;pzDragEnd();pzChanged()}});
+/* ---- events: selected piece, groups, rules ---- */
+$('#pzSel').addEventListener('click',e=>{const P=pzP(),u=PZ.sel;if(!u)return;
+ if(e.target.closest('#pzRange')){const c=pzCfg(u);c.lock=!c.lock;if(c.lock)c.min=c.max;pzChanged();return}
+ const sb=e.target.closest('button[data-sf]');if(sb){const c=pzCfg(u);pzSet(u,sb.dataset.sf,c[sb.dataset.sf]+ +sb.dataset.d);pzChanged();return}
+ const gb=e.target.closest('button[data-grp]');if(gb){const c=pzCfg(u),v=gb.dataset.grp;if(v==='new'){const n=(P.groups.length?Math.max(...P.groups):0)+1;P.groups.push(n);c.grp=n}else c.grp=v==='0'?null:+v;pzChanged()}});
+$('#pzSel').addEventListener('change',e=>{const i=e.target;if(i.dataset.sf){pzSet(PZ.sel,i.dataset.sf,i.value);pzChanged()}});
+$('#pzGroups').addEventListener('click',e=>{const b=e.target.closest('[data-delg]');if(!b)return;const P=pzP(),g=+b.dataset.delg;P.groups=P.groups.filter(x=>x!==g);Object.values(P.pieces).forEach(c=>{if(c.grp===g)c.grp=null});pzChanged()});
+$('#pzRules').addEventListener('click',e=>{const P=pzP(),c=e.target.closest('.mxc');if(c){P.rules[+c.dataset.i][+c.dataset.j]=!P.rules[+c.dataset.i][+c.dataset.j];renderPzRules();return}
+ const r=e.target.closest('[data-rule]');if(r){P.rules=PZC.map((_,i)=>PZC.map((__,j)=>r.dataset.rule==='all'?true:r.dataset.rule==='none'?false:i===j));renderPzRules()}});
+/* ---- workspace rail ---- */
+const HINT_ENT=$('#vhint').innerHTML;
+function renderRail(){$('#appRail').innerHTML=[['entities','Entities','cube','Entities — create and edit pieces'],['puzzle','Puzzle','puzzle','Puzzle — choose the result, the pieces and the rules'],['solver','Solver','play','Solver — run and browse solutions']].map(([id,n,ico,ttl])=>`<button class="rbtn ${st.tab===id?'on':''}" data-tab="${id}" title="${ttl}">${ic(ico,22)}<span>${n}</span></button>`).join('')}
+function setTab(t){st.tab=t;$('#stage').dataset.tab=t;renderRail();layout.focus='';layout.lc=false;layout.rc=false;applyLayout();hov=null;PZ.hover=null;
+ const nav=$('#navHint')?$('#navHint').textContent:'Drag orbit · Shift/middle-drag pan · Wheel zoom';
+ $('#vhint').innerHTML=t==='puzzle'?`<div>Click a piece to select it · drag to rotate every piece in place</div><div id="navHint">${nav}</div>`:HINT_ENT.replace(/<div id="navHint">.*?<\/div>/,`<div id="navHint">${nav}</div>`);
+ renderAll();render3d()}
+$('#appRail').addEventListener('click',e=>{const b=e.target.closest('.rbtn');if(b&&b.dataset.tab!==st.tab)setTab(b.dataset.tab)});
+renderRail();
+initPuzzle();
+
 /* ---------- orchestration ---------- */
 function renderEditor(){renderPlane();renderLayers();renderGrid();renderSelbar()}
 const _renderInsp0=renderInsp;renderInsp=function(){_renderInsp0();if(spaceNow()){['#btnPrune','#btnCenter','#btnOrigin','#btnMin','#btnFill'].forEach(q=>{const e=$(q);if(e){e.disabled=true;e.title='Mock: not interactive for this voxel type'}});$$('#mulRow button,#surf button').forEach(b=>{b.disabled=true;b.title='Mock: not interactive for this voxel type'})}};
-function renderAll(){renderVType();renderShapes();renderInsp();renderTools();renderMod();renderStatusTgl();renderColors();renderEditor();renderTag();updateStatus();render3d()}
+function renderAll(){if(st.tab==='puzzle'){renderPuzzle()}renderVType();renderShapes();renderInsp();renderTools();renderMod();renderStatusTgl();renderColors();renderEditor();renderTag();updateStatus();render3d()}
 function fit(){S=Math.min(innerWidth/1600,innerHeight/1000);const wr=$('#wrap');wr.style.width=1600*S+'px';wr.style.height=1000*S+'px';$('#stage').style.transform=`scale(${S})`;renderGrid();render3d()}
 addEventListener('resize',fit);
 new ResizeObserver(()=>render3d()).observe($('#cv'));
